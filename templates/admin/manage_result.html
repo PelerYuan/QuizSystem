@@ -219,8 +219,8 @@
 {#                               href="{{ url_for('entrance_manage', quiz_id=entrance['id']) }}">Manage entrance</a>#}
 {#                            <a class="btn btn-custom btn-source"#}
 {#                               href="{{ url_for('entrance_add', quiz_id=entrance['id']) }}">Add entrance</a>#}
-{#                            <a class="btn btn-custom btn-trial"#}
-{#                               href="{{ url_for('quiz_trial', quiz_id=entrance['id']) }}">Trial</a>#}
+                            <a class="btn btn-custom btn-trial"
+                               href="{{ url_for('review', result_id=result['id']) }}">Review</a>
                         </div>
                     </li>
                 {% endfor %}

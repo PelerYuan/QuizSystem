@@ -84,87 +84,89 @@ def quiz(entrance_id):
 
 @app.route('/submit/<entrance_id>', methods=['POST'])
 def submit(entrance_id):
-    selection = {}
-    for key in request.form.keys():
-        selection[key] = request.form.getlist(key)
+    if session.get('name') is not None:
+        selection = {}
+        for key in request.form.keys():
+            selection[key] = request.form.getlist(key)
 
+        quiz_id = Entrance.query.filter_by(id=entrance_id).first().id
+        file_path = Quiz.query.filter_by(id=quiz_id).first().file_path
+        with open(file_path, 'r', encoding='utf-8') as f:
+            quiz = json.loads(f.read())
+            quiz['points'] = float(quiz['points'])
+            for i in range(len(quiz['questions'])):
+                quiz['questions'][i]['index'] = str(i + 1)
+
+        score = quiz['points']
+        total_score = 0
+        question_count = 0
+        for question in quiz['questions']:
+            if 'options' in question.keys():
+                question_count += 1
+                if selection.get(question['index'], False):
+                    selection[question['index']].append(0)  # last one to be the score
+                    for option in question['options']:
+                        if option['opt'] == selection[question['index']][0] and option.get('correct', '') == 'true':
+                            selection[question['index']][-1] = score
+                            total_score += score
+                            break
+                else:
+                    selection[question['index']] = [0]
+
+            elif 'multioptions' in question.keys():
+                question_count += 1
+                if selection.get(question['index'], False):
+                    selection[question['index']].append(0)
+                    question_count = len(question['multioptions'])
+                    for option in question['multioptions']:
+                        if option['opt'] in selection[question['index']]:
+                            if option.get('correct', '') == 'true':
+                                selection[question['index']][-1] += score / question_count
+                            else:
+                                selection[question['index']][-1] -= score / question_count
+                    if selection[question['index']][-1] < 0:
+                        selection[question['index']][-1] = 0
+                    total_score += selection[question['index']][-1]
+                else:
+                    selection[question['index']] = [0]
+
+            elif 'itext' in question.keys():
+                if selection.get(question['index'], False):
+                    selection[question['index']].append(-404)
+                else:
+                    selection[question['index']] = [-404]
+
+            selection['score'] = str(total_score)
+            selection['total_score'] = str(score * question_count)  # Ignore itext
+
+        file_path = os.path.join('result/', str(uuid.uuid4())) + '.json'
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(selection, f, ensure_ascii=False, indent=4)
+        result = Result(entrance_id=entrance_id, student_name=session['name'], score=total_score,
+                        file_path=file_path)
+        db.session.add(result)
+        db.session.commit()
+
+        return redirect(url_for('review', result_id=result.id))
+    else:
+        return redirect(url_for('login', entrance_id=entrance_id))
+
+
+@app.route('/review/<result_id>')
+def review(result_id):
+    session['name'] = None
+    entrance_id = Result.query.filter_by(id=result_id).first().entrance_id
     quiz_id = Entrance.query.filter_by(id=entrance_id).first().id
     file_path = Quiz.query.filter_by(id=quiz_id).first().file_path
     with open(file_path, 'r', encoding='utf-8') as f:
         quiz = json.loads(f.read())
-        quiz['points'] = float(quiz['points'])
         for i in range(len(quiz['questions'])):
             quiz['questions'][i]['index'] = str(i + 1)
-
-    score = quiz['points']
-    total_score = 0
-    question_count = 0
-    for question in quiz['questions']:
-        if 'options' in question.keys():
-            question_count += 1
-            if selection.get(question['index'], False):
-                selection[question['index']].append(0)  # last one to be the score
-                for option in question['options']:
-                    print(option.get('correct', ''))
-                    if option['opt'] == selection[question['index']][0] and option.get('correct', '') == 'true':
-                        selection[question['index']][-1] = score
-                        total_score += score
-                        break
-            else:
-                selection[question['index']] = [0]
-
-        elif 'multioptions' in question.keys():
-            question_count += 1
-            if selection.get(question['index'], False):
-                selection[question['index']].append(0)
-                question_count = len(question['multioptions'])
-                for option in question['multioptions']:
-                    print(option.get('correct', ''))
-                    print(option['opt'])
-                    print(selection[question['index']])
-                    if option['opt'] in selection[question['index']]:
-                        if option.get('correct', '') == 'true':
-                            selection[question['index']][-1] += score / question_count
-                        else:
-                            selection[question['index']][-1] -= score / question_count
-                if selection[question['index']][-1] < 0:
-                    selection[question['index']][-1] = 0
-                total_score += selection[question['index']][-1]
-            else:
-                selection[question['index']] = [0]
-
-        elif 'itext' in question.keys():
-            if selection.get(question['index'], False):
-                selection[question['index']].append(-404)
-            else:
-                selection[question['index']] = [-404]
-
-        selection['score'] = str(total_score)
-        selection['total_score'] = str(score * question_count)  # Ignore itext
-
-    file_path = os.path.join('result/', str(uuid.uuid4())) + '.json'
-    with open(file_path, 'w', encoding='utf-8') as f:
-        json.dump(selection, f, ensure_ascii=False, indent=4)
-    result = Result(entrance_id=entrance_id, student_name=session['name'], score=total_score,
-                    file_path=file_path)
-    db.session.add(result)
-    db.session.commit()
-
-    session['quiz'] = quiz
-    session['answer'] = selection
-    session['score'] = f"{total_score} / {score * question_count}"
-    return redirect(url_for('review', entrance_id=entrance_id))
-
-
-@app.route('/review/<entrance_id>')
-def review(entrance_id):
-    if session.get('name') is not None:
-        session['name'] = None
-        quiz = session.get('quiz')
-        answer = session.get('answer')
-        score = session.get('score')
-        return render_template('review.html', quiz=quiz, answer=answer, score=score)
-    return redirect(url_for('login', entrance_id=entrance_id))
+    result_path = Result.query.filter_by(id=result_id).first().file_path
+    with open(result_path, 'r', encoding='utf-8') as f:
+        answer = json.loads(f.read())
+    score = Result.query.filter_by(id=result_id).first().score
+    return render_template('review.html', quiz=quiz, answer=answer, score=score)
 
 
 @app.route('/img/<folder>/<filename>')
@@ -298,6 +300,7 @@ def result_manage(entrance_id):
                 {'id': result.id, 'entrance_id': result.entrance_id, 'student_name': result.student_name, 'score': result.score})
         return render_template('admin/manage_result.html', results=results, entrance_id=entrance_id)
     return redirect(url_for('admin_login'))
+
 
 if __name__ == '__main__':
     app.run()
