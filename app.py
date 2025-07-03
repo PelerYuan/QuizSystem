@@ -13,7 +13,7 @@ admin_config = json.loads(open('configure.json').read())
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__name__)),
                                                                     'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = 'data/'
+
 db = SQLAlchemy(app)
 
 
@@ -142,7 +142,7 @@ def submit(entrance_id):
         selection['score'] = str(total_score)
         selection['total_score'] = str(score * question_count)  # Ignore itext
 
-    file_path = os.path.join(app.config['UPLOAD_FOLDER'], str(uuid.uuid4())) + '.json'
+    file_path = os.path.join('result/', str(uuid.uuid4())) + '.json'
     with open(file_path, 'w', encoding='utf-8') as f:
         json.dump(selection, f, ensure_ascii=False, indent=4)
     result = Result(entrance_id=entrance_id, student_name=session['name'], score=total_score,
@@ -211,6 +211,58 @@ def admin_trial(quiz_id):
             for i in range(len(quiz['questions'])):
                 quiz['questions'][i]['index'] = (i + 1)
         return render_template('admin/trial.html', quiz=quiz)
+    return redirect(url_for('admin_login'))
+
+
+@app.route('/admin_add', methods=['GET', 'POST'])
+def admin_add():
+    if session.get('admin', False):
+        if request.method == 'POST':
+            json_ = request.files.get('json')
+            image_dir = {}
+            json_path = ""
+            try:
+                if json_:
+                    json_path = os.path.join('quiz/', str(uuid.uuid4())) + '.json'
+                    json_.save(json_path)
+                    with open(json_path, 'r', encoding='utf-8') as f:
+                        quiz = json.loads(f.read())
+                        quiz['image_folder'] = 'img'
+                        for i in range(len(quiz['questions'])):
+                            question = quiz['questions'][i]
+                            image = question.get('image', False)
+                            if image:
+                                code = str(uuid.uuid4())+ '.' + image.split('.')[-1]
+                                image_dir[image] = code
+                                question['image'] = code
+                    with open(json_path, 'w', encoding='utf-8') as f:
+                        json.dump(quiz, f, ensure_ascii=False, indent=4)
+            except Exception as e:
+                return render_template('admin/add.html', error="Json File invalid: " + e.args[0])
+
+            try:
+                images = request.files.getlist('images')
+                for image in images:
+                    if image:
+                        filename = image_dir[image.filename]
+            except KeyError as e:
+                return render_template('admin/add.html', error="Image invalid: " + e.args[0])
+
+            for image in images:
+                if image:
+                    filename = image_dir[image.filename]
+                    image_dir.pop(image.filename)
+                    image.save(os.path.join('img/', filename))
+
+            if image_dir:
+                return render_template('admin/add.html', error="Lack of image: " + str(list(image_dir.keys())))
+
+            quiz = Quiz(name=request.form['name'], description=request.form['description'], file_path=json_path)
+            db.session.add(quiz)
+            db.session.commit()
+
+            return redirect(url_for('admin'))
+        return render_template('admin/add.html', error='')
     return redirect(url_for('admin_login'))
 
 

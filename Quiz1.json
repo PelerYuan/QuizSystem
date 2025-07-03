@@ -1,245 +1,2697 @@
 {
-    "title": "Unit1 quiz",
-    "subtitle": "made by Peler",
-    "points": "2",
-    "image_folder": "img",
-    "questions": [
+  "title": "EXCEL SUPER TRIAL",
+  "subtitle": "Based on 2023 and 2024 content",
+  "points": "2",
+  "image_folder": "T1_SUPER_EXCEL",
+  "questions": [
+    {
+      "Q": "Which formula could be used to find the selling price of an article with a purchase price of $56.75 (entered in cell B7) that has a 35% markup (entered in cell C7)?",
+      "options": [
         {
-            "Q": "Which one would be the rate of data transfer through the Internet?",
-            "options": [
-                {
-                    "opt": "a. 100.3 KB"
-                },
-                {
-                    "opt": "b. 57.5 ms"
-                },
-                {
-                    "opt": "c. 10.2 MB"
-                },
-                {
-                    "opt": "d. 86.4 Mbps",
-                    "correct": "true"
-                }
-            ]
+          "opt": "a. =B7*C7"
         },
         {
-            "Q": "Where the data can be temporarily stored?",
-            "options": [
-                {
-                    "opt": "a. Read Only Memory"
-                },
-                {
-                    "opt": "b. SSD"
-                },
-                {
-                    "opt": "c. Random Access Memory",
-                    "correct": "true"
-                },
-                {
-                    "opt": "d. HDD"
-                }
-            ]
+          "opt": "b. =SUM(B7*35%)"
         },
         {
-            "Q": "Which of the following can be both internal and external storage?",
-            "options": [
-                {
-                    "opt": "a. USB Flash Drives"
-                },
-                {
-                    "opt": "b. External Hard Drives"
-                },
-                {
-                    "opt": "c. Cloud Storage"
-                },
-                {
-                    "opt": "d. Solid State Drives",
-                    "correct": "true"
-                }
-            ]
+          "opt": "c. =B7+B7*C7",
+          "correct": "true"
         },
         {
-            "Q": "Which one is the processing device?",
-            "options": [
-                {
-                    "opt": "a. Sound Chip",
-                    "correct": "true"
-                },
-                {
-                    "opt": "b. Microphone"
-                },
-                {
-                    "opt": "c. Touch Screen"
-                },
-                {
-                    "opt": "d. Sensor"
-                }
-            ]
-        },
-        {
-            "Q": "Two main parts of CPU are:",
-            "options": [
-                {
-                    "opt": "a. Decoding and Executing Unit"
-                },
-                {
-                    "opt": "b. Arithmetic Logic Unit and Control Unit",
-                    "correct": "true"
-                },
-                {
-                    "opt": "c. ROM and RAM"
-                },
-                {
-                    "opt": "d. Sound Chip and Computing Unit"
-                }
-            ]
-        },
-        {
-            "Q": "CPU read instructions from:",
-            "options": [
-                {
-                    "opt": "a. ROM"
-                },
-                {
-                    "opt": "b. RAM",
-                    "correct": "true"
-                },
-                {
-                    "opt": "c. SSD"
-                },
-                {
-                    "opt": "d. HDD"
-                }
-            ]
-        },
-        {
-            "Q": "CPU read instructions from:",
-            "options": [
-                {
-                    "opt": "a. m/s"
-                },
-                {
-                    "opt": "b. Hz"
-                },
-                {
-                    "opt": "c. GHz",
-                    "correct": "true"
-                },
-                {
-                    "opt": "d. Gbps"
-                }
-            ]
-        },
-        {
-            "Q": "Basic functions of all computers:",
-            "image": "U1_1.png",
-            "options": [
-                {
-                    "opt": "a. 1,2,6,4",
-                    "correct": "true"
-                },
-                {
-                    "opt": "b. 2,6,4,1"
-                },
-                {
-                    "opt": "c. 5,2,3,4"
-                },
-                {
-                    "opt": "d. 5,7,3,6"
-                }
-            ]
-        },
-        {
-            "Q": "Basic steps performed by CPU:",
-            "image": "U1_1.png",
-            "options": [
-                {
-                    "opt": "a. 1,2,6"
-                },
-                {
-                    "opt": "b. 1,3,6"
-                },
-                {
-                    "opt": "c. 5,7,3",
-                    "correct": "true"
-                },
-                {
-                    "opt": "d. 5,7,6"
-                }
-            ]
-        },
-        {
-            "Q": "Which computer is appropriate for students?",
-            "options": [
-                {
-                    "opt": "a. CPU: i7-8550U Processor (8MB Cache, up to 4.0 GHz) | Windows 10 | RAM: 16GB | 256GB SSD",
-                    "correct": "true"
-                },
-                {
-                    "opt": "b. CPU: i7-8700T | supports Windows/ Linux, 8 GB RAM, 256 GB SSD"
-                },
-                {
-                    "opt": "c. CPU: Intel Core i7-9700K| GPU: Nvidia GeForce RTX 2080 Ti | RAM: 32GB | Storage: 480GB M.2 SSD/2TB HDD"
-                },
-                {
-                    "opt": "d. CPU: Intel Xeon W | Graphics: AMD Vega 56 | RAM: 32GB | Storage: 1TB SSD"
-                }
-            ]
-        },
-        {
-            "Q": "Which computer is appropriate for designing?",
-            "options": [
-                {
-                    "opt": "a. CPU: i7-8550U Processor (8MB Cache, up to 4.0 GHz) | Windows 10 | RAM: 16GB | 256GB SSD"
-                },
-                {
-                    "opt": "b. CPU: i7-8700T | supports Windows/ Linux, 8 GB RAM, 256 GB SSD"
-                },
-                {
-                    "opt": "c. CPU: Intel Core i7-9700K| GPU: Nvidia GeForce RTX 2080 Ti | RAM: 32GB | Storage: 480GB M.2 SSD/2TB HDD"
-                },
-                {
-                    "opt": "d. CPU: Intel Xeon W | Graphics: AMD Vega 56 | RAM: 32GB | Storage: 1TB SSD",
-                    "correct": "true"
-                }
-            ]
-        },
-        {
-            "Q": "Which computer is appropriate for small business?",
-            "options": [
-                {
-                    "opt": "a. CPU: i7-8550U Processor (8MB Cache, up to 4.0 GHz) | Windows 10 | RAM: 16GB | 256GB SSD"
-                },
-                {
-                    "opt": "b. CPU: i7-8700T | supports Windows/ Linux, 8 GB RAM, 256 GB SSD",
-                    "correct": "true"
-                },
-                {
-                    "opt": "c. CPU: Intel Core i7-9700K| GPU: Nvidia GeForce RTX 2080 Ti | RAM: 32GB | Storage: 480GB M.2 SSD/2TB HDD"
-                },
-                {
-                    "opt": "d. CPU: Intel Xeon W | Graphics: AMD Vega 56 | RAM: 32GB | Storage: 1TB SSD"
-                }
-            ]
-        },
-        {
-            "Q": "Which computer is appropriate for gaming?",
-            "options": [
-                {
-                    "opt": "a. CPU: i7-8550U Processor (8MB Cache, up to 4.0 GHz) | Windows 10 | RAM: 16GB | 256GB SSD"
-                },
-                {
-                    "opt": "b. CPU: i7-8700T | supports Windows/ Linux, 8 GB RAM, 256 GB SSD"
-                },
-                {
-                    "opt": "c. CPU: Intel Core i7-9700K| GPU: Nvidia GeForce RTX 2080 Ti | RAM: 32GB | Storage: 480GB M.2 SSD/2TB HDD",
-                    "correct": "true"
-                },
-                {
-                    "opt": "d. CPU: Intel Xeon W | Graphics: AMD Vega 56 | RAM: 32GB | Storage: 1TB SSD"
-                }
-            ]
+          "opt": "d. =B7*(B7*C7)"
         }
-    ],
-    "close": "false"
+      ]
+    },
+    {
+      "Q": "There are 4 missing parts to the formula below. The completed formula needs to display the words On Target if the total revenue (in cell G8) is $6,000 or over, or display Below Target if it's not. <br>= [  ] ( [  ] , [  ] , [  ] )",
+      "multioptions": [
+        {
+          "opt": "a. IF, G8<6000, \"Below Target\", \"On Target\"",
+          "correct": "true"
+        },
+        {
+          "opt": "b. IF, G8<6000, \"On Target\", \"Below Target\""
+        },
+        {
+          "opt": "c. IF, G8>=6000, \"On Target\", \"Below Target\"",
+          "correct": "true"
+        },
+        {
+          "opt": "d. IF, G8>6000, \"On Target\", \"Below Target\""
+        }
+      ]
+    },
+    {
+      "Q": "What is the difference between a VLOOKUP and an HLOOKUP function? Choose all that apply.",
+      "multioptions": [
+        {
+          "opt": "a. One looks for a value in the leftmost column of a table and the other in the top row of a table",
+          "correct": "true"
+        },
+        {
+          "opt": "b. One requires that the first column or row in the table is sorted, and the other doesn't."
+        },
+        {
+          "opt": "c. One requires the lookup value to be an absolute reference and the other doesn't."
+        },
+        {
+          "opt": "d. One searches for values that are set up in columns and the other searches by row.",
+          "correct": "true"
+        }
+      ]
+    },
+    {
+      "Q": "Refer to the following screenshot. This displays invoice amounts expected from customers for January. If the invoice amount expected in January is more than $500, the customer receives a 15% discount. What is the correct formula to be entered in C3 (and filled down to C7)?",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "",
+            "January Income",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "Customer",
+            "Invoice Amount",
+            "Amount to Pay"
+          ],
+          [
+            "<b>3</b>",
+            "Rehan Salazar",
+            "$357",
+            ""
+          ],
+          [
+            "<b>4</b>",
+            "Keane Palmer",
+            "$989",
+            ""
+          ],
+          [
+            "<b>5</b>",
+            "Ted Nicholson",
+            "$1,502",
+            ""
+          ],
+          [
+            "<b>6</b>",
+            "Diego Burns",
+            "$650",
+            ""
+          ],
+          [
+            "<b>7</b>",
+            "Dominik Larsen",
+            "$289",
+            ""
+          ],
+          [
+            "<b>8</b>",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>9</b>",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>10</b>",
+            "Discount",
+            "15%",
+            ""
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. =IF(B3:B7>500, B3*$B$10,B3)"
+        },
+        {
+          "opt": "b. =IF(B3>500,B3-B3*$B10,B3)"
+        },
+        {
+          "opt": "c. =IF(B3<500, B3+B3*15%,B3)"
+        },
+        {
+          "opt": "d. =IF(B3>500,B3-B3*$B$10,B3)",
+          "correct": "true"
+        }
+      ]
+    },
+    {
+      "Q": "What charts show percentages/proportions of data within a whole category?",
+      "multioptions": [
+        {
+          "opt": "a. 3d column"
+        },
+        {
+          "opt": "b. bar"
+        },
+        {
+          "opt": "c. scatter"
+        },
+        {
+          "opt": "d. pie",
+          "correct": "true"
+        },
+        {
+          "opt": "e. line"
+        }
+      ]
+    },
+    {
+      "Q": "Lee has created the following chart, and has realised that the amounts should be shown in order from smallest to largest. Lee should:<br><pre>\n         Cups of Coffee Sold per Day\n700 +-------------------------------------------+\n    |                                           |\n550 |  ███                              ███     |\n    |  ███                              ███     |\n500 |  ███                              ███ ███ |\n    |  ███                              ███ ███ |\n300 |  ███   ███                        ███ ███ |\n    |  ███   ███                        ███ ███ |\n250 |  ███   ███   ███   ███            ███ ███ |\n    |  ███   ███   ███   ███            ███ ███ |\n150 |  ███   ███   ███   ███   ███      ███ ███ |\n  0 +-------------------------------------------+\n     Mon   Tue   Wed   Thu   Fri   Sat   Sun\n</pre>",
+      "options": [
+        {
+          "opt": "a. Sort the data on the spreadsheet.",
+          "correct": "true"
+        },
+        {
+          "opt": "b. Sort the data on the chart - the data on the spreadsheet will automatically be sorted."
+        },
+        {
+          "opt": "c. Create a different type of chart."
+        },
+        {
+          "opt": "d. Delete the chart, then sort the data on the spreadsheet and create the chart again."
+        }
+      ]
+    },
+    {
+      "Q": "When you fill a formula down, it will",
+      "options": [
+        {
+          "opt": "a. change all relative references to absolute references."
+        },
+        {
+          "opt": "b. check that the formula is correctly constructed."
+        },
+        {
+          "opt": "c. update relative cell references in the formula to reflect their new location.",
+          "correct": "true"
+        },
+        {
+          "opt": "d. change all absolute references to relative references."
+        }
+      ]
+    },
+    {
+      "Q": "Consider the spreadsheet shown above. If cell D2 contained the following formula:<br>=IF(C2=\"\",\"\",B2*C2)<br>What value would be displayed in cell D2?",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "Product",
+            "Price",
+            "Quantity",
+            "Total"
+          ],
+          [
+            "<b>2</b>",
+            "Chocolate",
+            "3",
+            "10",
+            ""
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. \"\""
+        },
+        {
+          "opt": "b. Chocolate"
+        },
+        {
+          "opt": "c. B2*C2"
+        },
+        {
+          "opt": "d. 30",
+          "correct": "true"
+        }
+      ]
+    },
+    {
+      "Q": "What list will result from choosing the following options in the Fill Series dialogue box?",
+      "table": {
+        "headers": [
+          "Setting",
+          "Value"
+        ],
+        "rows": [
+          [
+            "Series in",
+            "Columns"
+          ],
+          [
+            "Type",
+            "Date"
+          ],
+          [
+            "Date unit",
+            "Weekday"
+          ],
+          [
+            "Step value",
+            "1"
+          ],
+          [
+            "Stop value",
+            "10/5/23"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. <br>Monday, 1 May 2023<br>Tuesday, 2 May 2023<br>Wednesday, 3 May 2023<br>Thursday, 4 May 2023<br>Friday, 5 May 2023<br>Monday, 8 May 2023<br>Tuesday, 9 May 2023<br>Wednesday, 10 May 2023",
+          "correct": "true"
+        },
+        {
+          "opt": "b. <br>Monday, 1 May 2023<br>Tuesday, 2 May 2023<br>Wednesday, 3 May 2023<br>Thursday, 4 May 2023<br>Friday, 5 May 2023<br>Saturday, 6 May 2023<br>Sunday, 7 May 2023<br>Monday, 8 May 2023<br>Tuesday, 9 May 2023<br>Wednesday, 10 May 2023"
+        }
+      ]
+    },
+    {
+      "Q": "To create a chart such as the one shown, you should:<br><pre>\n       Value of Footwear Sales\n\n     Boots | █████████████████████████ | $4,750\n\n   Sandals | ████████████████          | $3,139\n\n  Sneakers | ███████████████           | $2,969\n\n</pre>",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B"
+        ],
+        "rows": [
+          [
+            "<b> </b>",
+            "<b>Type</b>",
+            "<b>Value</b>"
+          ],
+          [
+            "<b> </b>",
+            "Pumps",
+            "$1,662.70"
+          ],
+          [
+            "<b> </b>",
+            "Heels",
+            "$1,329.60"
+          ],
+          [
+            "<b> </b>",
+            "Sandals",
+            "$3,139.30"
+          ],
+          [
+            "<b> </b>",
+            "Sneakers",
+            "$2,969.50"
+          ],
+          [
+            "<b> </b>",
+            "Slippers",
+            "$3,639.30"
+          ],
+          [
+            "<b> </b>",
+            "Boots",
+            "$4,750.30"
+          ],
+          [
+            "<b> </b>",
+            "Ballet Flats",
+            "$2,860.30"
+          ],
+          [
+            "<b> </b>",
+            "<b>Total</b>",
+            "<b>$20,351.00</b>"
+          ]
+        ]
+      },
+      "multioptions": [
+        {
+          "opt": "a. Use the Control key (Windows) or Command key (Mac) to select only the data required.",
+          "correct": "true"
+        },
+        {
+          "opt": "b. Select all of the data, then delete the columns on the chart that you don't want."
+        },
+        {
+          "opt": "c. Filter the data to show only the categories that you want.",
+          "correct": "true"
+        },
+        {
+          "opt": "d. Use the Shift key to select the data required."
+        }
+      ]
+    },
+    {
+      "Q": "To make sure headings are not sorted with a range of cells you wish to sort, you should",
+      "multioptions": [
+        {
+          "opt": "a. Include the headings in the data you select, and check the 'My Data has Headers' checkbox in the sort dialogue box",
+          "correct": "true"
+        },
+        {
+          "opt": "b. Only right click to sort data."
+        },
+        {
+          "opt": "c. Select the data but not the headings and uncheck the 'My Data has Headers' check box in the sort dialogue box",
+          "correct": "true"
+        },
+        {
+          "opt": "d. Only use the sort tool in the home ribbon to sort data"
+        }
+      ]
+    },
+    {
+      "Q": "Flash fill can combine data from several columns, where there is a consistent pattern",
+      "options": [
+        {
+          "opt": "True",
+          "correct": "true"
+        },
+        {
+          "opt": "False"
+        }
+      ]
+    },
+    {
+      "Q": "An advantage of using cell references in formulas is that",
+      "options": [
+        {
+          "opt": "a. it allows other people to update the formulas."
+        },
+        {
+          "opt": "b. if values in the calculated cells are changed, the values calculated by the formula automatically updates.",
+          "correct": "true"
+        },
+        {
+          "opt": "c. the values are automatically formatted."
+        },
+        {
+          "opt": "d. the data in the spreadsheet is ordered correctly"
+        }
+      ]
+    },
+    {
+      "Q": "The following screen shot displays students' Computing Marks for Term 1. We need to establish what comment each student below is to receive. Students who achieve an average less than 50 of their Term 1 marks receive a Fail comment. 50 or more receive Excellent comment. Which of the following formulas are correct?",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "",
+            "Computing Marks Term 1",
+            "",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "Student Name",
+            "Quiz",
+            "Practical",
+            "Comment"
+          ],
+          [
+            "<b>3</b>",
+            "Melissa Lam",
+            "85",
+            "68",
+            ""
+          ],
+          [
+            "<b>4</b>",
+            "Alisa Ngyuen",
+            "68",
+            "98",
+            ""
+          ],
+          [
+            "<b>5</b>",
+            "An Phoel",
+            "43",
+            "24",
+            ""
+          ],
+          [
+            "<b>6</b>",
+            "Will Lee",
+            "58",
+            "50",
+            ""
+          ],
+          [
+            "<b>7</b>",
+            "George Toulous",
+            "97",
+            "100",
+            ""
+          ]
+        ]
+      },
+      "multioptions": [
+        {
+          "opt": "a. =IF(AVERAGE(A3:C3)<50,\"Fail\",\"Excellent\")"
+        },
+        {
+          "opt": "b. =IF(SUM(B3:C3)/COUNT(B3:C3)>=50,\"Excellent\",\"Fail\")",
+          "correct": "true"
+        },
+        {
+          "opt": "c. =IF(AVERAGE(B3:C3)<50,\"Fail\",\"Excellent\")",
+          "correct": "true"
+        },
+        {
+          "opt": "d. =IF(SUM(B3:C3)/COUNT(B3:C3)>50,\"Excellent\",\"Fail\")"
+        }
+      ]
+    },
+    {
+      "Q": "What formatting features have been applied?",
+      "image": "action.png",
+      "multioptions": [
+        {
+          "opt": "a. Vertical Middle Alignment",
+          "correct": "true"
+        },
+        {
+          "opt": "b. Fill / shading",
+          "correct": "true"
+        },
+        {
+          "opt": "c. Merge & Centre",
+          "correct": "true"
+        },
+        {
+          "opt": "d. Border",
+          "correct": "true"
+        }
+      ]
+    },
+    {
+      "Q": "The purpose of the button shown below is to:<br><pre>┌───┐\n│ fx│\n└───┘</pre>",
+      "options": [
+        {
+          "opt": "a. show all of the cells which contain functions."
+        },
+        {
+          "opt": "b. check all of the calculations in your spreadsheet."
+        },
+        {
+          "opt": "c. open the function arguments box or formula builder pane.",
+          "correct": "true"
+        },
+        {
+          "opt": "d. automatically recalculate a formula."
+        }
+      ]
+    },
+    {
+      "Q": "If a second level custom sort was performed as shown in the screen shot below, what would be the result of this sort? Choose the correct one.",
+      "table": {
+        "headers": [
+          "Column",
+          "Sort On",
+          "Order"
+        ],
+        "rows": [
+          [
+            "Sort by Column C",
+            "Cell Values",
+            "A to Z"
+          ],
+          [
+            "Then by Column B",
+            "Cell Values",
+            "Z to A"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. <pre>| A         | B       | C           |\n|-----------|---------|-------------|\n| First Name| Surname | Suburb      |\n| Lenny     | Nguyen  | Hunters Hill|\n| Amy       | Jones   | Hunters Hill|\n| John      | Nguyen  | Randwick    |\n| Alana     | Jones   | Randwick    |\n| Con       | Nguyen  | Turramurra  |\n| Nelly     | Jones   | Zetland     |</pre>",
+          "correct": "true"
+        },
+        {
+          "opt": "b. <pre>| A         | B       | C           |\n|-----------|---------|-------------|\n| First Name| Surname | Suburb      |\n| Nelly     | Jones   | Zetland     |\n| Con       | Nguyen  | Turramurra  |\n| John      | Nguyen  | Randwick    |\n| Alana     | Jones   | Randwick    |\n| Lenny     | Nguyen  | Hunters Hill|\n| Amy       | Jones   | Hunters Hill|</pre>"
+        },
+        {
+          "opt": "c. <pre>| A         | B       | C           |\n|-----------|---------|-------------|\n| First Name| Surname | Suburb      |\n| Nelly     | Jones   | Zetland     |\n| Con       | Nguyen  | Turramurra  |\n| John      | Nguyen  | Randwick    |\n| Alana     | Jones   | Randwick    |\n| Amy       | Jones   | Hunters Hill|\n| Lenny     | Nguyen  | Hunters Hill|</pre>"
+        },
+        {
+          "opt": "d. <pre>| A         | B       | C           |\n|-----------|---------|-------------|\n| First Name| Surname | Suburb      |\n| Amy       | Jones   | Hunters Hill|\n| Lenny     | Nguyen  | Hunters Hill|\n| Alana     | Jones   | Randwick    |\n| John      | Nguyen  | Randwick    |\n| Con       | Nguyen  | Turramurra  |\n| Nelly     | Jones   | Zetland     |</pre>"
+        }
+      ]
+    },
+    {
+      "Q": "If you click and drag the solid square at the bottom right of the active cell marker, you can<br><pre>┌─────────┐\n│         │\n│         │\n└─────────■\n</pre>",
+      "options": [
+        {
+          "opt": "a. move the cell"
+        },
+        {
+          "opt": "b. make the cell larger."
+        },
+        {
+          "opt": "c. fill a series, such as days of the week, into other cells.",
+          "correct": "true"
+        },
+        {
+          "opt": "d. change all absolute cell references to relative cell references"
+        }
+      ]
+    },
+    {
+      "Q": "Refer to the screenshot below. The result in B6 could have been achieved by using which one of the following functions:",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "<b>EXAM RESULTS</b>",
+            "<b>%</b>"
+          ],
+          [
+            "<b>2</b>",
+            "Tran",
+            "70"
+          ],
+          [
+            "<b>3</b>",
+            "Korford",
+            "85"
+          ],
+          [
+            "<b>4</b>",
+            "Nguyen",
+            "80"
+          ],
+          [
+            "<b>5</b>",
+            "Jens",
+            "65"
+          ],
+          [
+            "<b>6</b>",
+            "Average",
+            "75"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. =AVERAGE(B2:B6)"
+        },
+        {
+          "opt": "b. =AVERAGE(B1:B6)"
+        },
+        {
+          "opt": "c. =AVERAGE(B1:B5)"
+        },
+        {
+          "opt": "d. =AVERAGE(B2:B5)",
+          "correct": "true"
+        }
+      ]
+    },
+    {
+      "Q": "The following screenshot displays the 2023 Sales for a business. What formula is needed in B10 to display the Highest sale amount for 2023?",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "",
+            "2023 Sales",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "",
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+          ],
+          [
+            "<b>3</b>",
+            "Clothing",
+            "$183,269",
+            "$677,275",
+            "$87,616",
+            "$465,321",
+            "$154,240",
+            "$745,263",
+            "$724,483",
+            "$649,649",
+            "$732,594",
+            "$501,398",
+            "$865,679",
+            "$95,764"
+          ],
+          [
+            "<b>4</b>",
+            "Handbags",
+            "$256,178",
+            "$856,148",
+            "$249,461",
+            "$662,340",
+            "$510,071",
+            "$620,498",
+            "$374,558",
+            "$213,264",
+            "$503,107",
+            "$554,307",
+            "$872,498",
+            "$507,770"
+          ],
+          [
+            "<b>5</b>",
+            "Shoes",
+            "$357,767",
+            "$871,829",
+            "$495,606",
+            "$838,143",
+            "$21,038",
+            "$150,041",
+            "$679,603",
+            "$16,933",
+            "$45,420",
+            "$734,912",
+            "$660,954",
+            "$254,072"
+          ],
+          [
+            "<b>6</b>",
+            "Jewelry",
+            "$753,324",
+            "$736,079",
+            "$259,256",
+            "$327,767",
+            "$814,332",
+            "$774,969",
+            "$849,513",
+            "$409,662",
+            "$680,368",
+            "$349,375",
+            "$432,663",
+            "$289,132"
+          ],
+          [
+            "<b>7</b>",
+            "Homeware",
+            "$543,441",
+            "$729,203",
+            "$168,255",
+            "$373,082",
+            "$183,086",
+            "$31,550",
+            "$232,912",
+            "$60,456",
+            "$845,859",
+            "$771,496",
+            "$404,291",
+            "$459,416"
+          ],
+          [
+            "<b>8</b>",
+            "Kitchenware",
+            "$202,938",
+            "$317,878",
+            "$523,248",
+            "$234,515",
+            "$748,713",
+            "$420,671",
+            "$261,535",
+            "$837,324",
+            "$508,928",
+            "$694,793",
+            "$646,368",
+            "$134,871"
+          ],
+          [
+            "<b>9</b>",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>10</b>",
+            "Highest Sale:",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. =MAX(B3:M8)",
+          "correct": "true"
+        },
+        {
+          "opt": "b. =MAX(K3:M8)"
+        },
+        {
+          "opt": "c. =MAX(G3:M8)"
+        },
+        {
+          "opt": "d. =MAX(B3:D8)"
+        }
+      ]
+    },
+    {
+      "Q": "What is the best chart to use to show a comparison of data when there are many categories and/or the category labels are long?",
+      "options": [
+        {
+          "opt": "a. a bar chart",
+          "correct": "true"
+        },
+        {
+          "opt": "b. a pie chart"
+        },
+        {
+          "opt": "c. a column chart"
+        },
+        {
+          "opt": "d. an area chart"
+        }
+      ]
+    },
+    {
+      "Q": "Which of the following are valid formulas / functions in Excel? Select all that apply.",
+      "multioptions": [
+        {
+          "opt": "a. =SUM(B2:B8-D2:D4)"
+        },
+        {
+          "opt": "b. =AVERAGE(B2:G4)",
+          "correct": "true"
+        },
+        {
+          "opt": "c. =AVERAGE(B2:C2;D4:G4)"
+        },
+        {
+          "opt": "d. =SUM(B2:D8)",
+          "correct": "true"
+        }
+      ]
+    },
+    {
+      "Q": "To find the price for the product specified in Cell A11 (Kombucha in the example above), what formula would you type into the highlighted cell (B11)?",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "Name",
+            "Product ID",
+            "Price"
+          ],
+          [
+            "<b>2</b>",
+            "Almonds",
+            "P321",
+            "6"
+          ],
+          [
+            "<b>3</b>",
+            "Cheese",
+            "P412",
+            "8"
+          ],
+          [
+            "<b>4</b>",
+            "Coffee",
+            "P003",
+            "12"
+          ],
+          [
+            "<b>5</b>",
+            "Kombucha",
+            "P283",
+            "5"
+          ],
+          [
+            "<b>6</b>",
+            "Milk",
+            "P123",
+            "6"
+          ],
+          [
+            "<b>7</b>",
+            "Sesame Snaps",
+            "P111",
+            "4"
+          ],
+          [
+            "<b>8</b>",
+            "Tea",
+            "P923",
+            "3"
+          ],
+          [
+            "<b>9</b>",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>10</b>",
+            "Product",
+            "Product Price",
+            ""
+          ],
+          [
+            "<b>11</b>",
+            "Kombucha",
+            "[  ]",
+            ""
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. =HLOOKUP(A11,A2:C8,5)"
+        },
+        {
+          "opt": "b. =HLOOKUP(A11,A2:B8,3)"
+        },
+        {
+          "opt": "c. =VLOOKUP(A11,A2:C8,2)"
+        },
+        {
+          "opt": "d. =VLOOKUP(A11,A2:C8,3)",
+          "correct": "true"
+        },
+        {
+          "opt": "e. =VLOOKUP(A11,A2:B8,3)"
+        }
+      ]
+    },
+    {
+      "Q": "Use the COUNT function to:",
+      "options": [
+        {
+          "opt": "a. count the number of cells in a range that contain numbers.",
+          "correct": "true"
+        },
+        {
+          "opt": "b. count the number of cells in a range that are empty."
+        },
+        {
+          "opt": "c. count the number of cells in a range that are not empty."
+        },
+        {
+          "opt": "d. add the values in a range."
+        }
+      ]
+    },
+    {
+      "Q": "What is the best chart to use when you want to show trends over time?",
+      "multioptions": [
+        {
+          "opt": "a. bar chart"
+        },
+        {
+          "opt": "b. pie chart"
+        },
+        {
+          "opt": "c. column chart"
+        },
+        {
+          "opt": "d. line chart",
+          "correct": "true"
+        }
+      ]
+    },
+    {
+      "Q": "Some products have been discounted by 10% at my local supermarket. Refer to the screenshot, which shows the name of the product and the usual retail price before discount. Which of the following formulas can be entered in cell C2 that will give the correct discounted price for each item when copied (filled) to cell C5?",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "",
+            "Retail Price",
+            "Discounted Price (10%)"
+          ],
+          [
+            "<b>2</b>",
+            "Vegemite",
+            "$4.70",
+            "$4.23"
+          ],
+          [
+            "<b>3</b>",
+            "Peanut Butter",
+            "$4.00",
+            "$3.60"
+          ],
+          [
+            "<b>4</b>",
+            "Marmalade",
+            "$3.00",
+            "$2.70"
+          ],
+          [
+            "<b>5</b>",
+            "Honey",
+            "$8.00",
+            "$7.20"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. =B2-B2*10%",
+          "correct": "true"
+        },
+        {
+          "opt": "b. =B2-B2*$C$1"
+        },
+        {
+          "opt": "c. =B2*10%-B2"
+        },
+        {
+          "opt": "d. =B2-10%"
+        }
+      ]
+    },
+    {
+      "Q": "Which of the following formulas, entered in C4 and copied down, would give a correct result in Column C – Total Cost?",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "",
+            "Bookings",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>3</b>",
+            "Room Type",
+            "Number of Nights",
+            "Total Cost",
+            "",
+            ""
+          ],
+          [
+            "<b>4</b>",
+            "Deluxe",
+            "4",
+            "$980",
+            "",
+            ""
+          ],
+          [
+            "<b>5</b>",
+            "Family",
+            "5",
+            "$2,200",
+            "",
+            ""
+          ],
+          [
+            "<b>6</b>",
+            "Single",
+            "3",
+            "$585",
+            "",
+            ""
+          ],
+          [
+            "<b>7</b>",
+            "Executive",
+            "6",
+            "$1,920",
+            "",
+            ""
+          ],
+          [
+            "<b>8</b>",
+            "Executive",
+            "3",
+            "$960",
+            "",
+            ""
+          ],
+          [
+            "<b>9</b>",
+            "Family",
+            "8",
+            "$3,520",
+            "",
+            ""
+          ],
+          [
+            "<b>10</b>",
+            "Deluxe",
+            "2",
+            "$490",
+            "",
+            ""
+          ],
+          [
+            "<b>11</b>",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>12</b>",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>13</b>",
+            "Room Type",
+            "Deluxe",
+            "Executive",
+            "Family",
+            "Single"
+          ],
+          [
+            "<b>14</b>",
+            "Cost per Night",
+            "$245.00",
+            "$320.00",
+            "$440.00",
+            "$195.00"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. =HLOOKUP(A4,$B$13:$E$14,2)*B4",
+          "correct": "true"
+        },
+        {
+          "opt": "b. =VLOOKUP(A4,$B$13:$E$14,2)*B4"
+        },
+        {
+          "opt": "c. B4*HLOOKUP(A4,$B$13:$E$14,2)"
+        },
+        {
+          "opt": "d. =HLOOKUP(A4,$B$13:$E$14,1)"
+        }
+      ]
+    },
+    {
+      "Q": "On the Excel interface, the name box shows the:",
+      "options": [
+        {
+          "opt": "a. name of the worksheet."
+        },
+        {
+          "opt": "b. name of the spreadsheet file."
+        },
+        {
+          "opt": "c. cell reference or name of the active (selected) cell.",
+          "correct": "true"
+        },
+        {
+          "opt": "d. title of the spreadsheet data table."
+        }
+      ]
+    },
+    {
+      "Q": "What range will produce the following chart?<br><pre>\n       Saturday Ticket Sales\n\n     500 +--------------------------------+\n         |                          █     |\n     400 +    █                    █ █     |\n         |    █              █     █ █     |\n     300 +  █ █              █     █ █     |\n         |  █ █ █            █ █   █ █     |\n     200 +  █ █ █          █ █ █   █ █     |\n         |  █ █ █ █        █ █ █   █ █     |\n     100 +  █ █ █ █ █      █ █ █   █ █ █   |\n         |  █ █ █ █ █      █ █ █   █ █ █   |\n       0 +--------------------------------+\n            F.F   M.W.  B.R   Jub.  D.W.\n\n    Legend: Morning (█) Afternoon (█) Evening (█)\n</pre>",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "",
+            "Saturday Ticket Sales",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "Movie",
+            "Morning",
+            "Afternoon",
+            "Evening",
+            "Total"
+          ],
+          [
+            "<b>3</b>",
+            "Forest Friends",
+            "248",
+            "437",
+            "77",
+            "762"
+          ],
+          [
+            "<b>4</b>",
+            "Moon Walkers",
+            "186",
+            "191",
+            "111",
+            "488"
+          ],
+          [
+            "<b>5</b>",
+            "Born to Run",
+            "472",
+            "320",
+            "428",
+            "1,220"
+          ],
+          [
+            "<b>6</b>",
+            "Jubilee",
+            "311",
+            "127",
+            "78",
+            "516"
+          ],
+          [
+            "<b>7</b>",
+            "Driving Wheels",
+            "180",
+            "233",
+            "239",
+            "652"
+          ],
+          [
+            "<b>8</b>",
+            "Total",
+            "1,397",
+            "1,308",
+            "933",
+            "3,638"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. A2:D7",
+          "correct": "true"
+        },
+        {
+          "opt": "b. A2:A7, E2:E7"
+        },
+        {
+          "opt": "c. A2:D2, A8:D8"
+        },
+        {
+          "opt": "d. A1:D7"
+        }
+      ]
+    },
+    {
+      "Q": "Select all of the formulas that could be used to calculate the Total Cost of each pizza type in Column F. Choose carefully! If you include an incorrect answer, you will receive no marks for this question.",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "",
+            "",
+            "Nina's Pizza Place",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>3</b>",
+            "Pizza Type",
+            "Extras",
+            "Price",
+            "Extra Cost",
+            "Number Ordered",
+            "Total Cost"
+          ],
+          [
+            "<b>4</b>",
+            "Margarita",
+            "Cheese",
+            "$20.50",
+            "$6.00",
+            "3",
+            "$79.50"
+          ],
+          [
+            "<b>5</b>",
+            "Supreme",
+            "Pineapple",
+            "$29.50",
+            "$3.50",
+            "1",
+            "$33.00"
+          ],
+          [
+            "<b>6</b>",
+            "Pepperoni",
+            "Mushrooms",
+            "$23.75",
+            "$4.00",
+            "2",
+            "$55.50"
+          ],
+          [
+            "<b>7</b>",
+            "Hawaiian",
+            "",
+            "$25.00",
+            "$0.00",
+            "3",
+            "$75.00"
+          ],
+          [
+            "<b>8</b>",
+            "Vegetarian",
+            "Chilli",
+            "$22.40",
+            "$2.80",
+            "4",
+            "$100.80"
+          ],
+          [
+            "<b>9</b>",
+            "Total",
+            "",
+            "$121.15",
+            "$16.30",
+            "13",
+            "$343.80"
+          ],
+          [
+            "<b>10</b>",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>11</b>",
+            "Pizzas with Extras",
+            "4",
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "multioptions": [
+        {
+          "opt": "a. =SUM(C4:D4)*E4",
+          "correct": "true"
+        },
+        {
+          "opt": "b. =(C4+D4)*E4",
+          "correct": "true"
+        },
+        {
+          "opt": "c. =C4*D4+E4"
+        },
+        {
+          "opt": "d. =E4*C4+D4"
+        }
+      ]
+    },
+    {
+      "Q": "Autofill provides options to allow you to fill cell formatting without the content.",
+      "options": [
+        {
+          "opt": "True",
+          "correct": "true"
+        },
+        {
+          "opt": "False"
+        }
+      ]
+    },
+    {
+      "Q": "What range will produce the following chart?",
+      "image": "icecream.png",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "Ice Cream Sales",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>3</b>",
+            "Ice Cream Type",
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thu",
+            "Fri",
+            "Sat",
+            "Sun",
+            "Weekly Total"
+          ],
+          [
+            "<b>4</b>",
+            "Super Pop",
+            "44",
+            "39",
+            "13",
+            "50",
+            "43",
+            "39",
+            "46",
+            "274"
+          ],
+          [
+            "<b>5</b>",
+            "Giant Cone",
+            "18",
+            "16",
+            "37",
+            "25",
+            "28",
+            "27",
+            "11",
+            "162"
+          ],
+          [
+            "<b>6</b>",
+            "Squishy",
+            "23",
+            "17",
+            "17",
+            "23",
+            "38",
+            "41",
+            "22",
+            "181"
+          ],
+          [
+            "<b>7</b>",
+            "Fruity Ice",
+            "41",
+            "43",
+            "49",
+            "14",
+            "26",
+            "30",
+            "46",
+            "246"
+          ],
+          [
+            "<b>8</b>",
+            "Choco Delight",
+            "13",
+            "31",
+            "31",
+            "11",
+            "30",
+            "46",
+            "27",
+            "189"
+          ],
+          [
+            "<b>9</b>",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>10</b>",
+            "Daily Average",
+            "28",
+            "29",
+            "29",
+            "30",
+            "31",
+            "36",
+            "27",
+            "210"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. A3,G3:H3,A5,G5:H5, A6, G6:H6",
+          "correct": "true"
+        },
+        {
+          "opt": "b. A3:A6,G3:H6"
+        },
+        {
+          "opt": "c. A5,G5:H5,A6,G6:H6"
+        },
+        {
+          "opt": "d. G3:H3,A5:A6,G5:H6"
+        }
+      ]
+    },
+    {
+      "Q": "The screenshot shows a Train Trip Calculator. When a Destination is typed into B1, and the Number of Passengers is typed into B2, a formula in B3 will calculate the cost of a return trip (ie from Sydney to the destination, then from the destination back to Sydney). Refer to the table in the screenshot for the cost of a one-way ticket to the relevant destinations. Which of the following formulas can be used in B3 to calculate the correct cost of the return trip?",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "Destination",
+            "Goulburn",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "Number of Passengers",
+            "3",
+            ""
+          ],
+          [
+            "<b>3</b>",
+            "Total Trip Cost Return",
+            "$360",
+            ""
+          ],
+          [
+            "<b>4</b>",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>5</b>",
+            "Destination",
+            "Duration (Hours)",
+            "Cost Person One-Way"
+          ],
+          [
+            "<b>6</b>",
+            "Albury",
+            "8",
+            "$100"
+          ],
+          [
+            "<b>7</b>",
+            "Canberra",
+            "5",
+            "$80"
+          ],
+          [
+            "<b>8</b>",
+            "Goulburn",
+            "2",
+            "$60"
+          ],
+          [
+            "<b>9</b>",
+            "Wagga Wagga",
+            "6",
+            "$90"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. =VLOOKUP(B1,A6:C9,3)*2*B2",
+          "correct": "true"
+        },
+        {
+          "opt": "b. =VLOOKUP(B2,A5:C9,2)*B2*2"
+        },
+        {
+          "opt": "c. =HLOOKUP(B1,A6:A9,C6:C9)*3*2"
+        },
+        {
+          "opt": "d. =VLOOKUP(A6:C9,B1,2)*3"
+        }
+      ]
+    },
+    {
+      "Q": "Which of the following formulas will correctly calculate the Member Discount in G54? Choose all that are correct.",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H"
+        ],
+        "rows": [
+          [
+            "<b>51</b>",
+            "",
+            "",
+            "",
+            "Boat Hire",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>52</b>",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>53</b>",
+            "Customer",
+            "Member?",
+            "Vessel",
+            "Hourly Rate",
+            "Hours Hired",
+            "Total",
+            "Member Discount",
+            "Total Minus Discount"
+          ],
+          [
+            "<b>54</b>",
+            "Lee",
+            "No",
+            "Row Boat",
+            "$45.00",
+            "4",
+            "$180.00",
+            "$0.00",
+            "$180.00"
+          ],
+          [
+            "<b>55</b>",
+            "Bell",
+            "Yes",
+            "Canoe",
+            "$35.00",
+            "3.5",
+            "$122.50",
+            "$12.25",
+            "$110.25"
+          ],
+          [
+            "<b>56</b>",
+            "Caro",
+            "Yes",
+            "Kayak",
+            "$32.00",
+            "7",
+            "$224.00",
+            "$20.16",
+            "$203.84"
+          ],
+          [
+            "<b>57</b>",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>58</b>",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>59</b>",
+            "",
+            "Vessel",
+            "Canoe",
+            "Kayak",
+            "Row Boat",
+            "Sail Boat",
+            ""
+          ],
+          [
+            "<b>60</b>",
+            "",
+            "Hourly Rate",
+            "$35.00",
+            "$32.00",
+            "$45.00",
+            "$76.00",
+            ""
+          ],
+          [
+            "<b>61</b>",
+            "",
+            "Member Discount",
+            "10%",
+            "9.00%",
+            "11%",
+            "8.00%",
+            ""
+          ]
+        ]
+      },
+      "multioptions": [
+        {
+          "opt": "a. =IF(B54=\"Yes\",HLOOKUP(C54,$B$59:$E$61,3)*F54,0)",
+          "correct": "true"
+        },
+        {
+          "opt": "b. =IF(B54=\"No\",0,HLOOKUP(C54,$B$59:$E$61,3)*F54)",
+          "correct": "true"
+        },
+        {
+          "opt": "c. =IF(B54=\"Yes\",VLOOKUP(C54,$B$59:$E$61,3)*F54,0)"
+        },
+        {
+          "opt": "d. =HLOOKUP, if(B54=\"Yes\",(C54,$B$59:$E$61,3)*F54,0)"
+        }
+      ]
+    },
+    {
+      "Q": "The spreadsheet shows house sales on Easy Street that occurred in the second half of the year. For houses sold in August, the agent's fee for selling the house (a percentage of the amount the house sold for) was different to other months. Which of the following formulas would be used in D8 and copied down?<br>Choose carefully! If you include an incorrect response, you will receive no marks for this question.",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "2nd Half of Year House Sales - Easy Street",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "Agent Fee",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>3</b>",
+            "Month Sold",
+            "% of House Price",
+            "",
+            ""
+          ],
+          [
+            "<b>4</b>",
+            "August",
+            "12.50%",
+            "",
+            ""
+          ],
+          [
+            "<b>5</b>",
+            "All others",
+            "13.25%",
+            "",
+            ""
+          ],
+          [
+            "<b>6</b>",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>7</b>",
+            "House Number",
+            "Month Sold",
+            "Sold for",
+            "Amount to Owner Less Agent Fee"
+          ],
+          [
+            "<b>8</b>",
+            "6",
+            "August",
+            "$1,100,148",
+            "$962,629.50"
+          ],
+          [
+            "<b>9</b>",
+            "14",
+            "July",
+            "$1,104,680",
+            "$958,309.90"
+          ],
+          [
+            "<b>10</b>",
+            "16B",
+            "September",
+            "$1,300,225",
+            "$1,127,945.19"
+          ],
+          [
+            "<b>11</b>",
+            "18",
+            "August",
+            "$744,007",
+            "$651,006.13"
+          ],
+          [
+            "<b>12</b>",
+            "19A",
+            "June",
+            "$838,868",
+            "$727,717.99"
+          ],
+          [
+            "<b>13</b>",
+            "24",
+            "October",
+            "$781,272",
+            "$677,753.46"
+          ]
+        ]
+      },
+      "multioptions": [
+        {
+          "opt": "a. =IF(B8<>$A$4,C8-(C8*$B$5),C8-(C8*$B$4))",
+          "correct": "true"
+        },
+        {
+          "opt": "b. =IF(B8=$A$4,C8-(C8*$B$4),C8-(C8*$B$5))",
+          "correct": "true"
+        },
+        {
+          "opt": "c. =IF(B8<>$A$5,C8-(C8*$B$4),C8-(C8*$B$5))"
+        },
+        {
+          "opt": "d. =IF(B8=$A$5,C8-(C8*$B$5),C8-(C8*$B$4))"
+        }
+      ]
+    },
+    {
+      "Q": "A formula in B3 displays Bus Route Numbers from the table provided, based on the destination entered in B2. The destination can be changed at any time, and the formula will always show the correct bus route number.<br>Choose the answer that correctly fills in the missing parts to the formula below, as indicated by the yellow boxes.<br>= HLOOKUP ( [ ], [ ], [ ] )",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "BUS ROUTES FROM KOGARAH",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "Destination",
+            "Hurstville",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>3</b>",
+            "Bus Number",
+            "947",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>4</b>",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>5</b>",
+            "Location",
+            "Dolls Point",
+            "Hurstville",
+            "Miranda",
+            "Rockdale"
+          ],
+          [
+            "<b>6</b>",
+            "Fare",
+            "$3.00",
+            "$2.50",
+            "$4.50",
+            "$2.00"
+          ],
+          [
+            "<b>7</b>",
+            "Bus Route Numbers",
+            "476",
+            "947",
+            "477",
+            "422"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. B2, B5:E7, 3",
+          "correct": "true"
+        },
+        {
+          "opt": "b. B2, A5:E7, 3"
+        },
+        {
+          "opt": "c. B3, B6:E7, 2"
+        },
+        {
+          "opt": "d. A3, A5:E7, A7"
+        }
+      ]
+    },
+    {
+      "Q": "The following screen shot displays the 2023 Sales for a business. What formula is needed in B10 to display the Average Sales for the 4th Quarter (October-December)?",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "",
+            "2023 Sales",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "",
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+          ],
+          [
+            "<b>3</b>",
+            "Clothing",
+            "$183,269",
+            "$677,275",
+            "$87,616",
+            "$465,321",
+            "$154,240",
+            "$745,263",
+            "$724,483",
+            "$649,649",
+            "$732,594",
+            "$501,398",
+            "$865,679",
+            "$95,764"
+          ],
+          [
+            "<b>4</b>",
+            "Handbags",
+            "$256,178",
+            "$856,148",
+            "$249,461",
+            "$662,340",
+            "$510,071",
+            "$620,498",
+            "$374,558",
+            "$213,264",
+            "$503,107",
+            "$554,307",
+            "$872,498",
+            "$507,770"
+          ],
+          [
+            "<b>5</b>",
+            "Shoes",
+            "$357,767",
+            "$871,829",
+            "$495,606",
+            "$838,143",
+            "$21,038",
+            "$150,041",
+            "$679,603",
+            "$16,933",
+            "$45,420",
+            "$734,912",
+            "$660,954",
+            "$254,072"
+          ],
+          [
+            "<b>6</b>",
+            "Jewelry",
+            "$753,324",
+            "$736,079",
+            "$259,256",
+            "$327,767",
+            "$814,332",
+            "$774,969",
+            "$849,513",
+            "$409,662",
+            "$680,368",
+            "$349,375",
+            "$432,663",
+            "$289,132"
+          ],
+          [
+            "<b>7</b>",
+            "Homeware",
+            "$543,441",
+            "$729,203",
+            "$168,255",
+            "$373,082",
+            "$183,086",
+            "$31,550",
+            "$232,912",
+            "$60,456",
+            "$845,859",
+            "$771,496",
+            "$404,291",
+            "$459,416"
+          ],
+          [
+            "<b>8</b>",
+            "Kitchenware",
+            "$202,938",
+            "$317,878",
+            "$523,248",
+            "$234,515",
+            "$748,713",
+            "$420,671",
+            "$261,535",
+            "$837,324",
+            "$508,928",
+            "$694,793",
+            "$646,368",
+            "$134,871"
+          ],
+          [
+            "<b>9</b>",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>10</b>",
+            "Average Sales 4th Quarter:",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. =AVERAGE(B3:M8)"
+        },
+        {
+          "opt": "b. =AVERAGE(G3:M8)"
+        },
+        {
+          "opt": "c. =AVERAGE(K3:M8)",
+          "correct": "true"
+        },
+        {
+          "opt": "d. =AVERAGE(B3:D8)"
+        }
+      ]
+    },
+    {
+      "Q": "Luxury Car Tax (LCT) is paid on cars over a certain value. Refer to the screenshot. A Luxury Car Tax of 33% of the car's value is added only for amounts over $89,332. Which formula, when entered in C5 and copied down to C8, will correctly calculate LCT for the vehicles listed.",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "Luxury Car Tax",
+            "33%",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "LCT Threshold",
+            "$89,332",
+            ""
+          ],
+          [
+            "<b>3</b>",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>4</b>",
+            "Car",
+            "Value of Car",
+            "LCT Tax"
+          ],
+          [
+            "<b>5</b>",
+            "Mercedes",
+            "$180,000",
+            "$29,920"
+          ],
+          [
+            "<b>6</b>",
+            "Mazda",
+            "$80,000",
+            "$0"
+          ],
+          [
+            "<b>7</b>",
+            "BMW",
+            "$95,000",
+            "$1,870"
+          ],
+          [
+            "<b>8</b>",
+            "Audi",
+            "$120,000",
+            "$10,120"
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. =IF(B5>$B$2,(B5-$B$2)*$B$1,0)",
+          "correct": "true"
+        },
+        {
+          "opt": "b. =IF(B5<=$B$2,0,B5-$B$2*$B$1)",
+          "correct": "true"
+        },
+        {
+          "opt": "c. =IF(B5<=$B$2,B5-$B$2*$B$1,0)"
+        },
+        {
+          "opt": "d. =IF(B5>$B$2,B5-$B$2*$B$1,0)"
+        }
+      ]
+    },
+    {
+      "Q": "The feature that allows data to be filled automatically when Excel recognises a pattern is called",
+      "options": [
+        {
+          "opt": "a. auto fill."
+        },
+        {
+          "opt": "b. flash fill.",
+          "correct": "true"
+        },
+        {
+          "opt": "c. fast fill."
+        },
+        {
+          "opt": "d. pattern fill."
+        }
+      ]
+    },
+    {
+      "Q": "The spreadsheet shown shows the amount each employee received for 2022 (Salary) and the amount of Tax and Union Fees each employee paid (deductions) for the year. All employees received a 10% bonus on the amount that remained after deductions. These are all yearly figures.<br><br>In column E, I need a formula to calculate how much each employee received weekly (assuming there are 52 weeks in a year) after all deductions have been made and the bonus is added. Which of the following formulas will give me the correct result when entered in cell E3 and copied down to E5? Choose carefully! If you choose any incorrect answers, you will receive no marks for this question.",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "",
+            "2022 SALARIES",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "",
+            "Salary 2022",
+            "Tax Paid for 2022",
+            "Union Fees Paid for 2022",
+            "Weekly Amount Received including Bonus"
+          ],
+          [
+            "<b>3</b>",
+            "Van Nguyen",
+            "$75,200",
+            "$18,800",
+            "$500",
+            "$1,183"
+          ],
+          [
+            "<b>4</b>",
+            "Jack Pham",
+            "$60,550",
+            "$15,138",
+            "$400",
+            "$952"
+          ],
+          [
+            "<b>5</b>",
+            "Katrina Delis",
+            "$81,600",
+            "$20,400",
+            "$550",
+            "$1,283"
+          ],
+          [
+            "<b>6</b>",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          [
+            "<b>7</b>",
+            "Bonus",
+            "10% of pay after deductions",
+            "",
+            "",
+            ""
+          ]
+        ]
+      },
+      "multioptions": [
+        {
+          "opt": "a. =((B3-C3-D3)+(B3-C3-D3)*$B$7)/52",
+          "correct": "true"
+        },
+        {
+          "opt": "b. =(($B$7*(B3-C3-D3))+(B3-C3-D3))/52",
+          "correct": "true"
+        },
+        {
+          "opt": "c. =((B3-C3-D3)-(B3-C3-D3)*$B$7)*52"
+        },
+        {
+          "opt": "d. =($B$7*(B3-C3-D3))/52+(B3-C3-D3)-D3/52"
+        }
+      ]
+    },
+    {
+      "Q": "When copying a formula to a range of cells, the term absolute means:",
+      "options": [
+        {
+          "opt": "a. all negative values will be made positive"
+        },
+        {
+          "opt": "b. cell references in the formula will remain identical to those in the original formula",
+          "correct": "true"
+        },
+        {
+          "opt": "c. cell references in the formula will be changed according to the position of the formula"
+        },
+        {
+          "opt": "d. the formula will only be copied to some cells"
+        }
+      ]
+    },
+    {
+      "Q": "If you apply a format to an empty cell, then any data you enter in that cell later will display the format you applied.",
+      "options": [
+        {
+          "opt": "True",
+          "correct": "true"
+        },
+        {
+          "opt": "False"
+        }
+      ]
+    },
+    {
+      "Q": "In Excel, data that appears in a specific order, such as days of the week, months of the year, etc, are known as",
+      "options": [
+        {
+          "opt": "a. categories."
+        },
+        {
+          "opt": "b. series.",
+          "correct": "true"
+        },
+        {
+          "opt": "c. ordinals."
+        },
+        {
+          "opt": "d. strings."
+        }
+      ]
+    },
+    {
+      "Q": "Which of the following cell references is an absolute cell reference?",
+      "options": [
+        {
+          "opt": "a. $C$5",
+          "correct": "true"
+        },
+        {
+          "opt": "b. C$5$"
+        },
+        {
+          "opt": "c. C5"
+        },
+        {
+          "opt": "d. $C5"
+        }
+      ]
+    },
+    {
+      "Q": "What will be displayed in cell C5 if you use Flash Fill to combine the first and last names from columns A and B?",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "First Name",
+            "Last Name",
+            "Full Name"
+          ],
+          [
+            "<b>2</b>",
+            "Lee",
+            "Harvey",
+            "Lee Harvey"
+          ],
+          [
+            "<b>3</b>",
+            "Norman",
+            "Bing",
+            "Norman Bing"
+          ],
+          [
+            "<b>4</b>",
+            "John",
+            "Smith",
+            "John Smith"
+          ],
+          [
+            "<b>5</b>",
+            "Jane",
+            "Doe",
+            ""
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. Doe"
+        },
+        {
+          "opt": "b. Jane"
+        },
+        {
+          "opt": "c. Jane Doe",
+          "correct": "true"
+        },
+        {
+          "opt": "d. Smith"
+        }
+      ]
+    },
+    {
+      "Q": "What does the red triangle in the top right corner of a cell indicate?",
+      "options": [
+        {
+          "opt": "a. The cell is part of an array formula"
+        },
+        {
+          "opt": "b. There is an error in the cell"
+        },
+        {
+          "opt": "c. The cell contains a comment or note",
+          "correct": "true"
+        },
+        {
+          "opt": "d. The cell's contents are hidden"
+        }
+      ]
+    },
+    {
+      "Q": "Which of the following is an example of a nested function?",
+      "options": [
+        {
+          "opt": "a. =SUM(A1:A5)+SUM(B1:B5)"
+        },
+        {
+          "opt": "b. =IF(A1>10,SUM(B1:B5),0)",
+          "correct": "true"
+        },
+        {
+          "opt": "c. =MAX(A1,B2,C3,D4)"
+        },
+        {
+          "opt": "d. =AVERAGE(A1:D5)"
+        }
+      ]
+    },
+    {
+      "Q": "What is the purpose of the Format Painter tool?",
+      "options": [
+        {
+          "opt": "a. To apply colors and shading to cells"
+        },
+        {
+          "opt": "b. To create charts and graphs"
+        },
+        {
+          "opt": "c. To copy the formatting from one cell to another",
+          "correct": "true"
+        },
+        {
+          "opt": "d. To change the font of the text"
+        }
+      ]
+    },
+    {
+      "Q": "Which of the following is not a valid cell range in Excel?",
+      "options": [
+        {
+          "opt": "a. A1:G5"
+        },
+        {
+          "opt": "b. C3:C10"
+        },
+        {
+          "opt": "c. A1:D5, F1:H5"
+        },
+        {
+          "opt": "d. B2-F2",
+          "correct": "true"
+        }
+      ]
+    },
+    {
+      "Q": "Refer to the screenshot. What would be the most appropriate formula to enter in cell D3 to work out the average score for Melissa?",
+      "table": {
+        "headers": [
+          "",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "rows": [
+          [
+            "<b>1</b>",
+            "",
+            "Computing Marks Term 1",
+            "",
+            ""
+          ],
+          [
+            "<b>2</b>",
+            "Student Name",
+            "Quiz",
+            "Practical",
+            "Average"
+          ],
+          [
+            "<b>3</b>",
+            "Melissa Lam",
+            "85",
+            "68",
+            ""
+          ],
+          [
+            "<b>4</b>",
+            "Alisa Nguyen",
+            "68",
+            "98",
+            ""
+          ]
+        ]
+      },
+      "options": [
+        {
+          "opt": "a. =AVERAGE(B3:C3)",
+          "correct": "true"
+        },
+        {
+          "opt": "b. =SUM(B3:C3)"
+        },
+        {
+          "opt": "c. =AVERAGE(B3,D3)"
+        },
+        {
+          "opt": "d. =AVERAGE(B2:C2)"
+        }
+      ]
+    }
+  ]
 }
