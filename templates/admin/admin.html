@@ -148,6 +148,8 @@
                         <p class="exam-subtitle">{{ test['description'] }}</p>
                     </div>
                     <div class="exam-actions">
+                        <a class="btn btn-custom btn-edit"
+                           href="{{ url_for('entrance_manage', quiz_id=test['id']) }}">Manage entrance</a>
                         <a class="btn btn-custom btn-source"
                            href="{{ url_for('entrance_add', quiz_id=test['id']) }}">Add entrance</a>
                         <a class="btn btn-custom btn-trial"
