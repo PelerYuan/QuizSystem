@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wrapper {
+            flex: 1;
+        }
+
+        .header-section {
+            background-color: #343a40;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header-title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .header-subtitle {
+            font-size: 24px;
+            font-weight: 300;
+        }
+
+        .exam-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .exam-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+            background-color: #f9f9f9;
+            transition: transform 0.2s;
+        }
+
+        .exam-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .exam-info {
+            flex: 1;
+        }
+
+        .exam-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .exam-subtitle {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .btn-custom {
+            margin: 5px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .btn-trial {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-edit {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .btn-source {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        .btn-close {
+            background-color: #6c757d; /* 灰色背景 */
+            color: white; /* 白色文字 */
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-add {
+            background-color: #007bff; /* 蓝色背景 */
+            color: white; /* 白色文字 */
+        }
+
+        .footer-section {
+            background-color: #000;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-text {
+            margin: 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Title area -->
+    <div class="header-section">
+        <div class="container">
+            <h1 class="header-title">Admin Dashboard</h1>
+            <p class="header-subtitle">Manage your quizzes and exams</p>
+            <!-- Add Quiz 按钮 -->
+            <a href="{{ url_for('edit', quiz_name='Quiz Name Here') }}" class="btn btn-custom btn-add">Add Quiz</a>
+        </div>
+    </div>
+
+    <!-- 考试列表 -->
+    <div class="container">
+        <ul class="exam-list">
+            {% for test in tests %}
+                <li class="exam-item">
+                    <div class="exam-info">
+                        <h5 class="exam-title">{{ test['title'] }}</h5>
+                        <p class="exam-subtitle">{{ test['subtitle'] }}</p>
+                    </div>
+                    <div class="exam-actions">
+                        <a class="btn btn-custom btn-edit"
+                           href="{{ url_for('result', quiz_name=test['name']) }}">Result</a>
+                        {% if is_super %}
+                            <a class="btn btn-custom btn-trial"
+                               href="{{ url_for('trial', quiz_name=test['name']) }}">Trial</a>
+                            <a class="btn btn-custom btn-source" href="{{ url_for('edit', quiz_name=test['name']) }}">Source
+                                Code</a>
+                            {% if is_closed(test['name']) %}
+                                <a class="btn btn-custom btn-secondary"
+                                   href="{{ url_for('open_', quiz_name=test['name']) }}">Open</a>
+                            {% else %}
+                                <a class="btn btn-custom btn-secondary"
+                                   href="{{ url_for('close', quiz_name=test['name']) }}">Close</a>
+                            {% endif %}
+                            <button class="btn btn-custom btn-delete" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal"
+                                    data-quiz-name="{{ test['name'] }}">Delete
+                            </button>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- 删除确认模态框 -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this quiz? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page foot -->
+<div class="footer-section">
+    <div class="container">
+        <p class="footer-text">© 2025 PQuiz | Created by Peler</p>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+<script>
+    // 获取模态框和确认删除按钮
+    const deleteModal = document.getElementById('deleteModal');
+    const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+
+    // 当模态框显示时，获取当前考试的 quiz_name
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget; // 触发模态框的按钮
+        const quizName = button.getAttribute('data-quiz-name'); // 获取 data-quiz-name 属性
+
+        // 设置确认删除按钮的点击事件
+        confirmDeleteButton.onclick = function () {
+            // 这里可以调用删除逻辑，例如发送请求到服务器
+            window.location.href = `/delete/${quizName}`;
+        };
+    });
+</script>
+</body>
+</html>

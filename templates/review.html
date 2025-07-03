@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review of {{ quiz['title'] }}</title>
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <style>
+        .clickable-option {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .clickable-option:hover {
+            background-color: #f8f9fa;
+        }
+
+        .form-check-input {
+            margin-right: 10px;
+        }
+
+        .correct-input {
+            border: 2px solid #28a745; /* 绿色边框 */
+            background-color: #d4edda; /* 绿色背景 */
+        }
+
+        .incorrect-input {
+            border: 2px solid #dc3545; /* 红色边框 */
+            background-color: #f8d7da; /* 红色背景 */
+        }
+
+        .incorrect-card {
+            border: 2px solid #dc3545; /* 红色边框 */
+            background-color: #f8d7da; /* 红色背景 */
+        }
+
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <!-- Title -->
+    <h1 class="text-center">Review of {{ quiz['title'] }}</h1>
+    <!-- Subtitle -->
+    <p class="text-center text-muted">{{ quiz['subtitle'] }}</p>
+    <p class="text-dark-emphasis">Total score: {{ answer['score']+' / '+answer['total_score'] }}</p>
+    <p class="header-subtitle">You have got {{ score }}</p>
+    <form id="quizForm">
+        {% for question in quiz['questions'] %}
+            <!-- Single Option -->
+            {% if 'options' in question.keys() %}
+                <div class="card mb-3">
+                    {% if is_answered(answer[question['index']]) %}
+                        <div class="card-header">
+                            Multiple choice (One answer only)
+                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}</small>
+                        </div>
+                    {% else %}
+                        <div class="card-header incorrect-card">
+                            Multiple choice (One answer only)
+                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}</small>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <p>{{ question['index'] }}. {{ question['Q'] }}</p>
+                        {% if 'image' in question.keys() %}
+                            <img
+                                    src="{{ url_for('img', folder=quiz['image_folder'], filename=question['image']) }}"
+                                    class="img-fluid">
+                        {% endif %}
+                        {% for option in question['options'] %}
+                            {% if option['opt'] in answer[question['index']] %}
+                                {% if 'correct' in option.keys() %}
+                                    <label class="clickable-option correct-input">
+                                        <input class="form-check-input" type="radio" name="{{ question['index'] }}"
+                                               value="{{ option['opt'] }}" disabled>
+                                        {{ option['opt'] }}
+                                    </label>
+                                {% else %}
+                                    <label class="clickable-option incorrect-input">
+                                        <input class="form-check-input" type="radio" name="{{ question['index'] }}"
+                                               value="{{ option['opt'] }}" disabled>
+                                        {{ option['opt'] }}
+                                    </label>
+                                {% endif %}
+                            {% else %}
+                                <label class="clickable-option">
+                                    <input class="form-check-input" type="radio" name="{{ question['index'] }}"
+                                           value="{{ option['opt'] }}" disabled>
+                                    {{ option['opt'] }}
+                                </label>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- Multiple Option -->
+            {% elif 'multioptions' in question.keys() %}
+                <div class="card mb-3">
+                    {% if is_answered(answer[question['index']]) %}
+                        <div class="card-header">
+                            Multiple choice (Not only one answer)
+                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}</small>
+                        </div>
+                    {% else %}
+                        <div class="card-header incorrect-card">
+                            Multiple choice (Not only one answer)
+                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}</small>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <p>{{ question['index'] }}. {{ question['Q'] }}</p>
+                        {% if 'image' in question.keys() %}
+                            <img
+                                    src="{{ url_for('img', folder=quiz['image_folder'], filename=question['image']) }}"
+                                    class="img-fluid">
+                        {% endif %}
+                        {% for option in question['multioptions'] %}
+                            {% if option['opt'] in answer[question['index']] %}
+                                {% if 'correct' in option.keys() %}
+                                    <label class="clickable-option correct-input">
+                                        <input class="form-check-input" type="checkbox" name="{{ question['index'] }}"
+                                               value="{{ option['opt'] }}" disabled>
+                                        {{ option['opt'] }}
+                                    </label>
+                                {% else %}
+                                    <label class="clickable-option incorrect-input">
+                                        <input class="form-check-input" type="checkbox" name="{{ question['index'] }}"
+                                               value="{{ option['opt'] }}" disabled>
+                                        {{ option['opt'] }}
+                                    </label>
+                                {% endif %}
+                            {% else %}
+                                <label class="clickable-option">
+                                    <input class="form-check-input" type="checkbox" name="{{ question['index'] }}"
+                                           value="{{ option['opt'] }}" disabled>
+                                    {{ option['opt'] }}
+                                </label>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- Input question -->
+            {% elif 'itext' in question.keys() %}
+                <div class="card mb-3">
+                    {% if is_answered(answer[question['index']]) %}
+                        <div class="card-header">
+                            Fill in the blank
+                            <small class="text-muted d-block">Points: Unknow. Please listen to Igor carefully to get
+                                this.</small>
+                        </div>
+                    {% else %}
+                        <div class="card-header incorrect-card">
+                            Fill in the blank
+                            <small class="text-muted d-block">Points: Unknow. Please listen to Igor carefully to get
+                                this.</small>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <p>{{ question['index'] }}. {{ question['Q'] }}</p>
+                        {% if 'image' in question.keys() %}
+                            <img
+                                    src="{{ url_for('img', folder=quiz['image_folder'], filename=question['image']) }}"
+                                    class="img-fluid">
+                        {% endif %}
+                        <input type="text" class="form-control" name="{{ question['index'] }}"
+                               placeholder="{{ answer[question['index']][0] }}" disabled>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </form>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+</body>
+</html>

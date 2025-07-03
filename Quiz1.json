@@ -1,0 +1,245 @@
+{
+    "title": "Unit1 quiz",
+    "subtitle": "made by Peler",
+    "points": "2",
+    "image_folder": "img",
+    "questions": [
+        {
+            "Q": "Which one would be the rate of data transfer through the Internet?",
+            "options": [
+                {
+                    "opt": "a. 100.3 KB"
+                },
+                {
+                    "opt": "b. 57.5 ms"
+                },
+                {
+                    "opt": "c. 10.2 MB"
+                },
+                {
+                    "opt": "d. 86.4 Mbps",
+                    "correct": "true"
+                }
+            ]
+        },
+        {
+            "Q": "Where the data can be temporarily stored?",
+            "options": [
+                {
+                    "opt": "a. Read Only Memory"
+                },
+                {
+                    "opt": "b. SSD"
+                },
+                {
+                    "opt": "c. Random Access Memory",
+                    "correct": "true"
+                },
+                {
+                    "opt": "d. HDD"
+                }
+            ]
+        },
+        {
+            "Q": "Which of the following can be both internal and external storage?",
+            "options": [
+                {
+                    "opt": "a. USB Flash Drives"
+                },
+                {
+                    "opt": "b. External Hard Drives"
+                },
+                {
+                    "opt": "c. Cloud Storage"
+                },
+                {
+                    "opt": "d. Solid State Drives",
+                    "correct": "true"
+                }
+            ]
+        },
+        {
+            "Q": "Which one is the processing device?",
+            "options": [
+                {
+                    "opt": "a. Sound Chip",
+                    "correct": "true"
+                },
+                {
+                    "opt": "b. Microphone"
+                },
+                {
+                    "opt": "c. Touch Screen"
+                },
+                {
+                    "opt": "d. Sensor"
+                }
+            ]
+        },
+        {
+            "Q": "Two main parts of CPU are:",
+            "options": [
+                {
+                    "opt": "a. Decoding and Executing Unit"
+                },
+                {
+                    "opt": "b. Arithmetic Logic Unit and Control Unit",
+                    "correct": "true"
+                },
+                {
+                    "opt": "c. ROM and RAM"
+                },
+                {
+                    "opt": "d. Sound Chip and Computing Unit"
+                }
+            ]
+        },
+        {
+            "Q": "CPU read instructions from:",
+            "options": [
+                {
+                    "opt": "a. ROM"
+                },
+                {
+                    "opt": "b. RAM",
+                    "correct": "true"
+                },
+                {
+                    "opt": "c. SSD"
+                },
+                {
+                    "opt": "d. HDD"
+                }
+            ]
+        },
+        {
+            "Q": "CPU read instructions from:",
+            "options": [
+                {
+                    "opt": "a. m/s"
+                },
+                {
+                    "opt": "b. Hz"
+                },
+                {
+                    "opt": "c. GHz",
+                    "correct": "true"
+                },
+                {
+                    "opt": "d. Gbps"
+                }
+            ]
+        },
+        {
+            "Q": "Basic functions of all computers:",
+            "image": "U1_1.png",
+            "options": [
+                {
+                    "opt": "a. 1,2,6,4",
+                    "correct": "true"
+                },
+                {
+                    "opt": "b. 2,6,4,1"
+                },
+                {
+                    "opt": "c. 5,2,3,4"
+                },
+                {
+                    "opt": "d. 5,7,3,6"
+                }
+            ]
+        },
+        {
+            "Q": "Basic steps performed by CPU:",
+            "image": "U1_1.png",
+            "options": [
+                {
+                    "opt": "a. 1,2,6"
+                },
+                {
+                    "opt": "b. 1,3,6"
+                },
+                {
+                    "opt": "c. 5,7,3",
+                    "correct": "true"
+                },
+                {
+                    "opt": "d. 5,7,6"
+                }
+            ]
+        },
+        {
+            "Q": "Which computer is appropriate for students?",
+            "options": [
+                {
+                    "opt": "a. CPU: i7-8550U Processor (8MB Cache, up to 4.0 GHz) | Windows 10 | RAM: 16GB | 256GB SSD",
+                    "correct": "true"
+                },
+                {
+                    "opt": "b. CPU: i7-8700T | supports Windows/ Linux, 8 GB RAM, 256 GB SSD"
+                },
+                {
+                    "opt": "c. CPU: Intel Core i7-9700K| GPU: Nvidia GeForce RTX 2080 Ti | RAM: 32GB | Storage: 480GB M.2 SSD/2TB HDD"
+                },
+                {
+                    "opt": "d. CPU: Intel Xeon W | Graphics: AMD Vega 56 | RAM: 32GB | Storage: 1TB SSD"
+                }
+            ]
+        },
+        {
+            "Q": "Which computer is appropriate for designing?",
+            "options": [
+                {
+                    "opt": "a. CPU: i7-8550U Processor (8MB Cache, up to 4.0 GHz) | Windows 10 | RAM: 16GB | 256GB SSD"
+                },
+                {
+                    "opt": "b. CPU: i7-8700T | supports Windows/ Linux, 8 GB RAM, 256 GB SSD"
+                },
+                {
+                    "opt": "c. CPU: Intel Core i7-9700K| GPU: Nvidia GeForce RTX 2080 Ti | RAM: 32GB | Storage: 480GB M.2 SSD/2TB HDD"
+                },
+                {
+                    "opt": "d. CPU: Intel Xeon W | Graphics: AMD Vega 56 | RAM: 32GB | Storage: 1TB SSD",
+                    "correct": "true"
+                }
+            ]
+        },
+        {
+            "Q": "Which computer is appropriate for small business?",
+            "options": [
+                {
+                    "opt": "a. CPU: i7-8550U Processor (8MB Cache, up to 4.0 GHz) | Windows 10 | RAM: 16GB | 256GB SSD"
+                },
+                {
+                    "opt": "b. CPU: i7-8700T | supports Windows/ Linux, 8 GB RAM, 256 GB SSD",
+                    "correct": "true"
+                },
+                {
+                    "opt": "c. CPU: Intel Core i7-9700K| GPU: Nvidia GeForce RTX 2080 Ti | RAM: 32GB | Storage: 480GB M.2 SSD/2TB HDD"
+                },
+                {
+                    "opt": "d. CPU: Intel Xeon W | Graphics: AMD Vega 56 | RAM: 32GB | Storage: 1TB SSD"
+                }
+            ]
+        },
+        {
+            "Q": "Which computer is appropriate for gaming?",
+            "options": [
+                {
+                    "opt": "a. CPU: i7-8550U Processor (8MB Cache, up to 4.0 GHz) | Windows 10 | RAM: 16GB | 256GB SSD"
+                },
+                {
+                    "opt": "b. CPU: i7-8700T | supports Windows/ Linux, 8 GB RAM, 256 GB SSD"
+                },
+                {
+                    "opt": "c. CPU: Intel Core i7-9700K| GPU: Nvidia GeForce RTX 2080 Ti | RAM: 32GB | Storage: 480GB M.2 SSD/2TB HDD",
+                    "correct": "true"
+                },
+                {
+                    "opt": "d. CPU: Intel Xeon W | Graphics: AMD Vega 56 | RAM: 32GB | Storage: 1TB SSD"
+                }
+            ]
+        }
+    ],
+    "close": "false"
+}
