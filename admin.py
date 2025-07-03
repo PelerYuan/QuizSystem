@@ -2,7 +2,9 @@ import json
 import os
 
 from flask import Flask, render_template, redirect, request, url_for, session, send_from_directory, jsonify, send_file
-from app import app, config
+from app import app
+
+admin_config = json.loads(open('configure.json').read())
 
 @app.route('/admin')
 def admin():
@@ -20,7 +22,7 @@ def admin():
 def admin_login():
     if request.method == 'POST':
         password = request.form['password']
-        if password == config['admin password']:
+        if password == admin_config['admin password']:
             ...
             # return redirect(url_for('admin'))
     return render_template('admin/login.html')
