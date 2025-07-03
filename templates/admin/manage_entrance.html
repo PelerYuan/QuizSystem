@@ -133,7 +133,6 @@
         <div class="container">
             <h1 class="header-title">Admin Dashboard</h1>
             <p class="header-subtitle">Manage your quizzes and exams here</p>
-            <!-- Add Quiz 按钮 -->
             <a href="{{ url_for('quiz_add') }}" class="btn btn-custom btn-add">Add Quiz</a>
         </div>
     </div>
@@ -148,8 +147,6 @@
                         <p class="exam-subtitle">{{ test['description'] }}</p>
                     </div>
                     <div class="exam-actions">
-                        <a class="btn btn-custom btn-source"
-                           href="{{ url_for('entrance_add', quiz_id=test['id']) }}">Add entrance</a>
                         <a class="btn btn-custom btn-trial"
                            href="{{ url_for('quiz_trial', quiz_id=test['id']) }}">Trial</a>
                     </div>

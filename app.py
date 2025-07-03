@@ -202,8 +202,8 @@ def admin_login():
     return render_template('admin/login.html', wrong_password=False)
 
 
-@app.route('/admin_trial/<quiz_id>')
-def admin_trial(quiz_id):
+@app.route('/quiz_trial/<quiz_id>')
+def quiz_trial(quiz_id):
     if session.get('admin', False):
         file_path = Quiz.query.filter_by(id=quiz_id).first().file_path
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -265,6 +265,29 @@ def quiz_add():
         return render_template('admin/add_quiz.html', error='')
     return redirect(url_for('admin_login'))
 
+
+@app.route('/entrance_manage/<quiz_id>')
+def entrance_manage(quiz_id):
+    if session.get('admin', False):
+        tests = []
+        for entrance in Entrance.query.filter_by(quiz_id=quiz_id).all():
+            tests.append(
+                {'id': entrance.id, 'quiz_id': entrance.quiz_id, 'name': entrance.name, 'description': entrance.description})
+        return render_template('admin/admin.html', tests=tests)
+    return redirect(url_for('admin_login'))
+
+
+@app.route('/entrance_add/<quiz_id>', methods=['GET', 'POST'])
+def entrance_add(quiz_id):
+    if session.get('admin', False):
+        if request.method == 'POST':
+            entrance = Entrance(quiz_id=quiz_id, name=request.form['name'], description=request.form['description'])
+            db.session.add(entrance)
+            db.session.commit()
+
+            return redirect(url_for('admin'))
+        return render_template('admin/add_entrance.html', error='', quiz_id=quiz_id)
+    return redirect(url_for('admin_login'))
 
 if __name__ == '__main__':
     app.run()
