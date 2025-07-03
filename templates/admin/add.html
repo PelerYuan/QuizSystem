@@ -33,7 +33,7 @@
     {% endif %}
 
     <h1 class="text-center mb-4">File Upload</h1>
-    <form action="{{ url_for('admin_add') }}" method="post" enctype="multipart/form-data" class="mb-4">
+    <form action="{{ url_for('quiz_add') }}" method="post" enctype="multipart/form-data" class="mb-4">
         <div class="form-group">
             <label for="Name" class="form-label">Choose files to upload:</label>
             <input type="text" id="Name" name="name" class="form-control-file" required>

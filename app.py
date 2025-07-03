@@ -214,8 +214,8 @@ def admin_trial(quiz_id):
     return redirect(url_for('admin_login'))
 
 
-@app.route('/admin_add', methods=['GET', 'POST'])
-def admin_add():
+@app.route('/quiz_add', methods=['GET', 'POST'])
+def quiz_add():
     if session.get('admin', False):
         if request.method == 'POST':
             json_ = request.files.get('json')
