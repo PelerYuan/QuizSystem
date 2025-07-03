@@ -13,6 +13,28 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.absp
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+class Quiz(db.Model):
+    __tablename__ = 'quiz'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(256), unique=False, nullable=False)
+    description = db.Column(db.String(256), unique=False, nullable=False)
+    file_path = db.Column(db.String(256), unique=False, nullable=False)
+
+    entrance = db.relationship('Entrance', backref='quiz')
+
+    def __repr__(self):
+        return f'<Quiz ID:{self.username}, Name:{self.name}, Description:{self.description}>'
+
+class Entrance(db.Model):
+    __tablename__ = 'entrance'
+    id = db.Column(db.Integer, primary_key=True)
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'))
+    name = db.Column(db.String(256), unique=False, nullable=False)
+    description = db.Column(db.String(256), unique=False, nullable=False)
+
+    def __repr__(self):
+        return f'<Entrance ID: {self.id}, Name: {self.name}, Description: {self.description}>'
+
 @app.route('/')
 def hello_world():  # put application's code here
     return f'Welcome to QuizSystem!'
