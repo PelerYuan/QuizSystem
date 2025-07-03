@@ -1,7 +1,7 @@
 import json
 import os
 import uuid
-
+from openpyxl import Workbook
 from flask import Flask, render_template, redirect, request, url_for, session, send_from_directory, jsonify, send_file
 from flask_sqlalchemy import SQLAlchemy
 
@@ -299,6 +299,22 @@ def result_manage(entrance_id):
             results.append(
                 {'id': result.id, 'entrance_id': result.entrance_id, 'student_name': result.student_name, 'score': result.score})
         return render_template('admin/manage_result.html', results=results, entrance_id=entrance_id)
+    return redirect(url_for('admin_login'))
+
+
+@app.route('/result_download/<entrance_id>')
+def result_download(entrance_id):
+    if session.get('admin', False):
+        wb = Workbook()
+        ws = wb.active
+        # 添加表头
+        ws.append(['Name', 'Score'])
+        # 添加数据
+        for result in Result.query.filter_by(entrance_id=entrance_id).all():
+            ws.append([result.student_name, result.score])
+        # 保存工作簿到文件
+        wb.save('tmp/Result.xlsx')
+        return send_file('tmp/Result.xlsx', as_attachment=True)
     return redirect(url_for('admin_login'))
 
 
