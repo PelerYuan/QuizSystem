@@ -30,7 +30,7 @@
         }
 
         .nav-link {
-            color: rgba(255,255,255,.8);
+            color: rgba(255, 255, 255, .8);
             margin: 0 10px;
             font-size: 16px;
         }
@@ -160,83 +160,110 @@
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('admin') }}">Quiz System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        {#            <div class="collapse navbar-collapse" id="navbarNav">#}
+        {#                <ul class="navbar-nav mr-auto">#}
+        {#                    <li class="nav-item">#}
+        {#                        <a class="nav-link active" href="{{ url_for('admin') }}">Dashboard</a>#}
+        {#                    </li>#}
+        {#                    <li class="nav-item">#}
+        {#                        <a class="nav-link" href="{{ url_for('quiz_add') }}">Add Quiz</a>#}
+        {#                    </li>#}
+        {#                    <li class="nav-item">#}
+        {#                        <a class="nav-link" href="#">Reports</a>#}
+        {#                    </li>#}
+        {#                    <li class="nav-item">#}
+        {#                        <a class="nav-link" href="#">Settings</a>#}
+        {#                    </li>#}
+        {#                </ul>#}
+        {#                <ul class="navbar-nav">#}
+        {#                    <li class="nav-item">#}
+        {#                        <a class="nav-link" href="#">Logout</a>#}
+        {#                    </li>#}
+        {#                </ul>#}
+        {#            </div>#}
+    </div>
+</nav>
+
+<div class="wrapper">
+    <!-- 标题区域 -->
+    <div class="header-section">
         <div class="container">
-            <a class="navbar-brand" href="{{ url_for('admin') }}">Quiz System</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-{#            <div class="collapse navbar-collapse" id="navbarNav">#}
-{#                <ul class="navbar-nav mr-auto">#}
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link active" href="{{ url_for('admin') }}">Dashboard</a>#}
-{#                    </li>#}
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link" href="{{ url_for('quiz_add') }}">Add Quiz</a>#}
-{#                    </li>#}
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link" href="#">Reports</a>#}
-{#                    </li>#}
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link" href="#">Settings</a>#}
-{#                    </li>#}
-{#                </ul>#}
-{#                <ul class="navbar-nav">#}
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link" href="#">Logout</a>#}
-{#                    </li>#}
-{#                </ul>#}
-{#            </div>#}
-        </div>
-    </nav>
-
-    <div class="wrapper">
-        <!-- 标题区域 -->
-        <div class="header-section">
-            <div class="container">
-                <h1 class="header-title">Entrance Management</h1>
-                <p class="header-subtitle">Manage your entrances for quizzes</p>
-            </div>
-        </div>
-
-        <!-- 主要内容区域 -->
-        <div class="container content-container">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3>Available Entrances</h3>
-                <a href="{{ url_for('entrance_add', quiz_id=quiz_id) }}" class="btn btn-custom btn-add">Add New Entrance</a>
-            </div>
-
-            <ul class="exam-list">
-                {% for entrance in entrances %}
-                    <li class="exam-item">
-                        <div class="exam-info">
-                            <h5 class="exam-title">{{ entrance['name'] }}</h5>
-                            <p class="exam-subtitle">{{ entrance['description'] }}</p>
-                        </div>
-                        <div class="exam-actions">
-                            <a class="btn btn-custom btn-edit"
-                               href="{{ url_for('result_manage', entrance_id=entrance['id']) }}">Manage entrance</a>
-{#                            <a class="btn btn-custom btn-source"#}
-{#                               href="{{ url_for('entrance_add', quiz_id=entrance['id']) }}">Add entrance</a>#}
-{#                            <a class="btn btn-custom btn-trial"#}
-{#                               href="{{ url_for('quiz_trial', quiz_id=entrance['id']) }}">Trial</a>#}
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
+            <h1 class="header-title">Entrance Management</h1>
+            <p class="header-subtitle">Manage your entrances for quizzes</p>
         </div>
     </div>
 
-    <!-- 页脚 -->
-    <div class="footer-section">
-        <div class="container">
-            <p class="footer-text">&copy; 2023 Quiz System. All rights reserved.</p>
+    <!-- 主要内容区域 -->
+    <div class="container content-container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3>Available Entrances</h3>
+            <a href="{{ url_for('entrance_add', quiz_id=quiz_id) }}" class="btn btn-custom btn-add">Add New Entrance</a>
         </div>
-    </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+        <ul class="exam-list">
+            {% for entrance in entrances %}
+                <li class="exam-item">
+                    <div class="exam-info">
+                        <h5 class="exam-title">{{ entrance['name'] }}</h5>
+                        <p class="exam-subtitle">{{ entrance['description'] }}</p>
+                    </div>
+                    <div class="exam-actions">
+                        <a class="btn btn-custom btn-edit"
+                           href="{{ url_for('result_manage', entrance_id=entrance['id']) }}">Manage entrance</a>
+                        <button class="btn btn-custom btn-trial"
+                           onclick="copyToClipboard('{{ hostname }}{{ url_for('quiz', entrance_id=entrance['id']) }}')">Copy Entrance Link</button>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<!-- 页脚 -->
+<div class="footer-section">
+    <div class="container">
+        <p class="footer-text">&copy; 2023 Quiz System. All rights reserved.</p>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+
+<script>
+    function copyToClipboard(text) {
+        // 创建一个临时的textarea元素
+        const textarea = document.createElement('textarea');
+
+        // 设置textarea的值为要复制的文本
+        textarea.value = text;
+
+        // 将textarea添加到文档中
+        document.body.appendChild(textarea);
+
+        // 选中textarea中的文本
+        textarea.select();
+
+        // 执行复制命令
+        try {
+            // 使用Clipboard API
+            const successful = document.execCommand('copy');
+            const message = successful ? 'Copied!' : 'Failed to copy！';
+            console.log(message);
+        } catch (err) {
+            console.error('Failed to copy：', err);
+        }
+
+        // 移除临时的textarea元素
+        document.body.removeChild(textarea);
+    }
+</script>
 </body>
 </html>

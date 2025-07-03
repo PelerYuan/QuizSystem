@@ -275,7 +275,7 @@ def entrance_manage(quiz_id):
         for entrance in Entrance.query.filter_by(quiz_id=quiz_id).all():
             entrances.append(
                 {'id': entrance.id, 'quiz_id': entrance.quiz_id, 'name': entrance.name, 'description': entrance.description})
-        return render_template('admin/manage_entrance.html', entrances=entrances, quiz_id=quiz_id)
+        return render_template('admin/manage_entrance.html', entrances=entrances, quiz_id=quiz_id, hostname=request.host)
     return redirect(url_for('admin_login'))
 
 
