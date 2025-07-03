@@ -289,5 +289,15 @@ def entrance_add(quiz_id):
         return render_template('admin/add_entrance.html', error='', quiz_id=quiz_id)
     return redirect(url_for('admin_login'))
 
+@app.route('/result_manage/<entrance_id>')
+def result_manage(entrance_id):
+    if session.get('admin', False):
+        results = []
+        for result in Result.query.filter_by(entrance_id=entrance_id).all():
+            results.append(
+                {'id': result.id, 'entrance_id': result.entrance_id, 'student_name': result.student_name, 'score': result.score})
+        return render_template('admin/manage_result.html', results=results, entrance_id=entrance_id)
+    return redirect(url_for('admin_login'))
+
 if __name__ == '__main__':
     app.run()

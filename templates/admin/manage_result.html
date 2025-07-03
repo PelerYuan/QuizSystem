@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrance Management</title>
+    <title>View Result</title>
     <!-- Bootstrap CSS -->
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
     <style>
@@ -195,28 +195,28 @@
         <!-- 标题区域 -->
         <div class="header-section">
             <div class="container">
-                <h1 class="header-title">Entrance Management</h1>
-                <p class="header-subtitle">Manage your entrances for quizzes</p>
+                <h1 class="header-title">View Result</h1>
+                <p class="header-subtitle">View results from the quizzes</p>
             </div>
         </div>
 
         <!-- 主要内容区域 -->
         <div class="container content-container">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3>Available Entrances</h3>
-                <a href="{{ url_for('entrance_add', quiz_id=quiz_id) }}" class="btn btn-custom btn-add">Add New Entrance</a>
+                <h3>Commited Results</h3>
+{#                <a href="{{ url_for('entrance_add', quiz_id=quiz_id) }}" class="btn btn-custom btn-add">Add New Entrance</a>#}
             </div>
 
             <ul class="exam-list">
-                {% for entrance in entrances %}
+                {% for result in results %}
                     <li class="exam-item">
                         <div class="exam-info">
-                            <h5 class="exam-title">{{ entrance['name'] }}</h5>
-                            <p class="exam-subtitle">{{ entrance['description'] }}</p>
+                            <h5 class="exam-title">{{ result['student_name'] }}</h5>
+                            <b class="exam-subtitle">Score: {{ result['score'] }}</b>
                         </div>
                         <div class="exam-actions">
-                            <a class="btn btn-custom btn-edit"
-                               href="{{ url_for('result_manage', entrance_id=entrance['id']) }}">Manage entrance</a>
+{#                            <a class="btn btn-custom btn-edit"#}
+{#                               href="{{ url_for('entrance_manage', quiz_id=entrance['id']) }}">Manage entrance</a>#}
 {#                            <a class="btn btn-custom btn-source"#}
 {#                               href="{{ url_for('entrance_add', quiz_id=entrance['id']) }}">Add entrance</a>#}
 {#                            <a class="btn btn-custom btn-trial"#}
