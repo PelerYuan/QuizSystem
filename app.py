@@ -8,6 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+admin_config = json.loads(open('configure.json').read())
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__name__)),
                                                                     'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -175,6 +177,42 @@ def is_answered(answer):
 
 
 app.jinja_env.globals['is_answered'] = is_answered
+
+
+@app.route('/admin')
+def admin():
+    if session.get('admin', False):
+        tests = []
+        for quiz in Quiz.query.all():
+            tests.append(
+                {'id': quiz.id, 'name': quiz.name, 'description': quiz.description, 'file_path': quiz.file_path})
+        return render_template('admin/admin.html', tests=tests)
+    return redirect(url_for('admin_login'))
+
+
+@app.route('/admin_login', methods=['GET', 'POST'])
+def admin_login():
+    if request.method == 'POST':
+        password = request.form['password']
+        if password == admin_config['admin password']:
+            session['admin'] = True
+            return redirect(url_for('admin'))
+        else:
+            return render_template('admin/login.html', wrong_password=True)
+    return render_template('admin/login.html', wrong_password=False)
+
+
+@app.route('/admin_trial/<quiz_id>')
+def admin_trial(quiz_id):
+    if session.get('admin', False):
+        file_path = Quiz.query.filter_by(id=quiz_id).first().file_path
+        with open(file_path, 'r', encoding='utf-8') as f:
+            quiz = json.loads(f.read())
+            for i in range(len(quiz['questions'])):
+                quiz['questions'][i]['index'] = (i + 1)
+        return render_template('admin/trial.html', quiz=quiz)
+    return redirect(url_for('admin_login'))
+
 
 if __name__ == '__main__':
     app.run()

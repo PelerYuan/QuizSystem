@@ -17,6 +17,11 @@
                     <p class="text-center text-muted">Welcome!</p>
                 </div>
                 <div class="card-body">
+                    {% if wrong_password == True %}
+                        <div class="alert alert-danger alert-container" id="errorAlert" role="alert">
+                            Wrong Password
+                        </div>
+                    {% endif %}
                     <form method="POST" action="{{ url_for('admin_login') }}">
                         <div class="mb-3">
                             <label for="nameInput" class="form-label">Password</label>

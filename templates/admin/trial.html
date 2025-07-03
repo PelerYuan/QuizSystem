@@ -38,7 +38,7 @@
     <!-- Subtitle -->
     <p class="text-center text-muted">{{ quiz['subtitle'] }}</p>
 
-    <form id="quizForm" action="{{ url_for('submit', quiz_name=quiz_name) }}" method="post">
+    <form id="quizForm">
         {% for question in quiz['questions'] %}
             <!-- Single Option -->
             {% if 'options' in question.keys() %}
@@ -124,7 +124,7 @@
         {% endfor %}
 
         <!-- Submit button -->
-        <a type="submit" class="btn btn-success mb-5" href="{{ url_for('admin') }}">Back</a>
+        <a type="submit" class="btn btn-success mb-5" href="{{ url_for('admin') }}">Dashboard</a>
     </form>
 </div>
 
