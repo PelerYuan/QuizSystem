@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Entrance Management</title>
     <!-- Bootstrap CSS -->
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
     <style>
@@ -18,23 +18,51 @@
             flex: 1;
         }
 
-        .header-section {
+        /* 导航栏样式 */
+        .navbar-custom {
             background-color: #343a40;
+            padding: 10px 0;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,.8);
+            margin: 0 10px;
+            font-size: 16px;
+        }
+
+        .nav-link:hover {
             color: white;
-            padding: 80px 0;
+        }
+
+        .active {
+            color: white;
+            font-weight: bold;
+        }
+
+        .header-section {
+            background-color: #f8f9fa;
+            color: #343a40;
+            padding: 40px 0;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
         }
 
         .header-title {
-            font-size: 48px;
+            font-size: 36px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .header-subtitle {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 300;
+            color: #6c757d;
         }
 
         .exam-list {
@@ -99,8 +127,8 @@
         }
 
         .btn-close {
-            background-color: #6c757d; /* 灰色背景 */
-            color: white; /* 白色文字 */
+            background-color: #6c757d;
+            color: white;
         }
 
         .btn-delete {
@@ -109,53 +137,106 @@
         }
 
         .btn-add {
-            background-color: #007bff; /* 蓝色背景 */
-            color: white; /* 白色文字 */
+            background-color: #007bff;
+            color: white;
         }
 
         .footer-section {
-            background-color: #000;
+            background-color: #343a40;
             color: white;
             padding: 20px 0;
             text-align: center;
+            margin-top: 40px;
         }
 
         .footer-text {
             margin: 0;
             font-size: 16px;
         }
+
+        .content-container {
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
-<div class="wrapper">
-    <!-- Title area -->
-    <div class="header-section">
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
         <div class="container">
-            <h1 class="header-title">Admin Dashboard</h1>
-            <p class="header-subtitle">Manage your quizzes and exams here</p>
+            <a class="navbar-brand" href="{{ url_for('admin') }}">Quiz System</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+{#            <div class="collapse navbar-collapse" id="navbarNav">#}
+{#                <ul class="navbar-nav mr-auto">#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link active" href="{{ url_for('admin') }}">Dashboard</a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="{{ url_for('quiz_add') }}">Add Quiz</a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="#">Reports</a>#}
+{#                    </li>#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="#">Settings</a>#}
+{#                    </li>#}
+{#                </ul>#}
+{#                <ul class="navbar-nav">#}
+{#                    <li class="nav-item">#}
+{#                        <a class="nav-link" href="#">Logout</a>#}
+{#                    </li>#}
+{#                </ul>#}
+{#            </div>#}
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        <!-- 标题区域 -->
+        <div class="header-section">
+            <div class="container">
+                <h1 class="header-title">Entrance Management</h1>
+                <p class="header-subtitle">Manage your entrances for quizzes</p>
+            </div>
+        </div>
+
+        <!-- 主要内容区域 -->
+        <div class="container content-container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3>Available Entrances</h3>
+                <a href="{{ url_for('entrance_add', quiz_id=quiz_id) }}" class="btn btn-custom btn-add">Add New Entrance</a>
+            </div>
+
+            <ul class="exam-list">
+                {% for entrance in entrances %}
+                    <li class="exam-item">
+                        <div class="exam-info">
+                            <h5 class="exam-title">{{ entrance['name'] }}</h5>
+                            <p class="exam-subtitle">{{ entrance['description'] }}</p>
+                        </div>
+                        <div class="exam-actions">
+{#                            <a class="btn btn-custom btn-edit"#}
+{#                               href="{{ url_for('entrance_manage', quiz_id=entrance['id']) }}">Manage entrance</a>#}
+{#                            <a class="btn btn-custom btn-source"#}
+{#                               href="{{ url_for('entrance_add', quiz_id=entrance['id']) }}">Add entrance</a>#}
+{#                            <a class="btn btn-custom btn-trial"#}
+{#                               href="{{ url_for('quiz_trial', quiz_id=entrance['id']) }}">Trial</a>#}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 
-    <!-- 考试列表 -->
-    <div class="container">
-        <ul class="exam-list">
-            {% for test in tests %}
-                <li class="exam-item">
-                    <div class="exam-info">
-                        <h5 class="exam-title">{{ test['name'] }}</h5>
-                        <p class="exam-subtitle">{{ test['description'] }}</p>
-                    </div>
-                    <div class="exam-actions">
-{#                        <a class="btn btn-custom btn-trial"#}
-{#                           href="{{ url_for('quiz_trial', quiz_id=test['id']) }}">Trial</a>#}
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+    <!-- 页脚 -->
+    <div class="footer-section">
+        <div class="container">
+            <p class="footer-text">&copy; 2023 Quiz System. All rights reserved.</p>
+        </div>
     </div>
-</div>
-<!-- Bootstrap JS and dependencies -->
-<script src="{{ url_for('static', filename='popper.min.js') }}"></script>
-<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 </body>
 </html>

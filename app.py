@@ -269,11 +269,11 @@ def quiz_add():
 @app.route('/entrance_manage/<quiz_id>')
 def entrance_manage(quiz_id):
     if session.get('admin', False):
-        tests = []
+        entrances = []
         for entrance in Entrance.query.filter_by(quiz_id=quiz_id).all():
-            tests.append(
+            entrances.append(
                 {'id': entrance.id, 'quiz_id': entrance.quiz_id, 'name': entrance.name, 'description': entrance.description})
-        return render_template('admin/manage_entrance.html', tests=tests)
+        return render_template('admin/manage_entrance.html', entrances=entrances, quiz_id=quiz_id)
     return redirect(url_for('admin_login'))
 
 
@@ -285,7 +285,7 @@ def entrance_add(quiz_id):
             db.session.add(entrance)
             db.session.commit()
 
-            return redirect(url_for('admin'))
+            return redirect(url_for('entrance_manage', quiz_id=quiz_id))
         return render_template('admin/add_entrance.html', error='', quiz_id=quiz_id)
     return redirect(url_for('admin_login'))
 

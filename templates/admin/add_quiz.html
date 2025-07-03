@@ -14,44 +14,163 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-        }
-
-        .container {
             display: flex;
             flex-direction: column;
-            height: 100%;
-            padding: 20px;
+        }
+
+        /* 导航栏样式 - 与之前保持一致 */
+        .navbar-custom {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, .8);
+            margin: 0 10px;
+            font-size: 16px;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .active {
+            color: white;
+            font-weight: bold;
+        }
+
+        .wrapper {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        .header-section {
+            background-color: #f8f9fa;
+            color: #343a40;
+            padding: 30px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .header-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .upload-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control, .form-control-file {
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .btn-custom {
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            transition: background-color 0.2s;
+        }
+
+        .btn-custom:hover {
+            background-color: #0069d9;
+        }
+
+        .alert-container {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .footer-section {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .footer-text {
+            margin: 0;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-<div class="container">
+<div class="wrapper">
+    <!-- 标题区域 -->
+    <div class="header-section">
+        <div class="container">
+            <h1 class="header-title">Upload Quiz Files</h1>
+            <p class="header-subtitle">Add new quiz content to the system</p>
+        </div>
+    </div>
+
+    <!-- 错误提示 -->
     {% if error %}
         <div class="alert alert-danger alert-container" id="errorAlert" role="alert">
             {{ error }}
         </div>
     {% endif %}
 
-    <h1 class="text-center mb-4">File Upload</h1>
-    <form action="{{ url_for('quiz_add') }}" method="post" enctype="multipart/form-data" class="mb-4">
-        <div class="form-group">
-            <label for="Name" class="form-label">Choose files to upload:</label>
-            <input type="text" id="Name" name="name" class="form-control-file" required>
+    <!-- 上传表单 -->
+    <div class="container">
+        <div class="upload-container">
+            <form action="{{ url_for('quiz_add') }}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="Name" class="form-label">Quiz Name:</label>
+                    <input type="text" id="Name" name="name" class="form-control" placeholder="Enter quiz name"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="Description" class="form-label">Quiz Description:</label>
+                    <input type="text" id="Description" name="description" class="form-control"
+                           placeholder="Enter quiz description" required>
+                </div>
+                <div class="form-group">
+                    <label for="jsonUpload" class="form-label">Quiz JSON File:</label>
+                    <input type="file" id="jsonUpload" name="json" class="form-control-file" required>
+                    <small class="form-text text-muted">Upload the quiz JSON configuration file</small>
+                </div>
+                <div class="form-group">
+                    <label for="imageUpload" class="form-label">Quiz Images (Optional):</label>
+                    <input type="file" id="imageUpload" name="images" multiple class="form-control-file">
+                    <small class="form-text text-muted">Upload any related images (multiple selection allowed)</small>
+                </div>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-custom">Upload Quiz</button>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="Description" class="form-label">Choose files to upload:</label>
-            <input type="text" id="Description" name="description" class="form-control-file" required>
-        </div>
-        <div class="form-group">
-            <label for="jsonUpload" class="form-label">Choose files to upload:</label>
-            <input type="file" id="jsonUpload" name="json" class="form-control-file" required>
-        </div>
-        <div class="form-group">
-            <label for="imageUpload" class="form-label">Choose files to upload:</label>
-            <input type="file" id="imageUpload" name="images" multiple class="form-control-file">
-        </div>
-        <button type="submit" class="btn btn-primary btn-custom">Submit</button>
-    </form>
+    </div>
 </div>
 
 <!-- Bootstrap JS and dependencies -->
