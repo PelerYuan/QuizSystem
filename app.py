@@ -238,7 +238,7 @@ def quiz_add():
                     with open(json_path, 'w', encoding='utf-8') as f:
                         json.dump(quiz, f, ensure_ascii=False, indent=4)
             except Exception as e:
-                return render_template('admin/add.html', error="Json File invalid: " + e.args[0])
+                return render_template('admin/add_quiz.html', error="Json File invalid: " + e.args[0])
 
             try:
                 images = request.files.getlist('images')
@@ -246,7 +246,7 @@ def quiz_add():
                     if image:
                         filename = image_dir[image.filename]
             except KeyError as e:
-                return render_template('admin/add.html', error="Image invalid: " + e.args[0])
+                return render_template('admin/add_quiz.html', error="Image invalid: " + e.args[0])
 
             for image in images:
                 if image:
@@ -255,14 +255,14 @@ def quiz_add():
                     image.save(os.path.join('img/', filename))
 
             if image_dir:
-                return render_template('admin/add.html', error="Lack of image: " + str(list(image_dir.keys())))
+                return render_template('admin/add_quiz.html', error="Lack of image: " + str(list(image_dir.keys())))
 
             quiz = Quiz(name=request.form['name'], description=request.form['description'], file_path=json_path)
             db.session.add(quiz)
             db.session.commit()
 
             return redirect(url_for('admin'))
-        return render_template('admin/add.html', error='')
+        return render_template('admin/add_quiz.html', error='')
     return redirect(url_for('admin_login'))
 
 
