@@ -6,29 +6,53 @@
     <title>Login</title>
     <!-- Bootstrap CSS -->
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title text-center">Login</h3>
-                    <p class="text-center text-muted">Be careful! You can only input this once and it is related to your
-                        scores!</p>
+                    <p class="text-center text-light mb-0">Be careful! You can only input this once!</p>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ url_for('login', entrance_id=entrance_id) }}" onsubmit="return validateForm()">
-
-                        <!-- 姓名输入 -->
                         <div class="mb-3">
                             <label for="nameInput" class="form-label">Name</label>
                             <input type="text" class="form-control" id="nameInput" name="name"
                                    placeholder="Please enter your name" required>
                         </div>
-
-                        <!-- 提交按钮 -->
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
                     </form>
                 </div>
             </div>
