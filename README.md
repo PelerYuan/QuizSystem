@@ -41,19 +41,10 @@ A flexible web-based quiz system built with Flask that allows administrators to 
       mkdir img quiz result tmp
       ```
 
-   2. Initialize the database as described in the Installation section.
-
-   3. Create a `configure.json` file with your admin password:
-      ```json
-      {
-        "admin password": "your-secure-password"
-      }
-      ```
-
 3. Create and activate a virtual environment:
    ```
    python -m venv .venv
-   .venv\Scripts\activate
+   source .venv/bin/activate
    ```
 
 4. Install the required dependencies:
@@ -63,8 +54,7 @@ A flexible web-based quiz system built with Flask that allows administrators to 
 
 5. Initialize the database:
    ```
-   python
-   >>> from app import db
+   flask shell
    >>> db.create_all()
    >>> exit()
    ```
