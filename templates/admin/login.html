@@ -1,20 +1,49 @@
 <!DOCTYPE html>
-<html lang=“en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
     <!-- Bootstrap CSS -->
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title text-center">Admin Login</h3>
-                    <p class="text-center text-muted">Welcome!</p>
+                    <p class="text-center text-light mb-0">Welcome to QuizSystem Admin Panel</p>
                 </div>
                 <div class="card-body">
                     {% if wrong_password == True %}
@@ -28,7 +57,7 @@
                             <input type="password" class="form-control" id="nameInput" name="password"
                                    placeholder="Please enter the admin password" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
                     </form>
                 </div>
             </div>
