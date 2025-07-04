@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 50px;
+        }
+        .jumbotron {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        .logo {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 1rem;
+        }
+        .subheading {
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+        }
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+        footer {
+            margin-top: 50px;
+            padding: 20px 0;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <div class="logo">Quiz System</div>
+            <p class="subheading">An interactive platform for online assessments</p>
+            <hr class="my-4">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <p class="lead">Welcome to the Quiz System! This platform allows you to take quizzes assigned by your teachers.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        For Students
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Ready to take a quiz?</h5>
+                        <p class="card-text">You'll need a quiz link from your teacher to access your assessment. The link will direct you to a login page where you can enter your name before starting the quiz.</p>
+                        <p class="card-text">Once you've completed the quiz, you'll receive immediate feedback on your performance.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        For Teachers
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Manage your quizzes</h5>
+                        <p class="card-text">Teachers can create and manage quizzes through the admin panel. You can generate unique links for each assessment session.</p>
+                        <a href="{{ url_for('admin_login') }}" class="btn btn-primary mt-3">Admin Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-info mt-5" role="alert">
+            <h4 class="alert-heading">Important Note!</h4>
+            <p>Students must obtain a quiz link from their teacher before they can access any assessments. If you haven't received a link, please contact your teacher.</p>
+        </div>
+    </div>
+    
+    <footer class="text-center">
+        <div class="container">
+            <p>&copy; 2023 Quiz System. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+</body>
+</html>

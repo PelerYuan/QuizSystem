@@ -56,8 +56,8 @@ class Result(db.Model):
 
 
 @app.route('/')
-def hello_world():  # put application's code here
-    return f'Welcome to QuizSystem!'
+def hello_world():
+    return render_template('index.html')
 
 
 @app.route('/login/<entrance_id>', methods=['GET', 'POST'])
