@@ -30,41 +30,55 @@ A flexible web-based quiz system built with Flask that allows administrators to 
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/QuizSystem.git
+   git clone https://github.com/PelerYuan/QuizSystem
    cd QuizSystem
    ```
+   
+2. After cloning the repository, you'll need to:
 
-2. Create and activate a virtual environment:
+   1. Create the necessary directories that are excluded from version control:
+      ```
+      mkdir img quiz result tmp
+      ```
+
+   2. Initialize the database as described in the Installation section.
+
+   3. Create a `configure.json` file with your admin password:
+      ```json
+      {
+        "admin password": "your-secure-password"
+      }
+      ```
+
+3. Create and activate a virtual environment:
    ```
    python -m venv .venv
    .venv\Scripts\activate
    ```
 
-3. Install the required dependencies:
+4. Install the required dependencies:
    ```
    pip install -r requirements.txt
    ```
 
-4. Initialize the database:
+5. Initialize the database:
    ```
    python
    >>> from app import db
    >>> db.create_all()
    >>> exit()
    ```
-
-5. Run the application:
+6. Run the application:
    ```
    python app.py
    ```
-
-6. Access the application at `http://127.0.0.1:5000`
+7. Access the application at `http://127.0.0.1:5000`
 
 ## Usage
 
 ### Admin Access
 
-1. Navigate to `/admin_login` and enter the admin password (default: "123456")
+1. Navigate to `/admin` and enter the admin password (default: "123456")
 2. From the admin dashboard, you can:
    - Add new quizzes by uploading JSON files
    - Create entrances for quizzes
