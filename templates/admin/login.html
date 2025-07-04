@@ -8,7 +8,8 @@
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #181a1b;
+            color: #f8f9fa;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,15 +17,30 @@
             margin: 0;
         }
         .card {
+            background-color: #23272b;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
             width: 100%;
             max-width: 500px;
+            color: #f8f9fa;
         }
         .card-header {
-            background-color: #007bff;
-            color: white;
+            background-color: #212529;
+            color: #f8f9fa;
             border-radius: 10px 10px 0 0 !important;
+        }
+        .form-label, .form-control::placeholder {
+            color: #adb5bd;
+        }
+        .form-control {
+            background-color: #343a40;
+            color: #f8f9fa;
+            border: 1px solid #495057;
+        }
+        .form-control:focus {
+            background-color: #23272b;
+            color: #f8f9fa;
+            border-color: #007bff;
         }
         .btn-primary {
             background-color: #007bff;
@@ -33,6 +49,11 @@
         .btn-primary:hover {
             background-color: #0056b3;
             border-color: #0056b3;
+        }
+        .alert-danger {
+            background-color: #842029;
+            color: #fff;
+            border-color: #842029;
         }
     </style>
 </head>
