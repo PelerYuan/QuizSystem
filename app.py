@@ -4,7 +4,6 @@ import uuid
 
 from openpyxl import Workbook
 from flask import Flask, render_template, redirect, request, url_for, session, send_from_directory, jsonify, send_file
-from markupsafe import Markup
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -79,13 +78,6 @@ def quiz(entrance_id):
             quiz = json.loads(f.read())
             for i in range(len(quiz['questions'])):
                 quiz['questions'][i]['index'] = (i + 1)
-                quiz['questions'][i]['Q'] = Markup(quiz['questions'][i]['Q'])
-                if 'options' in quiz['questions'][i].keys():
-                    for j in range(len(quiz['questions'][i]['options'])):
-                        quiz['questions'][i]['options'][j]['opt'] = Markup(quiz['questions'][i]['options'][j]['opt'])
-                elif 'multioptions' in quiz['questions'][i].keys():
-                    for j in range(len(quiz['questions'][i]['multioptions'])):
-                        quiz['questions'][i]['multioptions'][j]['opt'] = Markup(quiz['questions'][i]['multioptions'][j]['opt'])
         return render_template('quiz.html', quiz=quiz, entrance_id=entrance_id)
     else:
         return redirect(url_for('login', entrance_id=entrance_id))
@@ -171,14 +163,6 @@ def review(result_id):
         quiz = json.loads(f.read())
         for i in range(len(quiz['questions'])):
             quiz['questions'][i]['index'] = str(i + 1)
-            quiz['questions'][i]['Q'] = Markup(quiz['questions'][i]['Q'])
-            if 'options' in quiz['questions'][i].keys():
-                for j in range(len(quiz['questions'][i]['options'])):
-                    quiz['questions'][i]['options'][j]['opt'] = Markup(quiz['questions'][i]['options'][j]['opt'])
-            elif 'multioptions' in quiz['questions'][i].keys():
-                for j in range(len(quiz['questions'][i]['multioptions'])):
-                    quiz['questions'][i]['multioptions'][j]['opt'] = Markup(
-                        quiz['questions'][i]['multioptions'][j]['opt'])
     result_path = Result.query.filter_by(id=result_id).first().file_path
     with open(result_path, 'r', encoding='utf-8') as f:
         answer = json.loads(f.read())
@@ -229,14 +213,6 @@ def quiz_trial(quiz_id):
             quiz = json.loads(f.read())
             for i in range(len(quiz['questions'])):
                 quiz['questions'][i]['index'] = (i + 1)
-                quiz['questions'][i]['Q'] = Markup(quiz['questions'][i]['Q'])
-                if 'options' in quiz['questions'][i].keys():
-                    for j in range(len(quiz['questions'][i]['options'])):
-                        quiz['questions'][i]['options'][j]['opt'] = Markup(quiz['questions'][i]['options'][j]['opt'])
-                elif 'multioptions' in quiz['questions'][i].keys():
-                    for j in range(len(quiz['questions'][i]['multioptions'])):
-                        quiz['questions'][i]['multioptions'][j]['opt'] = Markup(
-                            quiz['questions'][i]['multioptions'][j]['opt'])
         return render_template('admin/trial.html', quiz=quiz)
     return redirect(url_for('admin_login'))
 

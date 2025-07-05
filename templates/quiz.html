@@ -33,7 +33,7 @@
     <!-- Subtitle -->
     <p class="text-center text-muted">{{ quiz['subtitle'] }}</p>
 
-        <form id="quizForm" action="{{ url_for('submit', entrance_id=entrance_id) }}" method="post">
+    <form id="quizForm" action="{{ url_for('submit', entrance_id=entrance_id) }}" method="post">
         {% for question in quiz['questions'] %}
             <!-- Single Option -->
             {% if 'options' in question.keys() %}
@@ -48,6 +48,28 @@
                             <img
                                     src="{{ url_for('img', folder=quiz['image_folder'], filename=question['image']) }}"
                                     class="img-fluid">
+                        {% endif %}
+                        {% if 'table' in question.keys() %}
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped text-center">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        {% for header in question['table']['headers'] %}
+                                            <th>{{ header|safe }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for row in question['table']['rows'] %}
+                                        <tr>
+                                            {% for cell in row %}
+                                                <td class="align-middle">{{ cell|safe }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         {% endif %}
                         {% for option in question['options'] %}
                             <label class="clickable-option">
@@ -72,6 +94,28 @@
                                     src="{{ url_for('img', folder=quiz['image_folder'], filename=question['image']) }}"
                                     class="img-fluid">
                         {% endif %}
+                        {% if 'table' in question.keys() %}
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped text-center">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        {% for header in question['table']['headers'] %}
+                                            <th>{{ header|safe }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for row in question['table']['rows'] %}
+                                        <tr>
+                                            {% for cell in row %}
+                                                <td class="align-middle">{{ cell|safe }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
                         {% for option in question['multioptions'] %}
                             <label class="clickable-option">
                                 <input class="form-check-input" type="checkbox" name="{{ question['index'] }}"
@@ -94,6 +138,28 @@
                             <img
                                     src="{{ url_for('img', folder=quiz['image_folder'], filename=question['image']) }}"
                                     class="img-fluid">
+                        {% endif %}
+                        {% if 'table' in question.keys() %}
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped text-center">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        {% for header in question['table']['headers'] %}
+                                            <th>{{ header|safe }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for row in question['table']['rows'] %}
+                                        <tr>
+                                            {% for cell in row %}
+                                                <td class="align-middle">{{ cell|safe }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         {% endif %}
                         <input type="text" class="form-control" name="{{ question['index'] }}"
                                placeholder="Input your answer here">
