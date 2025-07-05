@@ -118,13 +118,13 @@ def submit(entrance_id):
                 question_count += 1
                 if selection.get(question['index'], False):
                     selection[question['index']].append(0)
-                    question_count_ = len(question['multioptions'])
+                    correct_question_count_ = len([option for option in question['multioptions'] if option.get('correct', '') == 'true'])
                     for option in question['multioptions']:
                         if option['opt'] in selection[question['index']]:
                             if option.get('correct', '') == 'true':
-                                selection[question['index']][-1] += score / question_count_
+                                selection[question['index']][-1] += score / correct_question_count_
                             else:
-                                selection[question['index']][-1] -= score / question_count_
+                                selection[question['index']][-1] -= score / correct_question_count_
                     if selection[question['index']][-1] < 0:
                         selection[question['index']][-1] = 0
                     total_score += selection[question['index']][-1]
@@ -155,19 +155,21 @@ def submit(entrance_id):
 
 @app.route('/review/<result_id>')
 def review(result_id):
-    session['name'] = None
     entrance_id = Result.query.filter_by(id=result_id).first().entrance_id
-    quiz_id = Entrance.query.filter_by(id=entrance_id).first().quiz_id
-    file_path = Quiz.query.filter_by(id=quiz_id).first().file_path
-    with open(file_path, 'r', encoding='utf-8') as f:
-        quiz = json.loads(f.read())
-        for i in range(len(quiz['questions'])):
-            quiz['questions'][i]['index'] = str(i + 1)
-    result_path = Result.query.filter_by(id=result_id).first().file_path
-    with open(result_path, 'r', encoding='utf-8') as f:
-        answer = json.loads(f.read())
-    score = Result.query.filter_by(id=result_id).first().score
-    return render_template('review.html', quiz=quiz, answer=answer, score=score)
+    if session.get('name') is not None:
+        session['name'] = None
+        quiz_id = Entrance.query.filter_by(id=entrance_id).first().quiz_id
+        file_path = Quiz.query.filter_by(id=quiz_id).first().file_path
+        with open(file_path, 'r', encoding='utf-8') as f:
+            quiz = json.loads(f.read())
+            for i in range(len(quiz['questions'])):
+                quiz['questions'][i]['index'] = str(i + 1)
+        result_path = Result.query.filter_by(id=result_id).first().file_path
+        with open(result_path, 'r', encoding='utf-8') as f:
+            answer = json.loads(f.read())
+        score = Result.query.filter_by(id=result_id).first().score
+        return render_template('review.html', quiz=quiz, answer=answer, score=score)
+    return redirect(url_for('login', entrance_id=entrance_id))
 
 
 @app.route('/img/<folder>/<filename>')
