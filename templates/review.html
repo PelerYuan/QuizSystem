@@ -53,7 +53,7 @@
     <h1 class="text-center">Review of {{ quiz['title'] }}</h1>
     <!-- Subtitle -->
     <p class="text-center text-muted">{{ quiz['subtitle'] }}</p>
-    <p class="text-dark-emphasis">Total score: {{ answer['score']+' / '+answer['total_score'] }}</p>
+    <p class="text-dark-emphasis">Total score: {{ answer['score']|float }} / {{ answer['total_score'] }}</p>
     <p class="header-subtitle">You have got {{ score }}</p>
     <form id="quizForm">
         {% for question in quiz['questions'] %}
@@ -63,13 +63,13 @@
                     {% if is_answered(answer[question['index']]) %}
                         <div class="card-header">
                             Multiple choice (One answer only)
-                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}
+                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1]|float }}
                                 / {{ answer['points'] }}</small>
                         </div>
                     {% else %}
                         <div class="card-header incorrect-card">
                             Multiple choice (One answer only)
-                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}
+                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1]|float }}
                                 / {{ answer['points'] }}</small>
                         </div>
                     {% endif %}
@@ -133,13 +133,13 @@
                     {% if is_answered(answer[question['index']]) %}
                         <div class="card-header">
                             Multiple choice (Not only one answer)
-                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}
+                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1]|float }}
                                 / {{ answer['points'] }}</small>
                         </div>
                     {% else %}
                         <div class="card-header incorrect-card">
                             Multiple choice (Not only one answer)
-                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}
+                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1]|float }}
                                 / {{ answer['points'] }}</small>
                         </div>
                     {% endif %}

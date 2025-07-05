@@ -156,7 +156,7 @@ def submit(entrance_id):
 @app.route('/review/<result_id>')
 def review(result_id):
     entrance_id = Result.query.filter_by(id=result_id).first().entrance_id
-    if session.get('name') is not None:
+    if session.get('name') is not None or session.get('admin', False):
         session['name'] = None
         quiz_id = Entrance.query.filter_by(id=entrance_id).first().quiz_id
         file_path = Quiz.query.filter_by(id=quiz_id).first().file_path
