@@ -118,13 +118,13 @@ def submit(entrance_id):
                 question_count += 1
                 if selection.get(question['index'], False):
                     selection[question['index']].append(0)
-                    question_count = len(question['multioptions'])
+                    question_count_ = len(question['multioptions'])
                     for option in question['multioptions']:
                         if option['opt'] in selection[question['index']]:
                             if option.get('correct', '') == 'true':
-                                selection[question['index']][-1] += score / question_count
+                                selection[question['index']][-1] += score / question_count_
                             else:
-                                selection[question['index']][-1] -= score / question_count
+                                selection[question['index']][-1] -= score / question_count_
                     if selection[question['index']][-1] < 0:
                         selection[question['index']][-1] = 0
                     total_score += selection[question['index']][-1]
