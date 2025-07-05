@@ -72,7 +72,7 @@ def login(entrance_id):
 @app.route('/quiz/<entrance_id>')
 def quiz(entrance_id):
     if session.get('name') is not None:
-        quiz_id = Entrance.query.filter_by(id=entrance_id).first().id
+        quiz_id = Entrance.query.filter_by(id=entrance_id).first().quiz_id
         file_path = Quiz.query.filter_by(id=quiz_id).first().file_path
         with open(file_path, 'r', encoding='utf-8') as f:
             quiz = json.loads(f.read())
@@ -90,7 +90,7 @@ def submit(entrance_id):
         for key in request.form.keys():
             selection[key] = request.form.getlist(key)
 
-        quiz_id = Entrance.query.filter_by(id=entrance_id).first().id
+        quiz_id = Entrance.query.filter_by(id=entrance_id).first().quiz_id
         file_path = Quiz.query.filter_by(id=quiz_id).first().file_path
         with open(file_path, 'r', encoding='utf-8') as f:
             quiz = json.loads(f.read())
@@ -157,7 +157,7 @@ def submit(entrance_id):
 def review(result_id):
     session['name'] = None
     entrance_id = Result.query.filter_by(id=result_id).first().entrance_id
-    quiz_id = Entrance.query.filter_by(id=entrance_id).first().id
+    quiz_id = Entrance.query.filter_by(id=entrance_id).first().quiz_id
     file_path = Quiz.query.filter_by(id=quiz_id).first().file_path
     with open(file_path, 'r', encoding='utf-8') as f:
         quiz = json.loads(f.read())
