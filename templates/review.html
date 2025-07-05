@@ -67,7 +67,7 @@
                         </div>
                     {% endif %}
                     <div class="card-body">
-                        <p>{{ question['index'] }}. {{ question['Q'] }}</p>
+                        <p>{{ question['index'] }}. {{ question['Q']|safe }}</p>
                         {% if 'image' in question.keys() %}
                             <img
                                     src="{{ url_for('img', folder=quiz['image_folder'], filename=question['image']) }}"
@@ -79,20 +79,20 @@
                                     <label class="clickable-option correct-input">
                                         <input class="form-check-input" type="radio" name="{{ question['index'] }}"
                                                value="{{ option['opt'] }}" disabled>
-                                        {{ option['opt'] }}
+                                        {{ option['opt']|safe }}
                                     </label>
                                 {% else %}
                                     <label class="clickable-option incorrect-input">
                                         <input class="form-check-input" type="radio" name="{{ question['index'] }}"
                                                value="{{ option['opt'] }}" disabled>
-                                        {{ option['opt'] }}
+                                        {{ option['opt']|safe }}
                                     </label>
                                 {% endif %}
                             {% else %}
                                 <label class="clickable-option">
                                     <input class="form-check-input" type="radio" name="{{ question['index'] }}"
                                            value="{{ option['opt'] }}" disabled>
-                                    {{ option['opt'] }}
+                                    {{ option['opt']|safe }}
                                 </label>
                             {% endif %}
                         {% endfor %}
@@ -113,7 +113,7 @@
                         </div>
                     {% endif %}
                     <div class="card-body">
-                        <p>{{ question['index'] }}. {{ question['Q'] }}</p>
+                        <p>{{ question['index'] }}. {{ question['Q']|safe }}</p>
                         {% if 'image' in question.keys() %}
                             <img
                                     src="{{ url_for('img', folder=quiz['image_folder'], filename=question['image']) }}"
@@ -125,20 +125,20 @@
                                     <label class="clickable-option correct-input">
                                         <input class="form-check-input" type="checkbox" name="{{ question['index'] }}"
                                                value="{{ option['opt'] }}" disabled>
-                                        {{ option['opt'] }}
+                                        {{ option['opt']|safe }}
                                     </label>
                                 {% else %}
                                     <label class="clickable-option incorrect-input">
                                         <input class="form-check-input" type="checkbox" name="{{ question['index'] }}"
                                                value="{{ option['opt'] }}" disabled>
-                                        {{ option['opt'] }}
+                                        {{ option['opt']|safe }}
                                     </label>
                                 {% endif %}
                             {% else %}
                                 <label class="clickable-option">
                                     <input class="form-check-input" type="checkbox" name="{{ question['index'] }}"
                                            value="{{ option['opt'] }}" disabled>
-                                    {{ option['opt'] }}
+                                    {{ option['opt']|safe }}
                                 </label>
                             {% endif %}
                         {% endfor %}
@@ -161,7 +161,7 @@
                         </div>
                     {% endif %}
                     <div class="card-body">
-                        <p>{{ question['index'] }}. {{ question['Q'] }}</p>
+                        <p>{{ question['index'] }}. {{ question['Q']|safe }}</p>
                         {% if 'image' in question.keys() %}
                             <img
                                     src="{{ url_for('img', folder=quiz['image_folder'], filename=question['image']) }}"

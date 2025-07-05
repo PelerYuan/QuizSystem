@@ -43,7 +43,7 @@
                         <small class="text-muted d-block">Points: {{ quiz['points'] }}</small>
                     </div>
                     <div class=" card-body">
-                        <p>{{ question['index'] }}. {{ question['Q'] }}</p>
+                        <p>{{ question['index'] }}. {{ question['Q']|safe }}</p>
                         {% if 'image' in question.keys() %}
                             <img
                                     src="{{ url_for('img', folder=quiz['image_folder'], filename=question['image']) }}"
@@ -53,7 +53,7 @@
                             <label class="clickable-option">
                                 <input class="form-check-input" type="radio" name="{{ question['index'] }}"
                                        value="{{ option['opt'] }}">
-                                {{ option['opt'] }}
+                                {{ option['opt']|safe }}
                             </label>
                         {% endfor %}
                     </div>
@@ -66,7 +66,7 @@
                         <small class="text-muted d-block">Points: {{ quiz['points'] }}</small>
                     </div>
                     <div class="card-body">
-                        <p>{{ question['index'] }}. {{ question['Q'] }}</p>
+                        <p>{{ question['index'] }}. {{ question['Q']|safe }}</p>
                         {% if 'image' in question.keys() %}
                             <img
                                     src="{{ url_for('img', folder=quiz['image_folder'], filename=question['image']) }}"
@@ -76,7 +76,7 @@
                             <label class="clickable-option">
                                 <input class="form-check-input" type="checkbox" name="{{ question['index'] }}"
                                        value="{{ option['opt'] }}">
-                                {{ option['opt'] }}
+                                {{ option['opt']|safe }}
                             </label>
                         {% endfor %}
                     </div>
@@ -89,7 +89,7 @@
                         <small class="text-muted d-block">Points: {{ quiz['points'] }}</small>
                     </div>
                     <div class="card-body">
-                        <p>{{ question['index'] }}. {{ question['Q'] }}</p>
+                        <p>{{ question['index'] }}. {{ question['Q']|safe }}</p>
                         {% if 'image' in question.keys() %}
                             <img
                                     src="{{ url_for('img', folder=quiz['image_folder'], filename=question['image']) }}"
