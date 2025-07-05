@@ -137,9 +137,9 @@ def submit(entrance_id):
                 else:
                     selection[question['index']] = [-404]
 
-            selection['score'] = str(total_score)
-            selection['total_score'] = str(score * question_count)  # Ignore itext
-
+        selection['score'] = str(total_score)
+        selection['total_score'] = str(score * question_count)  # Ignore itext
+        selection['points'] = str(score)
         file_path = os.path.join('result/', str(uuid.uuid4())) + '.json'
         with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(selection, f, ensure_ascii=False, indent=4)

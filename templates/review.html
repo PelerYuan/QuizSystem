@@ -35,6 +35,11 @@
             background-color: #f8d7da; /* 红色背景 */
         }
 
+        .not-selected-input {
+            border: 2px solid #ffc107; /* 黄色边框 */
+            background-color: #fff3cd; /* 浅黄色背景 */
+        }
+
         .incorrect-card {
             border: 2px solid #dc3545; /* 红色边框 */
             background-color: #f8d7da; /* 红色背景 */
@@ -58,12 +63,14 @@
                     {% if is_answered(answer[question['index']]) %}
                         <div class="card-header">
                             Multiple choice (One answer only)
-                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}</small>
+                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}
+                                / {{ answer['points'] }}</small>
                         </div>
                     {% else %}
                         <div class="card-header incorrect-card">
                             Multiple choice (One answer only)
-                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}</small>
+                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}
+                                / {{ answer['points'] }}</small>
                         </div>
                     {% endif %}
                     <div class="card-body">
@@ -126,12 +133,14 @@
                     {% if is_answered(answer[question['index']]) %}
                         <div class="card-header">
                             Multiple choice (Not only one answer)
-                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}</small>
+                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}
+                                / {{ answer['points'] }}</small>
                         </div>
                     {% else %}
                         <div class="card-header incorrect-card">
                             Multiple choice (Not only one answer)
-                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}</small>
+                            <small class="text-muted d-block">Points: {{ answer[question['index']][-1] }}
+                                / {{ answer['points'] }}</small>
                         </div>
                     {% endif %}
                     <div class="card-body">
@@ -179,11 +188,29 @@
                                     </label>
                                 {% endif %}
                             {% else %}
-                                <label class="clickable-option">
-                                    <input class="form-check-input" type="checkbox" name="{{ question['index'] }}"
-                                           value="{{ option['opt'] }}" disabled>
-                                    {{ option['opt']|safe }}
-                                </label>
+                                {% if 'correct' in option.keys() %}
+                                    {% if is_answered(answer[question['index']]) %}
+                                        <label class="clickable-option not-selected-input">
+                                            <input class="form-check-input" type="checkbox"
+                                                   name="{{ question['index'] }}"
+                                                   value="{{ option['opt'] }}" disabled>
+                                            {{ option['opt']|safe }}
+                                        </label>
+                                    {% else %}
+                                        <label class="clickable-option">
+                                            <input class="form-check-input" type="checkbox"
+                                                   name="{{ question['index'] }}"
+                                                   value="{{ option['opt'] }}" disabled>
+                                            {{ option['opt']|safe }}
+                                        </label>
+                                    {% endif %}
+                                {% else %}
+                                    <label class="clickable-option">
+                                        <input class="form-check-input" type="checkbox" name="{{ question['index'] }}"
+                                               value="{{ option['opt'] }}" disabled>
+                                        {{ option['opt']|safe }}
+                                    </label>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     </div>
