@@ -273,10 +273,11 @@ def quiz_add():
 def entrance_manage(quiz_id):
     if session.get('admin', False):
         entrances = []
+        quiz_name  = Quiz.query.filter_by(id=quiz_id).first().name
         for entrance in Entrance.query.filter_by(quiz_id=quiz_id).all():
             entrances.append(
                 {'id': entrance.id, 'quiz_id': entrance.quiz_id, 'name': entrance.name, 'description': entrance.description})
-        return render_template('admin/manage_entrance.html', entrances=entrances, quiz_id=quiz_id, hostname=request.host)
+        return render_template('admin/manage_entrance.html', entrances=entrances, quiz_id=quiz_id, quiz_name=quiz_name,hostname=request.host)
     return redirect(url_for('admin_login'))
 
 
@@ -296,10 +297,13 @@ def entrance_add(quiz_id):
 def result_manage(entrance_id):
     if session.get('admin', False):
         results = []
+        quiz_id = Entrance.query.filter_by(id=entrance_id).first().quiz_id
+        quiz_name = Quiz.query.filter_by(id=quiz_id).first().name
+        entrance_name = Entrance.query.filter_by(id=entrance_id).first().name
         for result in Result.query.filter_by(entrance_id=entrance_id).all():
             results.append(
                 {'id': result.id, 'entrance_id': result.entrance_id, 'student_name': result.student_name, 'score': result.score})
-        return render_template('admin/manage_result.html', results=results, entrance_id=entrance_id)
+        return render_template('admin/manage_result.html', results=results, entrance_id=entrance_id, quiz_name=quiz_name,entrance_name=entrance_name)
     return redirect(url_for('admin_login'))
 
 
