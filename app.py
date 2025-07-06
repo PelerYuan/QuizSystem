@@ -324,6 +324,26 @@ def result_download(entrance_id):
         return send_file('tmp/Result.xlsx', as_attachment=True)
     return redirect(url_for('admin_login'))
 
+@app.route('/entrance_delete/<entrance_id>')
+def entrance_delete(entrance_id):
+    if session.get('admin', False):
+        # delete related results
+        for result in Result.query.filter_by(entrance_id=entrance_id).all():
+            result_delete(result.id)
+        entrance = Entrance.query.filter_by(id=entrance_id).first()
+        db.session.delete(entrance)
+        db.session.commit()
+        return redirect(url_for('entrance_manage', quiz_id=entrance.quiz_id))
+    return redirect(url_for('admin_login'))
+
+@app.route('/result_delete/<result_id>')
+def result_delete(result_id):
+    if session.get('admin', False):
+        result = Result.query.filter_by(id=result_id).first()
+        db.session.delete(result)
+        db.session.commit()
+        return redirect(url_for('result_manage', entrance_id=result.entrance_id))
+    return redirect(url_for('admin_login'))
 
 if __name__ == '__main__':
     app.run()
