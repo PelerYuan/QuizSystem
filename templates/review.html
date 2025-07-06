@@ -118,11 +118,19 @@
                                     </label>
                                 {% endif %}
                             {% else %}
-                                <label class="clickable-option">
-                                    <input class="form-check-input" type="radio" name="{{ question['index'] }}"
-                                           value="{{ option['opt'] }}" disabled>
-                                    {{ option['opt']|safe }}
-                                </label>
+                                {% if 'correct' in option.keys() %}
+                                    <label class="clickable-option correct-input">
+                                        <input class="form-check-input" type="radio" name="{{ question['index'] }}"
+                                               value="{{ option['opt'] }}" disabled>
+                                        {{ option['opt']|safe }}
+                                    </label>
+                                {% else %}
+                                    <label class="clickable-option">
+                                        <input class="form-check-input" type="radio" name="{{ question['index'] }}"
+                                               value="{{ option['opt'] }}" disabled>
+                                        {{ option['opt']|safe }}
+                                    </label>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     </div>
