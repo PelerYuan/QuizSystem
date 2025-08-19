@@ -215,6 +215,7 @@
                         <p class="exam-subtitle">{{ entrance['description'] }}</p>
                     </div>
                     <div class="exam-actions">
+                        <a class="btn btn-custom btn-delete" href="{{ url_for('entrance_delete', entrance_id=entrance['id']) }}">Delete</a>
                         <a class="btn btn-custom btn-edit"
                            href="{{ url_for('result_manage', entrance_id=entrance['id']) }}">Manage entrance</a>
                         <button class="btn btn-custom btn-trial"
@@ -229,7 +230,7 @@
 <!-- 页脚 -->
 <div class="footer-section">
     <div class="container">
-        <p class="footer-text">&copy; 2023 Quiz System. All rights reserved.</p>
+        <p class="footer-text">&copy; 2025 Quiz System. All rights reserved.</p>
     </div>
 </div>
 
