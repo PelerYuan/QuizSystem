@@ -203,7 +203,7 @@
     <!-- 主要内容区域 -->
     <div class="container content-container">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3>Available Entrances for `{{ quiz_name }}`</h3>
+            <h3>Available Entrances for `<a href="{{ url_for('admin') }}">{{ quiz_name }}</a>`</h3>
             <a href="{{ url_for('entrance_add', quiz_id=quiz_id) }}" class="btn btn-custom btn-add">Add New Entrance</a>
         </div>
 
@@ -217,7 +217,7 @@
                     <div class="exam-actions">
                         <a class="btn btn-custom btn-delete" href="{{ url_for('entrance_delete', entrance_id=entrance['id']) }}">Delete</a>
                         <a class="btn btn-custom btn-edit"
-                           href="{{ url_for('result_manage', entrance_id=entrance['id']) }}">Manage entrance</a>
+                           href="{{ url_for('result_manage', entrance_id=entrance['id']) }}">Check Results</a>
                         <button class="btn btn-custom btn-trial"
                            onclick="copyToClipboard('{{ hostname }}{{ url_for('quiz', entrance_id=entrance['id']) }}')">Copy Entrance Link</button>
                     </div>

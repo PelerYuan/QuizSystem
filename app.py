@@ -20,7 +20,7 @@ db = SQLAlchemy(app)
 
 class Quiz(db.Model):
     __tablename__ = 'quiz'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(256), primary_key=True, default=str(uuid.uuid4()))
     name = db.Column(db.String(256), unique=False, nullable=False)
     description = db.Column(db.String(256), unique=False, nullable=False)
     file_path = db.Column(db.String(256), unique=False, nullable=False)
@@ -33,7 +33,7 @@ class Quiz(db.Model):
 
 class Entrance(db.Model):
     __tablename__ = 'entrance'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(256), primary_key=True, default=str(uuid.uuid4()))
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'))
     name = db.Column(db.String(256), unique=False, nullable=False)
     description = db.Column(db.String(256), unique=False, nullable=False)
@@ -46,7 +46,7 @@ class Entrance(db.Model):
 
 class Result(db.Model):
     __tablename__ = 'result'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(256), primary_key=True, default=str(uuid.uuid4()))
     entrance_id = db.Column(db.Integer, db.ForeignKey('entrance.id'))
     student_name = db.Column(db.String(256), unique=False, nullable=False)
     score = db.Column(db.Float, unique=False, nullable=False)
@@ -305,7 +305,7 @@ def result_manage(entrance_id):
         for result in Result.query.filter_by(entrance_id=entrance_id).all():
             results.append(
                 {'id': result.id, 'entrance_id': result.entrance_id, 'student_name': result.student_name, 'score': result.score})
-        return render_template('admin/manage_result.html', results=results, entrance_id=entrance_id, quiz_name=quiz_name,entrance_name=entrance_name)
+        return render_template('admin/manage_result.html', results=results, quiz_id=quiz_id,entrance_id=entrance_id, quiz_name=quiz_name,entrance_name=entrance_name)
     return redirect(url_for('admin_login'))
 
 
