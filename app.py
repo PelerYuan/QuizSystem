@@ -24,6 +24,7 @@ class Quiz(db.Model):
     name = db.Column(db.String(256), unique=False, nullable=False)
     description = db.Column(db.String(256), unique=False, nullable=False)
     file_path = db.Column(db.String(256), unique=False, nullable=False)
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     entrance = db.relationship('Entrance', backref='quiz')
 
@@ -37,6 +38,7 @@ class Entrance(db.Model):
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'))
     name = db.Column(db.String(256), unique=False, nullable=False)
     description = db.Column(db.String(256), unique=False, nullable=False)
+    create_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     result = db.relationship('Result', backref='entrance')
 
@@ -51,6 +53,7 @@ class Result(db.Model):
     student_name = db.Column(db.String(256), unique=False, nullable=False)
     score = db.Column(db.Float, unique=False, nullable=False)
     file_path = db.Column(db.String(256), unique=False, nullable=False)
+    create_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     def __repr__(self):
         return f'<Entrance ID: {self.id}, Name: {self.name}, Description: {self.description}>'
@@ -304,8 +307,8 @@ def result_manage(entrance_id):
         entrance_name = Entrance.query.filter_by(id=entrance_id).first().name
         for result in Result.query.filter_by(entrance_id=entrance_id).all():
             results.append(
-                {'id': result.id, 'entrance_id': result.entrance_id, 'student_name': result.student_name, 'score': result.score})
-        return render_template('admin/manage_result.html', results=results, quiz_id=quiz_id,entrance_id=entrance_id, quiz_name=quiz_name,entrance_name=entrance_name)
+                {'id': result.id, 'entrance_id': result.entrance_id, 'student_name': result.student_name, 'score': result.score, 'create_at': result.create_at})
+        return render_template('admin/manage_result.html', results=results, quiz_id=quiz_id, entrance_id=entrance_id, quiz_name=quiz_name,entrance_name=entrance_name)
     return redirect(url_for('admin_login'))
 
 
