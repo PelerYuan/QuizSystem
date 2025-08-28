@@ -236,6 +236,7 @@ def quiz_add():
                     with open(json_path, 'r', encoding='utf-8') as f:
                         quiz = json.loads(f.read())
                         quiz['image_folder'] = 'img'
+                        quiz['title'] = request.form['name']
                         for i in range(len(quiz['questions'])):
                             question = quiz['questions'][i]
                             image = question.get('image', False)
