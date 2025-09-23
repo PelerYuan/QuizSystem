@@ -179,6 +179,10 @@ def review(result_id):
 def img(folder, filename):
     return send_from_directory(folder, filename)
 
+@app.route('/img/<filename>')
+def img_direct(filename):
+    return send_from_directory('img', filename)
+
 
 def is_answered(answer):
     return len(answer) > 1
@@ -229,48 +233,92 @@ def quiz_add():
             json_ = request.files.get('json')
             image_dir = {}
             json_path = ""
+            quiz_id = None
+            
             try:
                 if json_:
+                    # Read and process the uploaded JSON
                     json_path = os.path.join('quiz/', str(uuid.uuid4())) + '.json'
                     json_.save(json_path)
+                    
                     with open(json_path, 'r', encoding='utf-8') as f:
-                        quiz = json.loads(f.read())
-                        quiz['image_folder'] = 'img'
-                        quiz['title'] = request.form['name']
-                        for i in range(len(quiz['questions'])):
-                            question = quiz['questions'][i]
+                        quiz_data = json.loads(f.read())
+                        
+                    # Ensure required fields exist
+                    quiz_data['image_folder'] = 'img'
+                    if 'title' not in quiz_data or not quiz_data['title']:
+                        quiz_data['title'] = request.form['name']
+                    if 'subtitle' not in quiz_data:
+                        quiz_data['subtitle'] = request.form['name']  # Use name as fallback
+                    if 'description' not in quiz_data:
+                        quiz_data['description'] = request.form['description']
+                    if 'points' not in quiz_data:
+                        quiz_data['points'] = '1'
+                    
+                    # Process image references in questions
+                    if 'questions' in quiz_data:
+                        for i, question in enumerate(quiz_data['questions']):
                             image = question.get('image', False)
                             if image:
-                                code = str(uuid.uuid4())+ '.' + image.split('.')[-1]
+                                # Generate new UUID-based filename
+                                code = str(uuid.uuid4()) + '.' + image.split('.')[-1]
                                 image_dir[image] = code
                                 question['image'] = code
+                    
+                    # Save the processed JSON
                     with open(json_path, 'w', encoding='utf-8') as f:
-                        json.dump(quiz, f, ensure_ascii=False, indent=4)
+                        json.dump(quiz_data, f, ensure_ascii=False, indent=4)
+                        
             except Exception as e:
-                return render_template('admin/add_quiz.html', error="Json File invalid: " + e.args[0])
+                if json_path and os.path.exists(json_path):
+                    os.remove(json_path)
+                return render_template('admin/add_quiz.html', error="JSON file invalid: " + str(e))
 
+            # Handle image uploads
             try:
                 images = request.files.getlist('images')
+                
+                # Check if all referenced images are provided
                 for image in images:
-                    if image:
+                    if image and image.filename not in image_dir:
+                        return render_template('admin/add_quiz.html', error=f"Unexpected image: {image.filename}")
+                
+                # Save uploaded images with new names
+                for image in images:
+                    if image and image.filename in image_dir:
                         filename = image_dir[image.filename]
-            except KeyError as e:
-                return render_template('admin/add_quiz.html', error="Image invalid: " + e.args[0])
+                        image.save(os.path.join('img/', filename))
+                        image_dir.pop(image.filename)
+                
+                # Check if any referenced images are missing
+                if image_dir:
+                    # Clean up saved JSON file
+                    if json_path and os.path.exists(json_path):
+                        os.remove(json_path)
+                    return render_template('admin/add_quiz.html', error="Missing images: " + str(list(image_dir.keys())))
+                    
+            except Exception as e:
+                # Clean up saved JSON file
+                if json_path and os.path.exists(json_path):
+                    os.remove(json_path)
+                return render_template('admin/add_quiz.html', error="Image processing error: " + str(e))
 
-            for image in images:
-                if image:
-                    filename = image_dir[image.filename]
-                    image_dir.pop(image.filename)
-                    image.save(os.path.join('img/', filename))
-
-            if image_dir:
-                return render_template('admin/add_quiz.html', error="Lack of image: " + str(list(image_dir.keys())))
-
-            quiz = Quiz(name=request.form['name'], description=request.form['description'], file_path=json_path)
-            db.session.add(quiz)
-            db.session.commit()
-
-            return redirect(url_for('admin'))
+            # Save quiz to database
+            try:
+                quiz_id = str(uuid.uuid4())
+                quiz = Quiz(id=quiz_id, name=request.form['name'], description=request.form['description'], file_path=json_path)
+                db.session.add(quiz)
+                db.session.commit()
+                
+                # Redirect to visual editor for further editing
+                return redirect(url_for('quiz_edit_visual', quiz_id=quiz_id))
+                
+            except Exception as e:
+                # Clean up files if database save fails
+                if json_path and os.path.exists(json_path):
+                    os.remove(json_path)
+                return render_template('admin/add_quiz.html', error="Database error: " + str(e))
+                
         return render_template('admin/add_quiz.html', error='')
     return redirect(url_for('admin_login'))
 
@@ -302,14 +350,167 @@ def entrance_add(quiz_id):
 @app.route('/result_manage/<entrance_id>')
 def result_manage(entrance_id):
     if session.get('admin', False):
+        # Get basic information
+        entrance = Entrance.query.filter_by(id=entrance_id).first()
+        quiz = Quiz.query.filter_by(id=entrance.quiz_id).first()
+        
+        # Get quiz data to calculate max possible score
+        with open(quiz.file_path, 'r', encoding='utf-8') as f:
+            quiz_data = json.loads(f.read())
+        
+        points_per_question = float(quiz_data.get('points', 1))
+        graded_questions = 0
+        for question in quiz_data.get('questions', []):
+            if 'options' in question or 'multioptions' in question:
+                graded_questions += 1
+        max_possible_score = points_per_question * graded_questions
+        
+        # Get all results and calculate statistics
+        results = Result.query.filter_by(entrance_id=entrance_id).all()
+        
+        if not results:
+            return render_template('admin/result_analytics.html', 
+                                 quiz_name=quiz.name, entrance_name=entrance.name,
+                                 quiz_id=entrance.quiz_id, entrance_id=entrance_id,
+                                 total_students=0, statistics={}, best_students=[], 
+                                 dangerous_students=[], score_distribution=[])
+        
+        # Calculate statistics
+        scores = [result.score for result in results]
+        total_students = len(scores)
+        average_score = sum(scores) / total_students
+        max_score = max(scores)
+        min_score = min(scores)
+        
+        # Calculate pass rate (assuming 60% is passing)
+        passing_score = max_possible_score * 0.6
+        pass_count = sum(1 for score in scores if score >= passing_score)
+        pass_rate = (pass_count / total_students) * 100
+        
+        # Score distribution for charts
+        score_ranges = ['0-20%', '21-40%', '41-60%', '61-80%', '81-100%']
+        distribution = [0, 0, 0, 0, 0]
+        
+        for score in scores:
+            percentage = (score / max_possible_score) * 100 if max_possible_score > 0 else 0
+            if percentage <= 20:
+                distribution[0] += 1
+            elif percentage <= 40:
+                distribution[1] += 1
+            elif percentage <= 60:
+                distribution[2] += 1
+            elif percentage <= 80:
+                distribution[3] += 1
+            else:
+                distribution[4] += 1
+        
+        # Categorize students
+        # Best students: top performers
+        excellent_threshold = max_possible_score * 0.8
+        good_threshold = max_possible_score * 0.7
+        
+        best_students = []
+        dangerous_students = []
+        
+        # Sort results by score
+        sorted_results = sorted(results, key=lambda x: x.score, reverse=True)
+        
+        # Get top performers (top 20% or minimum 1, maximum 10)
+        top_count = max(1, min(10, int(total_students * 0.2)))
+        for result in sorted_results[:top_count]:
+            if result.score >= excellent_threshold:
+                best_students.append({
+                    'name': result.student_name,
+                    'score': result.score,
+                    'percentage': round((result.score / max_possible_score) * 100, 1) if max_possible_score > 0 else 0,
+                    'category': 'Excellent'
+                })
+            elif result.score >= good_threshold:
+                best_students.append({
+                    'name': result.student_name,
+                    'score': result.score,
+                    'percentage': round((result.score / max_possible_score) * 100, 1) if max_possible_score > 0 else 0,
+                    'category': 'Good'
+                })
+        
+        # Get dangerous students: bottom 4 students (or all if less than 4)
+        bottom_count = min(4, total_students)
+        for result in sorted_results[-bottom_count:]:
+            dangerous_students.append({
+                'name': result.student_name,
+                'score': result.score,
+                'percentage': round((result.score / max_possible_score) * 100, 1) if max_possible_score > 0 else 0,
+                'category': 'Needs Attention'
+            })
+        
+        # Reverse dangerous students list to show lowest scores first
+        dangerous_students = dangerous_students[::-1]
+        
+        statistics = {
+            'total_students': total_students,
+            'average_score': round(average_score, 2),
+            'max_score': max_score,
+            'min_score': min_score,
+            'max_possible_score': max_possible_score,
+            'pass_rate': round(pass_rate, 1),
+            'average_percentage': round((average_score / max_possible_score) * 100, 1) if max_possible_score > 0 else 0
+        }
+        
+        return render_template('admin/result_analytics.html',
+                             quiz_name=quiz.name, entrance_name=entrance.name,
+                             quiz_id=entrance.quiz_id, entrance_id=entrance_id,
+                             total_students=total_students, statistics=statistics,
+                             best_students=best_students, dangerous_students=dangerous_students,
+                             score_distribution=list(zip(score_ranges, distribution)),
+                             scores_data=scores)
+    return redirect(url_for('admin_login'))
+
+@app.route('/result_detailed/<entrance_id>')
+def result_detailed(entrance_id):
+    if session.get('admin', False):
+        # Get search and sort parameters
+        search_query = request.args.get('search', '').strip()
+        sort_by = request.args.get('sort', 'date')  # default sort by date
+        sort_order = request.args.get('order', 'desc')  # default descending
+
         results = []
         quiz_id = Entrance.query.filter_by(id=entrance_id).first().quiz_id
         quiz_name = Quiz.query.filter_by(id=quiz_id).first().name
         entrance_name = Entrance.query.filter_by(id=entrance_id).first().name
-        for result in Result.query.filter_by(entrance_id=entrance_id).all():
+
+        # Base query
+        query = Result.query.filter_by(entrance_id=entrance_id)
+
+        # Apply search filter if provided
+        if search_query:
+            query = query.filter(Result.student_name.contains(search_query))
+
+        # Apply sorting
+        if sort_by == 'name':
+            if sort_order == 'asc':
+                query = query.order_by(Result.student_name.asc())
+            else:
+                query = query.order_by(Result.student_name.desc())
+        elif sort_by == 'score':
+            if sort_order == 'asc':
+                query = query.order_by(Result.score.asc())
+            else:
+                query = query.order_by(Result.score.desc())
+        else:  # sort by date (default)
+            if sort_order == 'asc':
+                query = query.order_by(Result.create_at.asc())
+            else:
+                query = query.order_by(Result.create_at.desc())
+
+        # Get results
+        for result in query.all():
             results.append(
-                {'id': result.id, 'entrance_id': result.entrance_id, 'student_name': result.student_name, 'score': result.score, 'create_at': result.create_at})
-        return render_template('admin/manage_result.html', results=results, quiz_id=quiz_id, entrance_id=entrance_id, quiz_name=quiz_name,entrance_name=entrance_name)
+                {'id': result.id, 'entrance_id': result.entrance_id, 'student_name': result.student_name,
+                 'score': result.score, 'create_at': result.create_at})
+
+        return render_template('admin/manage_result.html', results=results, quiz_id=quiz_id,
+                             entrance_id=entrance_id, quiz_name=quiz_name, entrance_name=entrance_name,
+                             search_query=search_query, sort_by=sort_by, sort_order=sort_order)
     return redirect(url_for('admin_login'))
 
 
@@ -347,6 +548,153 @@ def result_delete(result_id):
         db.session.delete(result)
         db.session.commit()
         return redirect(url_for('result_manage', entrance_id=result.entrance_id))
+    return redirect(url_for('admin_login'))
+
+@app.route('/quiz_create_visual', methods=['GET', 'POST'])
+def quiz_create_visual():
+    if session.get('admin', False):
+        if request.method == 'POST':
+            try:
+                print("[DEBUG] Received POST request to create quiz")
+                quiz_data = request.get_json()
+                print(f"[DEBUG] Quiz data received: {quiz_data}")
+                
+                if not quiz_data:
+                    print("[DEBUG] No data received")
+                    return jsonify({'success': False, 'error': 'No data received'})
+                
+                # Create quiz JSON structure
+                quiz_json = {
+                    "title": quiz_data.get('title', ''),
+                    "subtitle": quiz_data.get('subtitle', ''), 
+                    "description": quiz_data.get('description', ''),
+                    "points": str(quiz_data.get('points', '1')),
+                    "image_folder": "img",
+                    "questions": quiz_data.get('questions', [])
+                }
+                
+                print(f"[DEBUG] Quiz JSON structure: {quiz_json}")
+                
+                # Save JSON file
+                json_path = os.path.join('quiz/', str(uuid.uuid4())) + '.json'
+                with open(json_path, 'w', encoding='utf-8') as f:
+                    json.dump(quiz_json, f, ensure_ascii=False, indent=4)
+                
+                print(f"[DEBUG] Saved JSON to: {json_path}")
+                
+                # Save to database
+                quiz_id = str(uuid.uuid4())
+                quiz = Quiz(id=quiz_id, name=quiz_data.get('title', ''), description=quiz_data.get('description', ''), file_path=json_path)
+                db.session.add(quiz)
+                db.session.commit()
+                
+                print(f"[DEBUG] Saved to database with ID: {quiz_id}")
+                
+                return jsonify({'success': True, 'quiz_id': quiz.id})
+            except Exception as e:
+                print(f"[DEBUG] Error creating quiz: {str(e)}")
+                return jsonify({'success': False, 'error': str(e)})
+        
+        return render_template('admin/visual_editor.html', mode='create')
+    return redirect(url_for('admin_login'))
+
+@app.route('/quiz_edit_visual/<quiz_id>')
+def quiz_edit_visual(quiz_id):
+    if session.get('admin', False):
+        quiz = Quiz.query.filter_by(id=quiz_id).first()
+        if quiz:
+            with open(quiz.file_path, 'r', encoding='utf-8') as f:
+                quiz_data = json.loads(f.read())
+            return render_template('admin/visual_editor.html', mode='edit', quiz_id=quiz_id, quiz_data=quiz_data)
+        return redirect(url_for('admin'))
+    return redirect(url_for('admin_login'))
+
+@app.route('/quiz_save_visual', methods=['POST'])
+def quiz_save_visual():
+    if session.get('admin', False):
+        try:
+            data = request.get_json()
+            
+            if not data:
+                return jsonify({'success': False, 'error': 'No data received'})
+                
+            quiz_id = data.get('quiz_id')
+            
+            if quiz_id:  # Edit existing quiz
+                quiz = Quiz.query.filter_by(id=quiz_id).first()
+                if quiz:
+                    # Update quiz JSON
+                    quiz_json = {
+                        "title": data.get('title', ''),
+                        "subtitle": data.get('subtitle', ''),
+                        "description": data.get('description', ''), 
+                        "points": str(data.get('points', '1')),
+                        "image_folder": "img",
+                        "questions": data.get('questions', [])
+                    }
+                    
+                    with open(quiz.file_path, 'w', encoding='utf-8') as f:
+                        json.dump(quiz_json, f, ensure_ascii=False, indent=4)
+                    
+                    # Update database record
+                    quiz.name = data.get('title', '')
+                    quiz.description = data.get('description', '')
+                    db.session.commit()
+                    
+                    return jsonify({'success': True})
+                else:
+                    return jsonify({'success': False, 'error': 'Quiz not found'})
+            
+            return jsonify({'success': False, 'error': 'Quiz ID not provided'})
+        except Exception as e:
+            return jsonify({'success': False, 'error': str(e)})
+    return jsonify({'success': False, 'error': 'Unauthorized'})
+
+@app.route('/upload_question_image', methods=['POST'])
+def upload_question_image():
+    if session.get('admin', False):
+        try:
+            if 'image' not in request.files:
+                return jsonify({'success': False, 'error': 'No image file'})
+            
+            file = request.files['image']
+            if file.filename == '':
+                return jsonify({'success': False, 'error': 'No file selected'})
+            
+            if file:
+                # Generate unique filename
+                file_extension = file.filename.rsplit('.', 1)[1].lower()
+                filename = str(uuid.uuid4()) + '.' + file_extension
+                file_path = os.path.join('img/', filename)
+                file.save(file_path)
+                
+                return jsonify({'success': True, 'filename': filename})
+        except Exception as e:
+            return jsonify({'success': False, 'error': str(e)})
+    return jsonify({'success': False, 'error': 'Unauthorized'})
+
+@app.route('/quiz_delete/<quiz_id>')
+def quiz_delete(quiz_id):
+    if session.get('admin', False):
+        quiz = Quiz.query.filter_by(id=quiz_id).first()
+        if quiz:
+            # Delete related entrances and results
+            for entrance in Entrance.query.filter_by(quiz_id=quiz_id).all():
+                for result in Result.query.filter_by(entrance_id=entrance.id).all():
+                    if os.path.exists(result.file_path):
+                        os.remove(result.file_path)
+                    db.session.delete(result)
+                db.session.delete(entrance)
+            
+            # Delete quiz file
+            if os.path.exists(quiz.file_path):
+                os.remove(quiz.file_path)
+            
+            # Delete quiz record
+            db.session.delete(quiz)
+            db.session.commit()
+        
+        return redirect(url_for('admin'))
     return redirect(url_for('admin_login'))
 
 if __name__ == '__main__':

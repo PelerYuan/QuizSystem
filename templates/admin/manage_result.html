@@ -6,6 +6,8 @@
     <title>View Result</title>
     <!-- Bootstrap CSS -->
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         html, body {
             height: 100%;
@@ -157,6 +159,130 @@
         .content-container {
             padding: 20px;
         }
+
+        .search-sort-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box {
+            flex: 1;
+            margin-right: 15px;
+            position: relative;
+        }
+
+        .search-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            padding-right: 45px; /* Make room for cancel button */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        .search-cancel-btn {
+            position: absolute;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .search-cancel-btn:hover {
+            background-color: #f8f9fa;
+            color: #dc3545;
+        }
+
+        .search-cancel-btn.hidden {
+            display: none;
+        }
+
+        .sort-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .sort-select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: white;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 8px center;
+            background-repeat: no-repeat;
+            background-size: 16px 12px;
+            padding-right: 40px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .sort-select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        .sort-select:hover {
+            border-color: #007bff;
+        }
+
+        .sort-btn {
+            padding: 10px 15px;
+            border: 1px solid #007bff;
+            background-color: white;
+            color: #007bff;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .sort-btn.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .sort-btn:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .results-info {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -204,9 +330,56 @@
         <div class="container content-container">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3>Commited Results for <a href="{{ url_for('admin') }}">{{ quiz_name }}</a>>><a href="{{ url_for('entrance_manage', quiz_id=quiz_id) }}">{{ entrance_name }}</a></h3>
-                <a href="{{ url_for('result_download', entrance_id=entrance_id) }}" class="btn btn-custom btn-add">Download Result</a>
+                <div>
+                    <a href="{{ url_for('result_download', entrance_id=entrance_id) }}" class="btn btn-custom btn-add">Download Excel</a>
+                </div>
             </div>
 
+            <!-- Search and Sort Controls -->
+            <div class="search-sort-container">
+                <form method="GET" id="searchSortForm">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="search-box">
+                            <div class="search-input-container">
+                                <input type="text" name="search" class="search-input" id="searchInput"
+                                       placeholder="Search by student name..."
+                                       value="{{ search_query or '' }}"
+                                       onkeyup="debounceSearch()"
+                                       oninput="toggleCancelButton()">
+                                <button type="button" class="search-cancel-btn {% if not search_query %}hidden{% endif %}"
+                                        onclick="clearSearch()" title="Clear search">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="sort-controls">
+                            <label style="margin-right: 10px; font-weight: 600;">Sort by:</label>
+                            <select name="sort" class="sort-select" onchange="updateSort()">
+                                <option value="date" {% if sort_by == 'date' %}selected{% endif %}>Date</option>
+                                <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Name</option>
+                                <option value="score" {% if sort_by == 'score' %}selected{% endif %}>Score</option>
+                            </select>
+                            <button type="button" class="sort-btn {% if sort_order == 'asc' %}active{% endif %}"
+                                    onclick="toggleSortOrder('asc')">
+                                <i class="fas fa-sort-up"></i> Asc
+                            </button>
+                            <button type="button" class="sort-btn {% if sort_order == 'desc' %}active{% endif %}"
+                                    onclick="toggleSortOrder('desc')">
+                                <i class="fas fa-sort-down"></i> Desc
+                            </button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="order" value="{{ sort_order or 'desc' }}" id="orderField">
+                </form>
+
+                <div class="results-info">
+                    Showing {{ results|length }} result(s)
+                    {% if search_query %}for "{{ search_query }}"{% endif %}
+                    - Sorted by {{ sort_by|title }} ({{ sort_order|upper }})
+                </div>
+            </div>
+
+            {% if results %}
             <ul class="exam-list">
                 {% for result in results %}
                     <li class="exam-item">
@@ -215,10 +388,6 @@
                             <b class="exam-subtitle">Score: {{ result['score'] }}, Date: {{ result['create_at'] }}</b>
                         </div>
                         <div class="exam-actions">
-{#                            <a class="btn btn-custom btn-edit"#}
-{#                               href="{{ url_for('entrance_manage', quiz_id=entrance['id']) }}">Manage entrance</a>#}
-{#                            <a class="btn btn-custom btn-source"#}
-{#                               href="{{ url_for('entrance_add', quiz_id=entrance['id']) }}">Add entrance</a>#}
                             <a class="btn btn-custom btn-delete" href="{{ url_for('result_delete', result_id=result['id']) }}">Delete</a>
                             <a class="btn btn-custom btn-trial"
                                href="{{ url_for('review', result_id=result['id']) }}">Review</a>
@@ -226,6 +395,18 @@
                     </li>
                 {% endfor %}
             </ul>
+            {% else %}
+            <div style="text-align: center; padding: 60px 20px; color: #6c757d;">
+                <i class="fas fa-search" style="font-size: 48px; margin-bottom: 20px;"></i>
+                <h4>No Results Found</h4>
+                {% if search_query %}
+                    <p>No results found for "{{ search_query }}". Try a different search term.</p>
+                    <a href="{{ url_for('result_detailed', entrance_id=entrance_id) }}" class="btn btn-custom btn-source">Clear Search</a>
+                {% else %}
+                    <p>No students have completed this quiz yet.</p>
+                {% endif %}
+            </div>
+            {% endif %}
         </div>
     </div>
 
@@ -239,5 +420,69 @@
     <!-- Bootstrap JS and dependencies -->
     <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+
+    <script>
+        let searchTimeout;
+
+        function debounceSearch() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                document.getElementById('searchSortForm').submit();
+            }, 300); // Wait 300ms after user stops typing
+        }
+
+        function updateSort() {
+            document.getElementById('searchSortForm').submit();
+        }
+
+        function toggleSortOrder(order) {
+            document.getElementById('orderField').value = order;
+            // Update button states
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            document.getElementById('searchSortForm').submit();
+        }
+
+        function toggleCancelButton() {
+            const searchInput = document.getElementById('searchInput');
+            const cancelBtn = document.querySelector('.search-cancel-btn');
+
+            if (searchInput.value.trim() === '') {
+                cancelBtn.classList.add('hidden');
+            } else {
+                cancelBtn.classList.remove('hidden');
+            }
+        }
+
+        function clearSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const cancelBtn = document.querySelector('.search-cancel-btn');
+
+            searchInput.value = '';
+            cancelBtn.classList.add('hidden');
+            searchInput.focus();
+
+            // Submit form to clear search
+            document.getElementById('searchSortForm').submit();
+        }
+
+        // Handle Enter key in search input
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) {
+                searchInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        document.getElementById('searchSortForm').submit();
+                    }
+                });
+            }
+
+            // Initialize cancel button state
+            toggleCancelButton();
+        });
+    </script>
 </body>
 </html>

@@ -129,8 +129,8 @@
     <!-- 标题区域 -->
     <div class="header-section">
         <div class="container">
-            <h1 class="header-title">Upload Quiz Files</h1>
-            <p class="header-subtitle">Add new quiz content to the system</p>
+            <h1 class="header-title">Import Quiz from JSON</h1>
+            <p class="header-subtitle">Upload JSON file and images, then edit in visual editor</p>
         </div>
     </div>
 
@@ -155,18 +155,23 @@
                     <input type="text" id="Description" name="description" class="form-control"
                            placeholder="Enter quiz description" required>
                 </div>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Import Process:</strong> After uploading, the quiz will be saved and you'll be redirected to the visual editor to review and make any additional changes.
+                </div>
+                
                 <div class="form-group">
-                    <label for="jsonUpload" class="form-label">Quiz JSON File:</label>
-                    <input type="file" id="jsonUpload" name="json" class="form-control-file" required>
+                    <label for="jsonUpload" class="form-label">Quiz JSON File *:</label>
+                    <input type="file" id="jsonUpload" name="json" class="form-control-file" accept=".json" required>
                     <small class="form-text text-muted">Upload the quiz JSON configuration file</small>
                 </div>
                 <div class="form-group">
-                    <label for="imageUpload" class="form-label">Quiz Images (Optional):</label>
-                    <input type="file" id="imageUpload" name="images" multiple class="form-control-file">
-                    <small class="form-text text-muted">Upload any related images (multiple selection allowed)</small>
+                    <label for="imageUpload" class="form-label">Quiz Images (if referenced in JSON):</label>
+                    <input type="file" id="imageUpload" name="images" multiple class="form-control-file" accept="image/*">
+                    <small class="form-text text-muted">Upload images that are referenced in your JSON file</small>
                 </div>
                 <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-custom">Upload Quiz</button>
+                    <button type="submit" class="btn btn-custom">Import & Edit Quiz</button>
                 </div>
             </form>
         </div>

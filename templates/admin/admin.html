@@ -204,7 +204,13 @@
     <div class="container content-container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3>Available Quizzes</h3>
-            <a href="{{ url_for('quiz_add') }}" class="btn btn-custom btn-add">Add New Quiz</a>
+            <div>
+                <a href="{{ url_for('quiz_create_visual') }}" class="btn btn-custom btn-add">Create New Quiz</a>
+                <label for="jsonFileInput" class="btn btn-custom btn-source" style="margin: 0; cursor: pointer;">
+                    Import from JSON
+                    <input type="file" id="jsonFileInput" accept=".json" style="display: none;" onchange="handleJsonUpload(this)">
+                </label>
+            </div>
         </div>
 
         <ul class="exam-list">
@@ -215,10 +221,13 @@
                         <p class="exam-subtitle">{{ test['description'] }}</p>
                     </div>
                     <div class="exam-actions">
+                        <a class="btn btn-custom btn-delete"
+                           href="{{ url_for('quiz_delete', quiz_id=test['id']) }}"
+                           onclick="return confirm('Are you sure you want to delete this quiz? This will also delete all related entrances and results.')">Delete</a>
                         <a class="btn btn-custom btn-edit"
-                           href="{{ url_for('entrance_manage', quiz_id=test['id']) }}">Manage entrance</a>
+                           href="{{ url_for('quiz_edit_visual', quiz_id=test['id']) }}">Edit</a>
                         <a class="btn btn-custom btn-source"
-                           href="{{ url_for('entrance_add', quiz_id=test['id']) }}">Add entrance</a>
+                           href="{{ url_for('entrance_manage', quiz_id=test['id']) }}">Manage entrance</a>
                         <a class="btn btn-custom btn-trial"
                            href="{{ url_for('quiz_trial', quiz_id=test['id']) }}">Trial</a>
                     </div>
@@ -238,5 +247,48 @@
 <!-- Bootstrap JS and dependencies -->
 <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
 <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+
+<script>
+function handleJsonUpload(input) {
+    const file = input.files[0];
+    if (!file) return;
+    
+    // Show loading indicator
+    const button = input.parentElement;
+    const originalText = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Importing...';
+    button.style.pointerEvents = 'none';
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const jsonData = JSON.parse(e.target.result);
+            
+            // Store the JSON data in sessionStorage for the visual editor
+            sessionStorage.setItem('importedQuizData', JSON.stringify(jsonData));
+            
+            // Redirect directly to visual editor in import mode
+            window.location.href = '/quiz_create_visual?import=true';
+            
+        } catch (error) {
+            alert('Invalid JSON file: ' + error.message);
+            resetButton();
+        }
+    };
+    
+    reader.onerror = function() {
+        alert('Error reading file');
+        resetButton();
+    };
+    
+    function resetButton() {
+        button.innerHTML = originalText;
+        button.style.pointerEvents = 'auto';
+        input.value = ''; // Clear the file input
+    }
+    
+    reader.readAsText(file);
+}
+</script>
 </body>
 </html>

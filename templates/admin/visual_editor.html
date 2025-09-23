@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if mode == 'create' %}Create Quiz{% else %}Edit Quiz{% endif %} - Visual Editor</title>
+    <!-- Bootstrap CSS -->
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar-custom {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, .8);
+            margin: 0 10px;
+            font-size: 16px;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .wrapper {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        .header-section {
+            background-color: #f8f9fa;
+            color: #343a40;
+            padding: 30px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .header-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .editor-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #343a40;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-control {
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .question-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .question-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .question-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: black;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .option-input {
+            flex: 1;
+        }
+
+        .correct-checkbox {
+            width: auto;
+        }
+
+        .image-preview {
+            max-width: 200px;
+            max-height: 150px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .image-upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 4px;
+            padding: 20px;
+            text-align: center;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .image-upload-area:hover {
+            border-color: #007bff;
+        }
+
+        .image-upload-area.dragover {
+            border-color: #007bff;
+            background-color: #f0f8ff;
+        }
+
+        .add-question-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px dashed #007bff;
+            background-color: #f0f8ff;
+            color: #007bff;
+            border-radius: 8px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-question-btn:hover {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .save-buttons {
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 30px;
+            border-top: 1px solid #ddd;
+        }
+
+        .drag-handle {
+            cursor: move;
+            color: #6c757d;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .sortable-ghost {
+            opacity: 0.4;
+        }
+
+        .alert {
+            margin: 20px 0;
+        }
+
+        .field-error {
+            border-color: #dc3545 !important;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+        }
+
+        .question-error {
+            border: 3px solid #dc3545 !important;
+            border-radius: 8px;
+            background-color: #fff5f5 !important;
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.3) !important;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .question-error-message {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            color: #721c24;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .question-error-message i {
+            margin-right: 5px;
+        }
+
+        .validation-icon {
+            color: #dc3545;
+            margin-left: 5px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .loading i {
+            font-size: 24px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('admin') }}">Quiz System</a>
+    </div>
+</nav>
+
+<div class="wrapper">
+    <!-- Header Section -->
+    <div class="header-section">
+        <div class="container">
+            <h1 class="header-title">
+                {% if mode == 'create' %}Create New Quiz{% else %}Edit Quiz{% endif %}
+            </h1>
+            <p class="header-subtitle">Visual Quiz Editor</p>
+        </div>
+    </div>
+
+    <!-- Editor Container -->
+    <div class="container">
+        <div class="editor-container">
+            <!-- Loading indicator -->
+            <div class="loading" id="loadingIndicator">
+                <i class="fas fa-spinner"></i>
+                <p>Saving quiz...</p>
+            </div>
+
+            <!-- Alert container -->
+            <div id="alertContainer"></div>
+
+            <!-- Quiz Metadata Section -->
+            <div class="form-section">
+                <h3 class="section-title">Quiz Information</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="quizTitle" class="form-label">Title *</label>
+                            <input type="text" id="quizTitle" class="form-control" placeholder="Enter quiz title" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="quizSubtitle" class="form-label">Subtitle *</label>
+                            <input type="text" id="quizSubtitle" class="form-control" placeholder="Enter quiz subtitle" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="quizDescription" class="form-label">Description *</label>
+                            <textarea id="quizDescription" class="form-control" rows="3" placeholder="Enter quiz description" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="quizPoints" class="form-label">Points per Question *</label>
+                            <input type="number" id="quizPoints" class="form-control" min="0.1" step="0.1" value="1" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questions Section -->
+            <div class="form-section">
+                <h3 class="section-title">Questions</h3>
+                <div id="questionsContainer">
+                    <!-- Questions will be dynamically added here -->
+                </div>
+                
+                <button type="button" class="add-question-btn" onclick="addQuestion()">
+                    <i class="fas fa-plus"></i> Add Question
+                </button>
+            </div>
+
+            <!-- Save Buttons -->
+            <div class="save-buttons">
+                <button type="button" class="btn btn-success btn-lg me-3" onclick="saveQuiz()">
+                    <i class="fas fa-save"></i> Save Quiz
+                </button>
+                <button type="button" class="btn btn-secondary btn-lg" onclick="cancelQuiz()">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sortable.js for drag and drop -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+
+<script>
+let questionCounter = 0;
+let quizMode = '{{ mode }}';
+let quizId = {% if mode == 'edit' %}'{{ quiz_id }}'{% else %}null{% endif %};
+let isImportMode = false;
+
+// Initialize editor
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if this is import mode
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('import') === 'true') {
+        isImportMode = true;
+        quizMode = 'import';
+        
+        // Load data from sessionStorage
+        const importedData = sessionStorage.getItem('importedQuizData');
+        if (importedData) {
+            try {
+                const quizData = JSON.parse(importedData);
+                loadQuizData(quizData);
+                // Clear the session storage
+                sessionStorage.removeItem('importedQuizData');
+            } catch (error) {
+                console.error('Error loading imported data:', error);
+                showAlert('Error loading imported quiz data', 'danger');
+            }
+        }
+    } else if (quizMode === 'edit') {
+        {% if mode == 'edit' and quiz_data %}
+            loadQuizData({{ quiz_data | tojson }});
+        {% endif %}
+    }
+    
+    // Initialize sortable for questions
+    initializeSortable();
+});
+
+// Load existing quiz data for editing
+function loadQuizData(data) {
+    document.getElementById('quizTitle').value = data.title || '';
+    document.getElementById('quizSubtitle').value = data.subtitle || '';
+    document.getElementById('quizDescription').value = data.description || '';
+    document.getElementById('quizPoints').value = data.points || 1;
+    
+    if (data.questions) {
+        data.questions.forEach(question => {
+            addQuestion(question);
+        });
+    }
+}
+
+// Initialize sortable functionality for questions
+function initializeSortable() {
+    const questionsContainer = document.getElementById('questionsContainer');
+    new Sortable(questionsContainer, {
+        handle: '.drag-handle',
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        onEnd: function() {
+            updateQuestionNumbers();
+        }
+    });
+}
+
+// Add a new question
+function addQuestion(questionData = null) {
+    questionCounter++;
+    const questionHtml = createQuestionHtml(questionCounter, questionData);
+    document.getElementById('questionsContainer').insertAdjacentHTML('beforeend', questionHtml);
+    updateQuestionNumbers();
+}
+
+// Create question HTML
+function createQuestionHtml(id, questionData = null) {
+    const questionText = questionData?.Q || '';
+    const questionType = getQuestionType(questionData);
+    const hasImage = questionData?.image ? true : false;
+    const imageHtml = hasImage ? `<img src="/img/${questionData.image}" class="image-preview" alt="Question image">` : '';
+    
+    return `
+        <div class="question-item" data-question-id="${id}">
+            <div class="question-header">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-grip-vertical drag-handle"></i>
+                    <span class="question-number">Question <span class="number">${id}</span></span>
+                </div>
+                <div class="question-actions">
+                    <button type="button" class="btn btn-sm btn-danger" onclick="removeQuestion(${id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Question Text *</label>
+                <textarea class="form-control question-text" rows="2" placeholder="Enter your question here" required>${questionText}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Question Type *</label>
+                <select class="form-control question-type" onchange="changeQuestionType(${id}, this.value)">
+                    <option value="single" ${questionType === 'single' ? 'selected' : ''}>Multiple Choice (Single Answer)</option>
+                    <option value="multiple" ${questionType === 'multiple' ? 'selected' : ''}>Multiple Choice (Multiple Answers)</option>
+                    <option value="text" ${questionType === 'text' ? 'selected' : ''}>Text Input (Not Graded)</option>
+                </select>
+            </div>
+            
+            <!-- Image Upload Section -->
+            <div class="form-group">
+                <label class="form-label">Question Image (Optional)</label>
+                <div class="image-upload-area" onclick="document.getElementById('imageInput-${id}').click()">
+                    <div class="image-content">
+                        ${imageHtml}
+                        <div class="upload-text" ${hasImage ? 'style="display:none"' : ''}>
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload image</p>
+                        </div>
+                    </div>
+                </div>
+                <input type="file" id="imageInput-${id}" style="display: none" accept="image/*" onchange="uploadQuestionImage(${id}, this)">
+                ${hasImage ? `<button type="button" class="btn btn-sm btn-warning mt-2" onclick="removeQuestionImage(${id})">Remove Image</button>` : ''}
+            </div>
+            
+            <!-- Options Section -->
+            <div class="options-section">
+                ${createOptionsHtml(id, questionData, questionType)}
+            </div>
+        </div>
+    `;
+}
+
+// Get question type from question data
+function getQuestionType(questionData) {
+    if (!questionData) return 'single';
+    if (questionData.options) return 'single';
+    if (questionData.multioptions) return 'multiple';
+    if (questionData.itext !== undefined) return 'text';
+    return 'single';
+}
+
+// Create options HTML based on question type
+function createOptionsHtml(questionId, questionData, questionType) {
+    if (questionType === 'text') {
+        return `
+            <div class="form-group">
+                <label class="form-label">Text Input Field</label>
+                <input type="text" class="form-control" placeholder="Students will type their answer here" disabled>
+                <small class="text-muted">This question will not be automatically graded.</small>
+            </div>
+        `;
+    }
+    
+    const options = questionData?.options || questionData?.multioptions || [];
+    let optionsHtml = `<label class="form-label">Answer Options</label>`;
+    
+    options.forEach((option, index) => {
+        const isCorrect = option.correct === 'true';
+        const inputType = questionType === 'single' ? 'radio' : 'checkbox';
+        
+        optionsHtml += `
+            <div class="option-item">
+                <input type="${inputType}" name="correct-${questionId}" class="correct-checkbox" ${isCorrect ? 'checked' : ''}>
+                <input type="text" class="form-control option-input" value="${option.opt}" placeholder="Enter option text">
+                <button type="button" class="btn btn-sm btn-danger" onclick="removeOption(this)">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+    });
+    
+    // Add at least 2 options if none exist
+    if (options.length === 0) {
+        for (let i = 0; i < 2; i++) {
+            const inputType = questionType === 'single' ? 'radio' : 'checkbox';
+            optionsHtml += `
+                <div class="option-item">
+                    <input type="${inputType}" name="correct-${questionId}" class="correct-checkbox">
+                    <input type="text" class="form-control option-input" placeholder="Enter option text">
+                    <button type="button" class="btn btn-sm btn-danger" onclick="removeOption(this)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+        }
+    }
+    
+    optionsHtml += `
+        <button type="button" class="btn btn-sm btn-primary mt-2" onclick="addOption(${questionId})">
+            <i class="fas fa-plus"></i> Add Option
+        </button>
+    `;
+    
+    return optionsHtml;
+}
+
+// Change question type
+function changeQuestionType(questionId, newType) {
+    const questionElement = document.querySelector(`[data-question-id="${questionId}"]`);
+    const optionsSection = questionElement.querySelector('.options-section');
+    optionsSection.innerHTML = createOptionsHtml(questionId, null, newType);
+}
+
+// Add option to question
+function addOption(questionId) {
+    const questionElement = document.querySelector(`[data-question-id="${questionId}"]`);
+    const questionTypeSelect = questionElement.querySelector('.question-type');
+    const questionType = questionTypeSelect.value;
+    
+    if (questionType === 'text') return;
+    
+    const inputType = questionType === 'single' ? 'radio' : 'checkbox';
+    const optionHtml = `
+        <div class="option-item">
+            <input type="${inputType}" name="correct-${questionId}" class="correct-checkbox">
+            <input type="text" class="form-control option-input" placeholder="Enter option text">
+            <button type="button" class="btn btn-sm btn-danger" onclick="removeOption(this)">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    
+    // Find the last option item and insert after it
+    const optionsSection = questionElement.querySelector('.options-section');
+    const lastOptionItem = optionsSection.querySelector('.option-item:last-of-type');
+    if (lastOptionItem) {
+        lastOptionItem.insertAdjacentHTML('afterend', optionHtml);
+    } else {
+        // If no options exist, insert before the add button
+        const addButton = optionsSection.querySelector('button');
+        addButton.insertAdjacentHTML('beforebegin', optionHtml);
+    }
+}
+
+// Remove option
+function removeOption(button) {
+    const optionItem = button.closest('.option-item');
+    const optionsSection = optionItem.closest('.options-section');
+    const optionItems = optionsSection.querySelectorAll('.option-item');
+    
+    // Don't allow removing if only 1 option left
+    if (optionItems.length > 1) {
+        optionItem.remove();
+    } else {
+        showAlert('At least one option is required.', 'warning');
+    }
+}
+
+// Remove question
+function removeQuestion(questionId) {
+    if (confirm('Are you sure you want to remove this question?')) {
+        const questionElement = document.querySelector(`[data-question-id="${questionId}"]`);
+        questionElement.remove();
+        updateQuestionNumbers();
+    }
+}
+
+// Update question numbers after reordering
+function updateQuestionNumbers() {
+    const questions = document.querySelectorAll('.question-item');
+    questions.forEach((question, index) => {
+        const numberSpan = question.querySelector('.question-number .number');
+        numberSpan.textContent = index + 1;
+    });
+}
+
+// Upload question image
+function uploadQuestionImage(questionId, input) {
+    const file = input.files[0];
+    if (!file) return;
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    fetch('/upload_question_image', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const questionElement = document.querySelector(`[data-question-id="${questionId}"]`);
+            const imageContent = questionElement.querySelector('.image-content');
+            const uploadText = imageContent.querySelector('.upload-text');
+            
+            // Add image preview
+            imageContent.innerHTML = `
+                <img src="/img/${data.filename}" class="image-preview" alt="Question image">
+                <div class="upload-text" style="display:none">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Click to upload image</p>
+                </div>
+            `;
+            
+            // Add remove button if it doesn't exist
+            const imageGroup = questionElement.querySelector('.form-group:has(.image-upload-area)');
+            if (!imageGroup.querySelector('.btn-warning')) {
+                imageGroup.insertAdjacentHTML('beforeend', 
+                    `<button type="button" class="btn btn-sm btn-warning mt-2" onclick="removeQuestionImage(${questionId})">Remove Image</button>`
+                );
+            }
+            
+            // Store filename for saving
+            questionElement.dataset.imageName = data.filename;
+            
+            showAlert('Image uploaded successfully!', 'success');
+        } else {
+            showAlert('Failed to upload image: ' + data.error, 'danger');
+        }
+    })
+    .catch(error => {
+        showAlert('Failed to upload image: ' + error, 'danger');
+    });
+}
+
+// Remove question image
+function removeQuestionImage(questionId) {
+    const questionElement = document.querySelector(`[data-question-id="${questionId}"]`);
+    const imageContent = questionElement.querySelector('.image-content');
+    const removeButton = questionElement.querySelector('.btn-warning');
+    
+    imageContent.innerHTML = `
+        <div class="upload-text">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Click to upload image</p>
+        </div>
+    `;
+    
+    if (removeButton) {
+        removeButton.remove();
+    }
+    
+    delete questionElement.dataset.imageName;
+}
+
+// Clear all validation errors
+function clearValidationErrors() {
+    // Clear field errors
+    document.querySelectorAll('.field-error').forEach(el => {
+        el.classList.remove('field-error');
+    });
+    
+    // Clear question errors
+    document.querySelectorAll('.question-error').forEach(el => {
+        el.classList.remove('question-error');
+    });
+    
+    // Clear question error messages
+    document.querySelectorAll('.question-error-message').forEach(el => {
+        el.remove();
+    });
+    
+    // Clear error messages
+    document.querySelectorAll('.error-message').forEach(el => {
+        el.remove();
+    });
+    
+    // Clear validation icons
+    document.querySelectorAll('.validation-icon').forEach(el => {
+        el.remove();
+    });
+    
+    // Clear add question button styling
+    const addQuestionBtn = document.querySelector('.add-question-btn');
+    if (addQuestionBtn) {
+        addQuestionBtn.style.borderColor = '';
+        addQuestionBtn.style.backgroundColor = '';
+    }
+    
+    // Clear option item highlighting
+    document.querySelectorAll('.option-item').forEach(optionItem => {
+        optionItem.style.border = '';
+        optionItem.style.borderRadius = '';
+        optionItem.style.backgroundColor = '';
+        optionItem.style.padding = '';
+        optionItem.style.margin = '';
+    });
+}
+
+// Add field error
+function addFieldError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    field.classList.add('field-error');
+    
+    // Add error message
+    const errorMsg = document.createElement('span');
+    errorMsg.className = 'error-message';
+    errorMsg.textContent = message;
+    field.parentNode.appendChild(errorMsg);
+    
+    // Add validation icon to label
+    const label = field.parentNode.querySelector('label');
+    if (label && !label.querySelector('.validation-icon')) {
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-exclamation-triangle validation-icon';
+        label.appendChild(icon);
+    }
+}
+
+// Add question error
+function addQuestionError(questionElement, message) {
+    questionElement.classList.add('question-error');
+    
+    // Add prominent error message within the question
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'question-error-message';
+    errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+    
+    // Insert error message right after the question header
+    const questionHeader = questionElement.querySelector('.question-header');
+    questionHeader.insertAdjacentElement('afterend', errorDiv);
+}
+
+// Scroll to first error
+function scrollToFirstError() {
+    const firstError = document.querySelector('.field-error, .question-error');
+    if (firstError) {
+        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Focus on the field if it's an input
+        if (firstError.tagName === 'INPUT' || firstError.tagName === 'TEXTAREA' || firstError.tagName === 'SELECT') {
+            setTimeout(() => firstError.focus(), 500);
+        }
+    }
+}
+
+// Save quiz
+function saveQuiz() {
+    // Clear previous validation errors
+    clearValidationErrors();
+    
+    let hasErrors = false;
+    
+    // Validate required fields
+    const title = document.getElementById('quizTitle').value.trim();
+    const subtitle = document.getElementById('quizSubtitle').value.trim();
+    const description = document.getElementById('quizDescription').value.trim();
+    const points = document.getElementById('quizPoints').value;
+    
+    if (!title) {
+        addFieldError('quizTitle', 'Title is required');
+        hasErrors = true;
+    }
+    
+    if (!subtitle) {
+        addFieldError('quizSubtitle', 'Subtitle is required');
+        hasErrors = true;
+    }
+    
+    if (!description) {
+        addFieldError('quizDescription', 'Description is required');
+        hasErrors = true;
+    }
+    
+    if (!points || points <= 0) {
+        addFieldError('quizPoints', 'Points must be greater than 0');
+        hasErrors = true;
+    }
+    
+    // Collect questions data
+    const questions = [];
+    const questionElements = document.querySelectorAll('.question-item');
+    
+    if (questionElements.length === 0) {
+        // Add visual indicator to the add question button area
+        const addQuestionBtn = document.querySelector('.add-question-btn');
+        addQuestionBtn.classList.add('field-error');
+        addQuestionBtn.style.borderColor = '#dc3545';
+        addQuestionBtn.style.backgroundColor = '#fff5f5';
+        
+        // Add error message below the button
+        const errorMsg = document.createElement('span');
+        errorMsg.className = 'error-message';
+        errorMsg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Please add at least one question';
+        addQuestionBtn.parentNode.appendChild(errorMsg);
+        
+        hasErrors = true;
+    } else {
+        for (let questionElement of questionElements) {
+            const questionData = collectQuestionData(questionElement);
+            if (!questionData) {
+                hasErrors = true;
+                continue; // Continue to validate other questions
+            }
+            questions.push(questionData);
+        }
+    }
+    
+    // If there are validation errors, scroll to first error and stop
+    if (hasErrors) {
+        scrollToFirstError();
+        return;
+    }
+    
+    // Prepare quiz data
+    const quizData = {
+        title: title,
+        subtitle: subtitle,
+        description: description,
+        points: points,
+        questions: questions
+    };
+    
+    // Add quiz_id for edit mode
+    if (quizMode === 'edit' && quizId) {
+        quizData.quiz_id = quizId;
+    }
+    
+    // Show loading
+    document.getElementById('loadingIndicator').style.display = 'block';
+    
+    // Choose URL based on mode
+    let url, method;
+    if (quizMode === 'create' || quizMode === 'import') {
+        url = '/quiz_create_visual';
+        method = 'POST';
+    } else {
+        url = '/quiz_save_visual';
+        method = 'POST';
+    }
+    
+    console.log('Saving quiz:', { mode: quizMode, url: url, data: quizData });
+    
+    fetch(url, {
+        method: method,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(quizData)
+    })
+    .then(response => {
+        console.log('Response status:', response.status);
+        return response.json();
+    })
+    .then(data => {
+        console.log('Response data:', data);
+        document.getElementById('loadingIndicator').style.display = 'none';
+        
+        if (data.success) {
+            // Show success message and redirect
+            document.getElementById('loadingIndicator').innerHTML = `
+                <div class="alert alert-success" role="alert">
+                    <i class="fas fa-check-circle"></i> Quiz saved successfully! Redirecting...
+                </div>
+            `;
+            setTimeout(() => {
+                window.location.href = '/admin';
+            }, 1500);
+        } else {
+            // Show error in loading area instead of alert
+            document.getElementById('loadingIndicator').innerHTML = `
+                <div class="alert alert-danger" role="alert">
+                    <i class="fas fa-exclamation-triangle"></i> Failed to save quiz: ${data.error || 'Unknown error'}
+                </div>
+            `;
+            setTimeout(() => {
+                document.getElementById('loadingIndicator').innerHTML = `
+                    <i class="fas fa-spinner"></i>
+                    <p>Saving quiz...</p>
+                `;
+                document.getElementById('loadingIndicator').style.display = 'none';
+            }, 5000);
+        }
+    })
+    .catch(error => {
+        console.error('Save error:', error);
+        // Show error in loading area instead of alert
+        document.getElementById('loadingIndicator').innerHTML = `
+            <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-triangle"></i> Network error: ${error.message}
+            </div>
+        `;
+        setTimeout(() => {
+            document.getElementById('loadingIndicator').innerHTML = `
+                <i class="fas fa-spinner"></i>
+                <p>Saving quiz...</p>
+            `;
+            document.getElementById('loadingIndicator').style.display = 'none';
+        }, 5000);
+    });
+}
+
+// Collect question data
+function collectQuestionData(questionElement) {
+    const questionText = questionElement.querySelector('.question-text').value.trim();
+    const questionType = questionElement.querySelector('.question-type').value;
+    const questionNumber = questionElement.querySelector('.question-number .number').textContent;
+    
+    if (!questionText) {
+        addQuestionError(questionElement, `Question ${questionNumber}: Please enter question text`);
+        return null;
+    }
+    
+    const questionData = {
+        Q: questionText
+    };
+    
+    // Add image if exists
+    if (questionElement.dataset.imageName) {
+        questionData.image = questionElement.dataset.imageName;
+    }
+    
+    // Add options based on question type
+    if (questionType === 'text') {
+        questionData.itext = '';
+    } else {
+        const options = [];
+        const optionItems = questionElement.querySelectorAll('.option-item');
+        
+        let hasEmptyOption = false;
+        
+        for (let optionItem of optionItems) {
+            const optionText = optionItem.querySelector('.option-input').value.trim();
+            const isCorrect = optionItem.querySelector('.correct-checkbox').checked;
+            
+            if (!optionText) {
+                optionItem.querySelector('.option-input').classList.add('field-error');
+                hasEmptyOption = true;
+                continue;
+            }
+            
+            const option = { opt: optionText };
+            if (isCorrect) {
+                option.correct = 'true';
+            }
+            
+            options.push(option);
+        }
+        
+        if (hasEmptyOption) {
+            addQuestionError(questionElement, `Question ${questionNumber}: Please enter text for all options`);
+            return null;
+        }
+        
+        if (options.length === 0) {
+            addQuestionError(questionElement, `Question ${questionNumber}: Please add at least one option`);
+            return null;
+        }
+        
+        // Check if at least one option is marked as correct
+        const hasCorrectAnswer = options.some(opt => opt.correct === 'true');
+        if (!hasCorrectAnswer) {
+            addQuestionError(questionElement, `Please mark at least one correct answer for this question`);
+            
+            // Highlight all option items to draw attention to checkboxes
+            optionItems.forEach(optionItem => {
+                optionItem.style.border = '2px solid #dc3545';
+                optionItem.style.borderRadius = '4px';
+                optionItem.style.backgroundColor = '#fff5f5';
+                optionItem.style.padding = '8px';
+                optionItem.style.margin = '5px 0';
+            });
+            
+            return null;
+        }
+        
+        if (questionType === 'single') {
+            questionData.options = options;
+        } else {
+            questionData.multioptions = options;
+        }
+    }
+    
+    return questionData;
+}
+
+// Cancel quiz creation/editing
+function cancelQuiz() {
+    if (isImportMode || quizMode === 'create') {
+        // For import mode or create mode, just confirm and go back
+        if (confirm('Are you sure you want to cancel? Any unsaved changes will be lost.')) {
+            window.location.href = '/admin';
+        }
+    } else if (quizMode === 'edit') {
+        // For edit mode, confirm and go back without saving
+        if (confirm('Are you sure you want to cancel? Any unsaved changes will be lost.')) {
+            window.location.href = '/admin';
+        }
+    }
+}
+
+// Show alert message
+function showAlert(message, type) {
+    const alertContainer = document.getElementById('alertContainer');
+    const alertHtml = `
+        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+    alertContainer.innerHTML = alertHtml;
+    
+    // Auto dismiss after 5 seconds
+    setTimeout(() => {
+        const alert = alertContainer.querySelector('.alert');
+        if (alert) {
+            alert.remove();
+        }
+    }, 5000);
+}
+</script>
+</body>
+</html>
