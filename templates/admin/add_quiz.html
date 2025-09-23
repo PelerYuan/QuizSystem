@@ -6,6 +6,8 @@
     <title>Upload Files</title>
     <!-- Bootstrap CSS -->
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- CodeMirror CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='codemirror.min.css') }}">
     <style>
@@ -143,6 +145,11 @@
 
     <!-- 上传表单 -->
     <div class="container">
+        <div class="d-flex justify-content-start mb-3">
+            <a href="{{ url_for('admin') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Admin
+            </a>
+        </div>
         <div class="upload-container">
             <form action="{{ url_for('quiz_add') }}" method="post" enctype="multipart/form-data">
                 <div class="form-group">

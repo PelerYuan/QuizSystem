@@ -196,8 +196,18 @@ def admin():
     if session.get('admin', False):
         tests = []
         for quiz in Quiz.query.all():
+            # Try to get subtitle from quiz JSON
+            subtitle = ''
+            try:
+                with open(quiz.file_path, 'r', encoding='utf-8') as f:
+                    quiz_data = json.loads(f.read())
+                    subtitle = quiz_data.get('subtitle', '')
+            except:
+                subtitle = ''
+
             tests.append(
-                {'id': quiz.id, 'name': quiz.name, 'description': quiz.description, 'file_path': quiz.file_path})
+                {'id': quiz.id, 'name': quiz.name, 'description': quiz.description,
+                 'subtitle': subtitle, 'file_path': quiz.file_path})
         return render_template('admin/admin.html', tests=tests)
     return redirect(url_for('admin_login'))
 

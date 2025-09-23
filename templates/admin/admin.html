@@ -102,6 +102,12 @@
             color: #666;
         }
 
+        .exam-subtitle-inline {
+            font-size: 14px;
+            font-weight: 400;
+            color: #6c757d;
+        }
+
         .btn-custom {
             margin: 5px;
             padding: 10px 20px;
@@ -217,7 +223,10 @@
             {% for test in tests %}
                 <li class="exam-item">
                     <div class="exam-info">
-                        <h5 class="exam-title">{{ test['name'] }}</h5>
+                        <div class="d-flex align-items-baseline">
+                            <h5 class="exam-title mb-0 me-2">{{ test['name'] }}</h5>
+                            <small class="exam-subtitle-inline text-muted">{{ test['subtitle'] or '' }}</small>
+                        </div>
                         <p class="exam-subtitle">{{ test['description'] }}</p>
                     </div>
                     <div class="exam-actions">

@@ -6,6 +6,8 @@
     <title>{{ quiz['title'] }}</title>
     <!-- Bootstrap CSS -->
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .clickable-option {
             display: block;
@@ -33,10 +35,16 @@
 </head>
 <body>
 <div class="container mt-5">
+    <!-- Back Button -->
+    <div class="d-flex justify-content-start mb-3">
+        <a href="{{ url_for('admin') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Admin
+        </a>
+    </div>
     <!-- Title -->
     <h1 class="text-center">{{ quiz['title'] }}</h1>
     <!-- Subtitle -->
-{#    <p class="text-center text-muted">{{ quiz['subtitle'] }}</p>#}
+    {#    <p class="text-center text-muted">{{ quiz['subtitle'] }}</p>#}
 
     <form id="quizForm">
         {% for question in quiz['questions'] %}

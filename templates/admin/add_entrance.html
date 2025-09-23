@@ -6,6 +6,8 @@
     <title>Upload Files</title>
     <!-- Bootstrap CSS -->
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- CodeMirror CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='codemirror.min.css') }}">
     <style>
@@ -144,6 +146,11 @@
 
     <!-- 表单区域 -->
     <div class="container">
+        <div class="d-flex justify-content-start mb-3">
+            <a href="{{ url_for('entrance_manage', quiz_id=quiz_id) }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Entrance Management
+            </a>
+        </div>
         <div class="upload-container">
             <form action="{{ url_for('entrance_add', quiz_id=quiz_id) }}" method="post" enctype="multipart/form-data">
                 <div class="form-group">

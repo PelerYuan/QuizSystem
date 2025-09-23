@@ -6,6 +6,8 @@
     <title>Entrance Management</title>
     <!-- Bootstrap CSS -->
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         html, body {
             height: 100%;
@@ -204,7 +206,12 @@
     <div class="container content-container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3>Available Entrances for <a href="{{ url_for('admin') }}">{{ quiz_name }}</a></h3>
-            <a href="{{ url_for('entrance_add', quiz_id=quiz_id) }}" class="btn btn-custom btn-add">Add New Entrance</a>
+            <div class="d-flex align-items-center">
+                <a href="{{ url_for('admin') }}" class="btn btn-outline-secondary me-3">
+                    <i class="fas fa-arrow-left"></i> Back to Admin
+                </a>
+                <a href="{{ url_for('entrance_add', quiz_id=quiz_id) }}" class="btn btn-custom btn-add">Add New Entrance</a>
+            </div>
         </div>
 
         <ul class="exam-list">
