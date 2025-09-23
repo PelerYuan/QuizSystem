@@ -707,5 +707,24 @@ def quiz_delete(quiz_id):
         return redirect(url_for('admin'))
     return redirect(url_for('admin_login'))
 
+# Health check endpoint for Docker
+@app.route('/health')
+def health_check():
+    """Health check endpoint for container monitoring"""
+    try:
+        # Test database connection
+        db.session.execute('SELECT 1')
+        return jsonify({
+            'status': 'healthy',
+            'message': 'Quiz system is running properly',
+            'database': 'connected'
+        }), 200
+    except Exception as e:
+        return jsonify({
+            'status': 'unhealthy',
+            'message': f'Health check failed: {str(e)}',
+            'database': 'disconnected'
+        }), 503
+
 if __name__ == '__main__':
     app.run()

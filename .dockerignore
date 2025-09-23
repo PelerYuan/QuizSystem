@@ -1,0 +1,105 @@
+# Docker ignore file for optimized builds
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+.env
+.venv/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.venv
+.pyenv
+
+# Testing
+.tox/
+.coverage
+.pytest_cache/
+htmlcov/
+
+# Documentation
+docs/
+*.md
+README*
+LICENSE*
+CHANGELOG*
+
+# Docker files (except those needed)
+Dockerfile.*
+docker-compose.override.yml
+docker-compose.*.yml
+
+# Development tools
+.pre-commit-config.yaml
+Makefile
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+# Node modules (if any)
+node_modules/
+npm-debug.log*
+
+# Editor specific
+.editorconfig
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Local development files
+.env.local
+.env.development
+docker-compose.dev.yml
+
+# Database files (will be mounted as volumes)
+*.sqlite
+*.db
+
+# Backup files
+*.bak
+*.backup
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
