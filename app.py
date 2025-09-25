@@ -1,6 +1,8 @@
 import json
 import os
 import uuid
+import random
+import string
 
 from openpyxl import Workbook
 from flask import Flask, render_template, redirect, request, url_for, session, send_from_directory, jsonify, send_file
@@ -18,9 +20,20 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
+def generate_quiz_id():
+    """Generate a 4-character alphanumeric quiz ID (uppercase letters and numbers)"""
+    characters = string.ascii_uppercase + string.digits
+    while True:
+        quiz_id = ''.join(random.choice(characters) for _ in range(4))
+        # Check if ID already exists in database
+        existing_quiz = Quiz.query.filter_by(id=quiz_id).first()
+        if not existing_quiz:
+            return quiz_id
+
+
 class Quiz(db.Model):
     __tablename__ = 'quiz'
-    id = db.Column(db.String(256), primary_key=True, default=str(uuid.uuid4()))
+    id = db.Column(db.String(4), primary_key=True, default=generate_quiz_id)
     name = db.Column(db.String(256), unique=False, nullable=False)
     description = db.Column(db.String(256), unique=False, nullable=False)
     file_path = db.Column(db.String(256), unique=False, nullable=False)
@@ -35,7 +48,7 @@ class Quiz(db.Model):
 class Entrance(db.Model):
     __tablename__ = 'entrance'
     id = db.Column(db.String(256), primary_key=True, default=str(uuid.uuid4()))
-    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'))
+    quiz_id = db.Column(db.String(4), db.ForeignKey('quiz.id'))
     name = db.Column(db.String(256), unique=False, nullable=False)
     description = db.Column(db.String(256), unique=False, nullable=False)
     create_at = db.Column(db.DateTime, default=db.func.current_timestamp())
@@ -49,7 +62,7 @@ class Entrance(db.Model):
 class Result(db.Model):
     __tablename__ = 'result'
     id = db.Column(db.String(256), primary_key=True, default=str(uuid.uuid4()))
-    entrance_id = db.Column(db.Integer, db.ForeignKey('entrance.id'))
+    entrance_id = db.Column(db.String(256), db.ForeignKey('entrance.id'))
     student_name = db.Column(db.String(256), unique=False, nullable=False)
     score = db.Column(db.Float, unique=False, nullable=False)
     file_path = db.Column(db.String(256), unique=False, nullable=False)
@@ -315,7 +328,7 @@ def quiz_add():
 
             # Save quiz to database
             try:
-                quiz_id = str(uuid.uuid4())
+                quiz_id = generate_quiz_id()
                 quiz = Quiz(id=quiz_id, name=request.form['name'], description=request.form['description'], file_path=json_path)
                 db.session.add(quiz)
                 db.session.commit()
@@ -593,7 +606,7 @@ def quiz_create_visual():
                 print(f"[DEBUG] Saved JSON to: {json_path}")
                 
                 # Save to database
-                quiz_id = str(uuid.uuid4())
+                quiz_id = generate_quiz_id()
                 quiz = Quiz(id=quiz_id, name=quiz_data.get('title', ''), description=quiz_data.get('description', ''), file_path=json_path)
                 db.session.add(quiz)
                 db.session.commit()
