@@ -18,6 +18,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the source
 COPY . .
 
+# Make entrypoint executable
+RUN chmod +x /app/scripts/entrypoint.sh || true
+
 # Flask runtime configuration
 ENV FLASK_APP=app.py \
     FLASK_RUN_HOST=0.0.0.0 \
@@ -26,5 +29,6 @@ ENV FLASK_APP=app.py \
 
 EXPOSE 8000
 
-# Start the Flask app (uses /health endpoint for healthcheck)
+# Ensure required runtime directories exist, then start Flask
+ENTRYPOINT ["/app/scripts/entrypoint.sh"]
 CMD ["flask", "run"]

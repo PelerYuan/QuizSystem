@@ -11,8 +11,14 @@ services:
       - FLASK_RUN_PORT=8000
       - FLASK_RUN_HOST=0.0.0.0
     volumes:
-      # Mount the entire project into the container to ensure all paths/files exist
-      - ./:/app
+      # Named volumes for writable data (production-friendly persistence)
+      - db:/app/data
+      - img:/app/img
+      - quiz:/app/quiz
+      - result:/app/result
+      - tmp:/app/tmp
+      # Bind mount read-only config (override via secrets/env later if desired)
+      - ./configure.json:/app/configure.json:ro
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
       interval: 15s
@@ -20,3 +26,10 @@ services:
       retries: 5
       start_period: 10s
     restart: unless-stopped
+
+volumes:
+  db:
+  img:
+  quiz:
+  result:
+  tmp:

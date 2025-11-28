@@ -33,11 +33,23 @@ ENV/
 *.sqlite
 data.sqlite
 
-# User-generated content
-/result/
-/img/
-/quiz/
-/tmp/
+# User-generated content (keep folders in Git, ignore their contents)
+# Each dir will include a .gitkeep file to keep the folder tracked
+img/**
+!img/.gitkeep
+
+quiz/**
+!quiz/.gitkeep
+
+result/**
+!result/.gitkeep
+
+tmp/**
+!tmp/.gitkeep
+
+# Data directory for Docker named volume bind (keep directory, ignore contents)
+data/**
+!data/.gitkeep
 
 # IDE specific files
 .idea/

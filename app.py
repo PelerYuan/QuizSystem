@@ -13,8 +13,23 @@ app.secret_key = os.urandom(24)
 
 admin_config = json.loads(open('configure.json').read())
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__name__)),
-                                                                    'data.sqlite')
+# Resolve database path with Docker-friendly default and local fallback
+def _resolve_db_path():
+    # 1) Explicit env var wins
+    env_path = os.environ.get('DB_PATH')
+    if env_path:
+        return env_path
+    # 2) If running in container with named volume mounted at /app/data
+    docker_default = '/app/data/data.sqlite'
+    if os.path.isdir('/app/data'):
+        return docker_default
+    # 3) Fallback to repo local file for non-Docker dev
+    return os.path.join(os.path.abspath(os.path.dirname(__file__)), 'data.sqlite')
+
+db_path = _resolve_db_path()
+os.makedirs(os.path.dirname(db_path), exist_ok=True)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
