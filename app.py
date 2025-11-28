@@ -31,6 +31,17 @@ def generate_quiz_id():
             return quiz_id
 
 
+def generate_entrance_id():
+    """Generate a 4-character alphanumeric entrance ID (uppercase letters and numbers)"""
+    characters = string.ascii_uppercase + string.digits
+    while True:
+        entrance_id = ''.join(random.choice(characters) for _ in range(4))
+        # Check if ID already exists in database
+        existing_entrance = Entrance.query.filter_by(id=entrance_id).first()
+        if not existing_entrance:
+            return entrance_id
+
+
 class Quiz(db.Model):
     __tablename__ = 'quiz'
     id = db.Column(db.String(4), primary_key=True, default=generate_quiz_id)
@@ -47,7 +58,7 @@ class Quiz(db.Model):
 
 class Entrance(db.Model):
     __tablename__ = 'entrance'
-    id = db.Column(db.String(256), primary_key=True, default=str(uuid.uuid4()))
+    id = db.Column(db.String(4), primary_key=True, default=generate_entrance_id)
     quiz_id = db.Column(db.String(4), db.ForeignKey('quiz.id'))
     name = db.Column(db.String(256), unique=False, nullable=False)
     description = db.Column(db.String(256), unique=False, nullable=False)
@@ -62,7 +73,7 @@ class Entrance(db.Model):
 class Result(db.Model):
     __tablename__ = 'result'
     id = db.Column(db.String(256), primary_key=True, default=str(uuid.uuid4()))
-    entrance_id = db.Column(db.String(256), db.ForeignKey('entrance.id'))
+    entrance_id = db.Column(db.String(4), db.ForeignKey('entrance.id'))
     student_name = db.Column(db.String(256), unique=False, nullable=False)
     score = db.Column(db.Float, unique=False, nullable=False)
     file_path = db.Column(db.String(256), unique=False, nullable=False)
