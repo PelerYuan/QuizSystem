@@ -11,16 +11,8 @@ services:
       - FLASK_RUN_PORT=8000
       - FLASK_RUN_HOST=0.0.0.0
     volumes:
-      # Persist the SQLite database and writable folders on the host
-      - ./data.sqlite:/app/data.sqlite
-      - ./img:/app/img
-      - ./quiz:/app/quiz
-      - ./result:/app/result
-      - ./tmp:/app/tmp
-      # Optional: keep local templates/static editable during development
-      - ./templates:/app/templates
-      - ./static:/app/static
-      - ./configure.json:/app/configure.json:ro
+      # Mount the entire project into the container to ensure all paths/files exist
+      - ./:/app
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
       interval: 15s
