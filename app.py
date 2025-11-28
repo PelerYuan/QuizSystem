@@ -1,4 +1,5 @@
 import json
+import sys
 import os
 import uuid
 import random
@@ -33,6 +34,20 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+
+
+def _init_db():
+    """Initialize SQLite tables in an idempotent way."""
+    try:
+        with app.app_context():
+            db.create_all()
+            print("[app] Database initialized (idempotent)")
+    except Exception as e:
+        print(f"[app] Error during db.create_all(): {e}", file=sys.stderr)
+
+
+# Initialize DB on startup (simple and avoids separate init script requirements)
+_init_db()
 
 
 def generate_quiz_id():
