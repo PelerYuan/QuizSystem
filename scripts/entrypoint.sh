@@ -5,7 +5,8 @@ set -e
 mkdir -p /app/data /app/img /app/quiz /app/result /app/tmp
 
 # Initialize the database within the Flask app context (idempotent)
-python /app/scripts/init_db.py
+export PYTHONPATH=$PYTHONPATH:.
+python scripts/init_db.py
 
 # Optionally relax permissions if running as non-root (commented out by default)
 # chown -R $(id -u):$(id -g) /app/data /app/img /app/quiz /app/result /app/tmp 2>/dev/null || true
