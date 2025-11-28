@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  quizsystem:
+    build: .
+    container_name: quizsystem
+    ports:
+      - "8000:8000"
+    environment:
+      - FLASK_ENV=production
+      - FLASK_RUN_PORT=8000
+      - FLASK_RUN_HOST=0.0.0.0
+    volumes:
+      # Persist the SQLite database and writable folders on the host
+      - ./data.sqlite:/app/data.sqlite
+      - ./img:/app/img
+      - ./quiz:/app/quiz
+      - ./result:/app/result
+      - ./tmp:/app/tmp
+      # Optional: keep local templates/static editable during development
+      - ./templates:/app/templates
+      - ./static:/app/static
+      - ./configure.json:/app/configure.json:ro
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped

@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# VCS
+.git
+.gitignore
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Local data that should not be baked into the image
+data.sqlite
+result/
+tmp/
+img/
+quiz/
+
+# Others
+*.log
+*.tmp
