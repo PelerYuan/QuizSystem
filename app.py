@@ -8,6 +8,7 @@ import string
 from openpyxl import Workbook
 from flask import Flask, render_template, redirect, request, url_for, session, send_from_directory, jsonify, send_file
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -766,8 +767,10 @@ def quiz_delete(quiz_id):
 def health_check():
     """Health check endpoint for container monitoring"""
     try:
-        # Test database connection
-        db.session.execute('SELECT 1')
+        # Test database connection using engine connection (works reliably with SQLAlchemy 2.x)
+        with db.engine.connect() as conn:
+            conn.execute(text('SELECT 1'))
+            conn.commit() if hasattr(conn, 'commit') else None
         return jsonify({
             'status': 'healthy',
             'message': 'Quiz system is running properly',
