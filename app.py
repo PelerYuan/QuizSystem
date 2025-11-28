@@ -8,7 +8,7 @@ import string
 from openpyxl import Workbook
 from flask import Flask, render_template, redirect, request, url_for, session, send_from_directory, jsonify, send_file
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import text
+from sqlalchemy import text, inspect
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -47,8 +47,7 @@ def _init_db():
         print(f"[app] Error during db.create_all(): {e}", file=sys.stderr)
 
 
-# Initialize DB on startup (simple and avoids separate init script requirements)
-_init_db()
+# (Do not call _init_db() here — models are not defined yet)
 
 
 def generate_quiz_id():
@@ -110,8 +109,8 @@ class Result(db.Model):
     file_path = db.Column(db.String(256), unique=False, nullable=False)
     create_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
-    def __repr__(self):
-        return f'<Entrance ID: {self.id}, Name: {self.name}, Description: {self.description}>'
+# Initialize DB on startup AFTER models are defined
+_init_db()
 
 
 @app.route('/')
@@ -782,6 +781,36 @@ def health_check():
             'message': f'Health check failed: {str(e)}',
             'database': 'disconnected'
         }), 503
+
+
+# Lightweight DB introspection endpoint to verify tables exist
+@app.route('/db_status')
+def db_status():
+    try:
+        with db.engine.connect() as conn:
+            insp = inspect(conn)
+            tables = sorted(insp.get_table_names())
+
+        counts = {}
+        target_tables = ['quiz', 'entrance', 'result']
+        for t in target_tables:
+            if t in tables:
+                try:
+                    cnt = db.session.execute(text(f'SELECT COUNT(*) FROM {t}')).scalar()
+                    counts[t] = int(cnt or 0)
+                except Exception as e:
+                    counts[t] = f'error: {e}'
+
+        return jsonify({
+            'database': 'connected',
+            'tables': tables,
+            'counts': counts
+        }), 200
+    except Exception as e:
+        return jsonify({
+            'database': 'disconnected',
+            'error': str(e)
+        }), 500
 
 if __name__ == '__main__':
     app.run()
