@@ -74,18 +74,17 @@ Open the app in your browser:
 - Stop: `docker compose down`
 - Restart after edits: `docker compose up -d --build`
 
-### 8) Persisted data and bind mounts
-The compose file mounts these paths by default:
-- `./data.sqlite -> /app/data.sqlite` (SQLite database)
-- `./img -> /app/img` (uploaded images)
-- `./quiz -> /app/quiz` (quiz JSON files)
-- `./result -> /app/result` (exported results)
-- `./tmp -> /app/tmp` (temporary files)
-- `./templates -> /app/templates` and `./static -> /app/static` (optional live edits)
-- `./configure.json -> /app/configure.json:ro` (admin password, read-only)
+### 8) Persisted data and volumes
+By default, the compose file uses named Docker volumes for writable data. Inside the container these paths are used:
+- `/app/data` (named volume `db`) — contains the SQLite database at `/app/data/data.sqlite`
+- `/app/img` (named volume `img`) — uploaded images
+- `/app/quiz` (named volume `quiz`) — quiz JSON files
+- `/app/result` (named volume `result`) — exported results
+- `/app/tmp` (named volume `tmp`) — temporary files
+- `./configure.json -> /app/configure.json:ro` — admin password (bind-mounted read-only from the repo)
 
 Notes:
-- If you get write-permission issues, ensure your host user can write to `img/`, `quiz/`, `result/`, and `tmp/`.
+- On first start, the container auto-initializes the database schema (idempotent). No manual step is needed.
 - To change the host port, edit `docker-compose.yml` and modify `ports: - "8000:8000"` (format is `HOST:CONTAINER`).
 
 ### 9) Healthcheck and readiness
@@ -93,8 +92,19 @@ Notes:
 - The Dockerfile runs `flask run` on port 8000.
 
 ### 10) Backup and restore
-- Backup: stop the stack and copy `data.sqlite`, `quiz/`, `img/`, and `result/` somewhere safe.
-- Restore: replace those files/folders with your backup and start the stack.
+Because writable data lives in named volumes, you can back them up with a temporary helper container:
+
+- Backup the DB volume to a local folder:
+  ```bash
+  mkdir -p backup/db
+  docker run --rm \
+    -v quizsystem_db:/from \
+    -v $(pwd)/backup/db:/to \
+    busybox sh -c "cp -a /from/. /to/"
+  ```
+- Similarly backup other volumes (`quizsystem_img`, `quizsystem_quiz`, `quizsystem_result`, `quizsystem_tmp`) if desired by replacing the volume name after `-v`.
+
+To restore, reverse the copy (from your backup folder into the corresponding volume) using the same pattern.
 
 ---
 
@@ -136,8 +146,7 @@ Exports are saved to the `result/` folder as Excel files (OpenPyXL).
 
 ## 🔎 Troubleshooting
 - Port already in use: change the host port in `docker-compose.yml` (`ports:` section) and restart.
-- Permission denied on volumes: `chmod -R u+rw img quiz result tmp` (Linux/macOS) and restart the container.
-- Health check failing: check `docker compose logs -f` and ensure `data.sqlite` exists or rerun DB init locally if running without Docker.
+- Health check failing: run `docker compose logs -f` to see startup logs. The container automatically initializes the database; if it still fails, share the logs.
 
 ## 🤝 Contributing
 PRs are welcome! Fork the repo, create a feature branch, and open a pull request.
